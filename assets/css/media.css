@@ -1,0 +1,11 @@
+
+/* Ancho minimo de la pagina: si la pantalla es mas angosta, aparece scroll horizontal en vez de aplastar los elementos */
+body { min-width: 320px; }
+/* Menos de 1030px: se ocultan los elementos de PC */
+@media (max-width: 1029.98px) {
+    .solo-pc { display: none !important; }
+}
+/* 1030px o mas: se ocultan los elementos de movil */
+@media (min-width: 1030px) {
+    .solo-movil { display: none !important; }
+}
