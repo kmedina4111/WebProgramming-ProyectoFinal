@@ -3,7 +3,7 @@
 ?>
 <!-- ======================================================= FOOTER PC ======================================================= -->
 <!-- Solo visible en pantallas de 1030px o mas -->
-<footer class="bg-primary text-white solo-pc mt-5">
+<footer class="bg-primary text-white solo-pc">
     <div class="container py-5">
         <!-- d-flex y justify-content-between reparten las 4 columnas a lo largo de todo el ancho -->
         <div class="d-flex justify-content-between">
@@ -31,7 +31,7 @@
                 <!-- Columna 2 -->
                 <h5 class="fw-bold mb-3">Tienda</h5>
                 <ul class="list-unstyled"><!-- list-unstyled quita los puntos de la lista -->
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Productos</a></li>
+                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Categorías</a></li>
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Novedades</a></li>
@@ -41,7 +41,7 @@
                 <!-- Columna 3 -->
                 <h5 class="fw-bold mb-3">Páginas</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="index.php" class="text-white text-decoration-none">Inicio</a></li>
+                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Inicio</a></li>
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Servicios</a></li>
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">Nosotros</a></li>
                     <li class="mb-2"><a href="#" class="text-white text-decoration-none">FaQ</a></li>
@@ -62,7 +62,7 @@
     <!-- Linea separadora y derechos reservados -->
     <div class="border-top border-white border-opacity-75">
         <div class="container py-3 text-center">
-            <small>© 2026 Nexus Importaciones. Todos los derechos reservados.</small>
+            <small>© 2026 NexusCorp Importaciones. Todos los derechos reservados.</small>
         </div>
     </div>
 </footer>
@@ -73,7 +73,7 @@
 <footer class="bg-primary text-white solo-movil mt-5">
     <!-- Seccion 1 -->
     <div class="container py-4 text-center">
-        <h3 class="fw-bold mb-3">Nexus Importaciones</h3>
+        <h3 class="fw-bold mb-3">NexusCorp Importaciones</h3>
         <p class="small">Productos importados de calidad, al mejor precio y con envío a todo el país.</p>
         <div class="d-flex gap-2 mt-3 justify-content-center"> <!-- Centra los elementos RRSS -->
             <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
@@ -103,7 +103,7 @@
         <!-- collapse: la lista empieza cerrada -->
         <div class="collapse" id="footerTienda" data-bs-parent="#acordeonFooter">
             <ul class="list-unstyled py-2">
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Productos</a></li>
+                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
                 <li class="mb-2"><a href="#" class="text-white text-decoration-none">Categorías</a></li>
                 <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
                 <li class="mb-2"><a href="#" class="text-white text-decoration-none">Novedades</a></li>
@@ -115,7 +115,7 @@
         </button>
         <div class="collapse" id="footerPaginas" data-bs-parent="#acordeonFooter">
             <ul class="list-unstyled py-2">
-                <li class="mb-2"><a href="index.php" class="text-white text-decoration-none">Inicio</a></li>
+                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Inicio</a></li>
                 <li class="mb-2"><a href="#" class="text-white text-decoration-none">Servicios</a></li>
                 <li class="mb-2"><a href="#" class="text-white text-decoration-none">Nosotros</a></li>
                 <li class="mb-2"><a href="#" class="text-white text-decoration-none">FaQ</a></li>
@@ -137,7 +137,7 @@
     <!-- ================================== Copyright centrado ================================== -->
     <div class="border-top border-white border-opacity-75">
         <div class="container py-3 text-center">
-            <small>© 2026 Nexus Importaciones. Todos los derechos reservados.</small>
+            <small>© 2026 NexusCorp Importaciones. Todos los derechos reservados.</small>
         </div>
     </div>
 </footer>

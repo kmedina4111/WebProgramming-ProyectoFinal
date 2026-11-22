@@ -17,8 +17,8 @@
                 </div>
                 <div>
                     <!-- LOGO -->
-                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="index.php">
-                        <img src="assets/imgs/logos/logo1.webp" alt="Logo" class="img-fluid" style="max-height: 50px;">
+                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="#">
+                        <img src="/assets/imgs/logos/logo1.webp" alt="Logo" class="img-fluid" style="max-height: 50px;">
                     </a>
                 </div>
                 <!-- Buscador PC -->
@@ -55,22 +55,22 @@
         <div class="container">
             <!-- justify-content-between reparte los enlaces en todo el ancho del container -->
             <ul class="nav justify-content-between fs-6"> <!-- fs-6 en el ul agranda la letra de todos los enlaces -->
-                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#">Productos</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/index.php">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/src/pages/ofertas.php">Ofertas</a></li>
                 <!-- d-flex y gap-1 para poner el icono de flecha al lado del texto -->
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="#">Categorías <i class="fi fi-rr-angle-small-down d-flex"></i></a>
+                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/categorias.php">Categorías <i class="fi fi-rr-angle-small-down d-flex"></i></a>
                 </li>
                 <!-- d-flex y gap-1 para poner el icono de flecha al lado del texto -->
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="#">Términos <i class="fi fi-rr-angle-small-down d-flex"></i></a>
+                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/terminos.php">Términos <i class="fi fi-rr-angle-small-down d-flex"></i></a>
                 </li>
                 <!-- d-flex y gap-1 para poner el icono de flecha al lado del texto -->
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="#">Servicios <i class="fi fi-rr-angle-small-down d-flex"></i></a>
+                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/servicios.php">Servicios <i class="fi fi-rr-angle-small-down d-flex"></i></a>
                 </li>
-                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#">Contacto</a></li>
-                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="#">Nosotros</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/src/pages/contacto.php">Contacto</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/src/pages/nosotros.php">Nosotros</a></li>
             </ul>
         </div>
     </nav>
@@ -92,7 +92,7 @@
                 </div>
                 <div>
                     <!-- LOGO movil | En celular el logo ocupa el espacio libre (flex-grow-1) -->
-                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="index.php">
+                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="#">
                         <img src="assets/imgs/logos/logo1.webp" alt="Logo" class="img-fluid" style="max-height: 42px;">
                     </a>
                 </div>
@@ -134,7 +134,7 @@
             <div class="list-group list-group-flush">
                 <!-- d-flex y justify-content-between ponen el texto a la izquierda y la flecha a la derecha -->
                 <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#">Categorías <i class="fi fi-rr-angle-small-down d-flex"></i></a>
-                <a class="list-group-item list-group-item-action fw-semibold py-3" href="#">Productos</a>
+                <a class="list-group-item list-group-item-action fw-semibold py-3" href="#">Ofertas</a>
                 <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#">Términos <i class="fi fi-rr-angle-small-down d-flex"></i></a>
                 <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#">Servicios <i class="fi fi-rr-angle-small-down d-flex"></i></a>
                 <a class="list-group-item list-group-item-action fw-semibold py-3" href="#">Contacto</a>
@@ -143,7 +143,7 @@
             <!-- mt-auto empuja este bloque hasta el fondo del menu -->
             <div class="mt-auto p-3 border-top">
                 <!-- btn-success es el verde de Bootstrap, w-100 ocupa todo el ancho -->
-                <a class="btn btn-success w-100 fw-semibold d-flex align-items-center justify-content-center gap-2 mb-3" href="" target="_blank">
+                <a class="btn btn-success w-100 fw-semibold d-flex align-items-center justify-content-center gap-2 mb-3" href="#" target="_blank">
                     <i class="fi fi-brands-whatsapp d-flex"></i> Escríbenos por WhatsApp
                 </a>
                 <!-- Circulos grises (bg-secondary-subtle) con el logo en negro (text-dark) encima | text-decoration-none quita la linea de subrayado del enlace -->

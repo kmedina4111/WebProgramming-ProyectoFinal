@@ -188,6 +188,400 @@
     <!-- =================================================== FIN HEADER MOVIL ==================================================== -->
 </header>
 <body>
+    <!-- ===================================================== CONTENIDO PRINCIPAL ===================================================== -->
+    <!-- PRUEBA: las imagenes son reemplazadas por iconos y los productos son de ejemplo. Luego saldran de la base de datos -->
+    <main>
+
+        <!-- ============ 1. CARRUSEL DE BANNERS ============ -->
+        <!-- carousel slide + data-bs-ride="carousel": los banners cambian solos (necesita el JS de Bootstrap) -->
+        <section class="container mt-4">
+            <div id="carruselBanners" class="carousel slide rounded-4 overflow-hidden" data-bs-ride="carousel">
+                <!-- Indicadores: las rayitas de abajo para saltar a cada banner -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carruselBanners" data-bs-slide-to="0" class="active" aria-label="Banner 1"></button>
+                    <button type="button" data-bs-target="#carruselBanners" data-bs-slide-to="1" aria-label="Banner 2"></button>
+                    <button type="button" data-bs-target="#carruselBanners" data-bs-slide-to="2" aria-label="Banner 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <!-- Banner 1 | El logo va de fondo con background-image -->
+                    <!-- background-size: 45% -> el logo ocupa casi la mitad del ancho | background-position: right 3rem center -> a la derecha, centrado en vertical -->
+                    <!-- Fondo blanco (el logo es azul y no se veria sobre bg-primary) y texto oscuro para que se lea -->
+                    <div class="carousel-item active">
+                        <div class="bg-dark text-white border rounded-4 text-dark d-flex align-items-center px-5" style="min-height: 340px; background-image: url('assets/imgs/logos/example1.webp'); background-repeat: no-repeat; background-size: 45% auto; background-position: right 3rem center;">
+                            <div>
+                                <span class="badge bg-warning text-dark mb-2">OFERTA</span>
+                                <h2 class="fw-bold display-6">Tarjetas de video RTX</h2>
+                                <p class="mb-4">Hasta 20% de descuento por tiempo limitado.</p>
+                                <a href="#" class="btn btn-primary fw-semibold px-4">Ver ofertas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Banner 2 -->
+                    <div class="carousel-item">
+                        <div class="bg-dark text-white d-flex align-items-center px-5" style="min-height: 340px;">
+                            <div>
+                                <span class="badge bg-info text-dark mb-2">NUEVO</span>
+                                <h2 class="fw-bold display-6">Laptops gamer</h2>
+                                <p class="mb-4">Los ultimos modelos ya disponibles en tienda.</p>
+                                <a href="#" class="btn btn-primary fw-semibold px-4">Ver laptops</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Banner 3 -->
+                    <div class="carousel-item">
+                        <div class="bg-success text-white d-flex align-items-center px-5" style="min-height: 340px;">
+                            <div>
+                                <span class="badge bg-light text-dark mb-2">ENVIO GRATIS</span>
+                                <h2 class="fw-bold display-6">Perifericos</h2>
+                                <p class="mb-4">Envio gratis en compras mayores a S/ 300.</p>
+                                <a href="#" class="btn btn-light fw-semibold px-4">Comprar ahora</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Flechas para pasar de banner -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carruselBanners" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carruselBanners" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ============ 2. BARRA DE BENEFICIOS ============ -->
+        <!-- col-6 col-lg-3 | 2 columnas en movil y 4 en PC -->
+        <!-- g-4 parecido a gap pero forma parte de la suma del ancho total -->
+        <section class="container mt-4">
+            <div class="row g-4">
+                <div class="col-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 bg-light rounded-3 p-3 h-100">
+                        <i class="fi fi-rr-truck-side fs-3 text-primary d-flex"></i>
+                        <div class="lh-sm">
+                            <span class="fw-bold small">Envíos a todo el país</span><br>
+                            <small class="text-secondary">Rápidos y seguros</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 bg-light rounded-3 p-3 h-100">
+                        <i class="fi fi-rr-shield-check fs-3 text-primary d-flex"></i>
+                        <div class="lh-sm">
+                            <span class="fw-bold small">Garantía oficial</span><br>
+                            <small class="text-secondary">En todos los productos</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 bg-light rounded-3 p-3 h-100">
+                        <i class="fi fi-rr-credit-card fs-3 text-primary d-flex"></i>
+                        <div class="lh-sm">
+                            <span class="fw-bold small">Pago seguro</span><br>
+                            <small class="text-secondary">Tarjetas y transferencias</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="d-flex align-items-center gap-3 bg-light rounded-3 p-3 h-100">
+                        <i class="fi fi-rr-headset fs-3 text-primary d-flex"></i>
+                        <div class="lh-sm">
+                            <span class="fw-bold small">Soporte técnico</span><br>
+                            <small class="text-secondary">Te asesoramos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 3. CATEGORIAS DESTACADAS ============ -->
+        <!-- col-4 col-md-3 col-lg-2: 3 por fila en movil, 4 en tablet y 6 en PC -->
+        <section class="container mt-5">
+            <h3 class="fw-bold mb-3">Categorías</h3>
+            <div class="row g-3 text-center">
+                <div class="col-4 col-md-3 col-lg-2">
+                    <a href="#" class="d-block bg-light rounded-3 p-3 text-dark text-decoration-none h-100">
+                        <i class="fi fi-rr-microchip fs-1 text-primary d-flex justify-content-center"></i>
+                        <small class="fw-semibold">Procesadores</small>
+                    </a>
+                </div>
+                <div class="col-4 col-md-3 col-lg-2">
+                    <a href="#" class="d-block bg-light rounded-3 p-3 text-dark text-decoration-none h-100">
+                        <i class="fi fi-rr-computer fs-1 text-primary d-flex justify-content-center"></i>
+                        <small class="fw-semibold">PCs armadas</small>
+                    </a>
+                </div>
+                <div class="col-4 col-md-3 col-lg-2">
+                    <a href="#" class="d-block bg-light rounded-3 p-3 text-dark text-decoration-none h-100">
+                        <i class="fi fi-rr-laptop fs-1 text-primary d-flex justify-content-center"></i>
+                        <small class="fw-semibold">Laptops</small>
+                    </a>
+                </div>
+                <div class="col-4 col-md-3 col-lg-2">
+                    <a href="#" class="d-block bg-light rounded-3 p-3 text-dark text-decoration-none h-100">
+                        <i class="fi fi-rr-keyboard fs-1 text-primary d-flex justify-content-center"></i>
+                        <small class="fw-semibold">Teclados</small>
+                    </a>
+                </div>
+                <div class="col-4 col-md-3 col-lg-2">
+                    <a href="#" class="d-block bg-light rounded-3 p-3 text-dark text-decoration-none h-100">
+                        <i class="fi fi-rr-mouse fs-1 text-primary d-flex justify-content-center"></i>
+                        <small class="fw-semibold">Mouse</small>
+                    </a>
+                </div>
+                <div class="col-4 col-md-3 col-lg-2">
+                    <a href="#" class="d-block bg-light rounded-3 p-3 text-dark text-decoration-none h-100">
+                        <i class="fi fi-rr-headphones fs-1 text-primary d-flex justify-content-center"></i>
+                        <small class="fw-semibold">Audífonos</small>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 4. OFERTAS ============ -->
+        <!-- Cada tarjeta es un producto. Cuando haya base de datos, se escribe UNA tarjeta dentro de un foreach -->
+        <section class="container mt-5">
+            <!-- Titulo a la izquierda y enlace "Ver todo" a la derecha -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="fw-bold mb-0">Ofertas</h3>
+                <a href="#" class="fw-semibold text-decoration-none">Ver todo</a>
+            </div>
+            <!-- col-6 col-md-4 col-lg-3: 2 por fila en movil, 3 en tablet y 4 en PC -->
+            <div class="row g-3">
+                <!-- Producto 1 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <!-- h-100: todas las tarjetas de la fila miden lo mismo de alto -->
+                    <div class="card h-100 border-0 shadow-sm">
+                        <!-- Imagen del producto | ratio-1x1 la hace cuadrada. Reemplazar el icono por <img> -->
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-microchip text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <!-- Etiqueta de descuento en la esquina | position-absolute la pone encima de la imagen -->
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-15%</span>
+                        <!-- d-flex flex-column + mt-auto: el boton siempre queda abajo aunque el nombre sea largo -->
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">AMD</small>
+                            <h6 class="fw-semibold">Procesador AMD Ryzen 5 7600</h6>
+                            <div class="mt-auto">
+                                <small class="text-secondary text-decoration-line-through">S/ 899.00</small>
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 764.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 2 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-computer text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-10%</span>
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">MSI</small>
+                            <h6 class="fw-semibold">Tarjeta de video GeForce RTX 4060 8GB</h6>
+                            <div class="mt-auto">
+                                <small class="text-secondary text-decoration-line-through">S/ 1,399.00</small>
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 1,259.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 3 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-laptop text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-20%</span>
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">ASUS</small>
+                            <h6 class="fw-semibold">Laptop ASUS TUF Gaming F15</h6>
+                            <div class="mt-auto">
+                                <small class="text-secondary text-decoration-line-through">S/ 4,299.00</small>
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 3,439.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 4 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-mouse text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-25%</span>
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">LOGITECH</small>
+                            <h6 class="fw-semibold">Mouse gamer Logitech G502 HERO</h6>
+                            <div class="mt-auto">
+                                <small class="text-secondary text-decoration-line-through">S/ 239.00</small>
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 179.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 5. BANNER INTERMEDIO ============ -->
+        <section class="container mt-5">
+            <!-- flex-column en movil (texto arriba, boton abajo) y flex-md-row en tablet/PC (uno al lado del otro) -->
+            <div class="bg-dark text-white rounded-4 p-4 p-md-5 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                <div>
+                    <h3 class="fw-bold">¿Quieres armar tu PC?</h3>
+                    <p class="mb-0 text-white-50">Te ayudamos a elegir los componentes ideales según tu presupuesto.</p>
+                </div>
+                <a href="#" class="btn btn-primary btn-lg fw-semibold flex-shrink-0">Cotizar ahora</a>
+            </div>
+        </section>
+
+        <!-- ============ 6. NOVEDADES ============ -->
+        <!-- Misma tarjeta que en Ofertas, pero con etiqueta "Nuevo" y sin precio tachado -->
+        <section class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="fw-bold mb-0">Novedades</h3>
+                <a href="#" class="fw-semibold text-decoration-none">Ver todo</a>
+            </div>
+            <div class="row g-3">
+                <!-- Producto 1 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-keyboard text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <span class="badge bg-success position-absolute top-0 start-0 m-2">Nuevo</span>
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">REDRAGON</small>
+                            <h6 class="fw-semibold">Teclado mecánico Redragon Kumara K552</h6>
+                            <div class="mt-auto">
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 159.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 2 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-headphones text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <span class="badge bg-success position-absolute top-0 start-0 m-2">Nuevo</span>
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">HYPERX</small>
+                            <h6 class="fw-semibold">Audífonos HyperX Cloud II</h6>
+                            <div class="mt-auto">
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 329.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 3 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-screen text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <span class="badge bg-success position-absolute top-0 start-0 m-2">Nuevo</span>
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">SAMSUNG</small>
+                            <h6 class="fw-semibold">Monitor Samsung Odyssey G5 27" 165Hz</h6>
+                            <div class="mt-auto">
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 1,099.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Producto 4 -->
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="ratio ratio-1x1 bg-light rounded-top">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fi fi-rr-microchip text-secondary d-flex" style="font-size: 4rem;"></i>
+                            </div>
+                        </div>
+                        <span class="badge bg-success position-absolute top-0 start-0 m-2">Nuevo</span>
+                        <div class="card-body d-flex flex-column">
+                            <small class="text-secondary fw-semibold">INTEL</small>
+                            <h6 class="fw-semibold">Procesador Intel Core i5-14400F</h6>
+                            <div class="mt-auto">
+                                <p class="fw-bold fs-5 text-primary mb-2">S/ 849.00</p>
+                                <a href="#" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fi fi-rr-shopping-cart d-flex"></i> Agregar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 7. MARCAS ============ -->
+        <!-- Por ahora solo texto. Luego reemplazar cada nombre por el <img> del logo de la marca -->
+        <section class="container mt-5">
+            <h3 class="fw-bold mb-3">Nuestras marcas</h3>
+            <!-- col-4 col-md-2: 3 por fila en movil y 6 en tablet/PC -->
+            <div class="row g-3 text-center">
+                <div class="col-4 col-md-2"><div class="border rounded-3 py-3 fw-bold text-secondary">ASUS</div></div>
+                <div class="col-4 col-md-2"><div class="border rounded-3 py-3 fw-bold text-secondary">MSI</div></div>
+                <div class="col-4 col-md-2"><div class="border rounded-3 py-3 fw-bold text-secondary">AMD</div></div>
+                <div class="col-4 col-md-2"><div class="border rounded-3 py-3 fw-bold text-secondary">INTEL</div></div>
+                <div class="col-4 col-md-2"><div class="border rounded-3 py-3 fw-bold text-secondary">LOGITECH</div></div>
+                <div class="col-4 col-md-2"><div class="border rounded-3 py-3 fw-bold text-secondary">SAMSUNG</div></div>
+            </div>
+        </section>
+
+        <!-- ============ 8. NEWSLETTER ============ -->
+        <section class="container mt-5">
+            <div class="bg-light rounded-4 p-4 p-md-5 text-center">
+                <h3 class="fw-bold">Recibe nuestras ofertas</h3>
+                <p class="text-secondary">Suscríbete y entérate primero de descuentos y nuevos productos.</p>
+                <!-- mx-auto + max-width: el formulario queda centrado y no se estira en pantallas grandes -->
+                <form class="d-flex gap-2 mx-auto" style="max-width: 480px;">
+                    <input class="form-control" type="email" name="email" placeholder="Tu correo electrónico" aria-label="Correo electrónico" required>
+                    <button class="btn btn-primary fw-semibold flex-shrink-0" type="submit">Suscribirme</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+    <!-- =================================================== FIN CONTENIDO PRINCIPAL =================================================== -->
+
     <!-- ======================================================= FOOTER PC ======================================================= -->
     <!-- Solo visible en pantallas de 1030px o mas -->
     <footer class="bg-primary text-white solo-pc mt-5">
