@@ -28,7 +28,7 @@
                 <!-- Usuario y carrito -->
                 <div class="d-flex align-items-center gap-3 gap-lg-4 flex-shrink-0">
                     <!-- Iniciar sesion -->
-                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="#">
+                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/src/pages/login.php" data-bs-toggle="modal" data-bs-target="#modalLogin">
                         <!-- Se agrego d-flex para centrar el icono dentro del circulo -->
                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
                             <i class="fi fi-rr-user fs-5 d-flex"></i>   <!-- Se agrego fs-5 para el tamaño y d-flex para centrarlo bien -->
@@ -99,7 +99,7 @@
                 <!-- Usuario y carrito | En movil solo se ven los iconos -->
                 <div class="d-flex align-items-center gap-3 gap-lg-4 flex-shrink-0">
                     <!-- Iniciar sesion -->
-                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="#">
+                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/src/pages/login.php" data-bs-toggle="modal" data-bs-target="#modalLogin" aria-label="Iniciar sesión">
                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
                             <i class="fi fi-rr-user fs-5 d-flex"></i>
                         </div>
@@ -157,3 +157,5 @@
     </div>
     <!-- ========================================================================================================================= -->  
 </header>
+
+<?php include __DIR__ . '/login-modal.php'; ?> <!-- modal de inicio de sesion (disponible en todas las paginas) -->

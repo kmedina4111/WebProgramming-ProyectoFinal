@@ -3,7 +3,7 @@
 ?>
 <!-- ======================================================= FOOTER PC ======================================================= -->
 <!-- Solo visible en pantallas de 1030px o mas -->
-<footer class="bg-primary text-white solo-pc">
+<footer class="bg-primary text-white solo-pc mt-5">
     <div class="container py-5">
         <!-- d-flex y justify-content-between reparten las 4 columnas a lo largo de todo el ancho -->
         <div class="d-flex justify-content-between">

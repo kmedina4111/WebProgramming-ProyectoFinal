@@ -14,7 +14,7 @@
     <meta property="og:site_name" content="NexusCorp">
     <meta property="og:title" content="NexusCorp">
     <meta property="og:description" content="Productos de cómputo importados, al mejor precio y con envío a todo el país.">
-    <meta property="og:image" content="assets/imgs/logos/logo.png">
+    <meta property="og:image" content="/assets/imgs/logos/logo.png">
     <meta property="og:locale" content="es_ES">
     <!-- <meta property="og:url" content="https://nexuscorp.com/"> -->  
     <!-- ===================== FAVICON ===================== -->
