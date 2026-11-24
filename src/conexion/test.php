@@ -1,31 +1,31 @@
 <?php
-require_once 'conexion.php';
+    require_once 'conexion.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $usuario  = $_POST['usuario'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);   // se guarda el HASH, nunca el texto plano
-    $rol      = $_POST['rol'];
-    $nombreFoto = null;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $usuario  = $_POST['usuario'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);   // se guarda el HASH, nunca el texto plano
+        $rol      = $_POST['rol'];
+        $nombreFoto = null;
 
-    // Procesar la subida del archivo de imagen
-    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-        $ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-        // Generar un nombre único para evitar duplicados
-        $nombreFoto = time() . '_' . uniqid() . '.' . $ext;
-        move_uploaded_file($_FILES['foto']['tmp_name'], 'imagenes/' . $nombreFoto);
-    }
+        // Procesar la subida del archivo de imagen
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            $ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+            // Generar un nombre único para evitar duplicados
+            $nombreFoto = time() . '_' . uniqid() . '.' . $ext;
+            move_uploaded_file($_FILES['foto']['tmp_name'], 'imagenes/' . $nombreFoto);
+        }
 
-    $sql = "INSERT INTO usuarios (usuario, password, rol, foto) VALUES (:usuario, :password, :rol, :foto)";
-    $stmt = $conexion->prepare($sql);
-    $stmt->execute([
-        ':usuario'  => $usuario,
-        ':password' => $password,
-        ':rol'      => $rol,
-        ':foto'     => $nombreFoto
-    ]);
+        $sql = "INSERT INTO usuarios (usuario, password, rol, foto) VALUES (:usuario, :password, :rol, :foto)";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([
+            ':usuario'  => $usuario,
+            ':password' => $password,
+            ':rol'      => $rol,
+            ':foto'     => $nombreFoto
+        ]);
 
-    header('Location: test.php?ok=1');
-    exit;
+        header('Location: test.php?ok=1');
+        exit;
 }
 ?>
 <!DOCTYPE html>
