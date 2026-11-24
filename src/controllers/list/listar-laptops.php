@@ -26,8 +26,13 @@ $urlFotos  = '/assets/imgs/laptops/';                      // ruta del NAVEGADOR
 
 <div class="container bg-white p-4 rounded shadow-sm">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Lista de Laptops</h2>
-        <a href="../add/agregar-laptos.php" class="btn btn-success">+ Nueva Laptop</a>
+        <h2 class="mb-0">Lista de Laptops</h2>
+        <!-- Lado derecho: boton para volver al dashboard + boton de nuevo registro -->
+        <div class="d-flex gap-2">
+            <!-- Ruta absoluta (empieza con /): funciona sin importar en que carpeta este este archivo -->
+            <a href="/admin/index.php" class="btn btn-outline-secondary">&larr; Volver al panel</a>
+            <a href="../add/agregar-laptos.php" class="btn btn-success">+ Nueva Laptop</a>
+        </div>
     </div>
 
     <!-- Llega desde agregar-laptos.php despues de guardar (header Location ...?ok=1) -->

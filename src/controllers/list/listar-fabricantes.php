@@ -23,8 +23,13 @@ $fabricantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="container bg-white p-4 rounded shadow-sm">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Lista de Fabricantes</h2>
-        <a href="../add/agregar-fabricantes.php" class="btn btn-success">+ Nuevo Fabricante</a>
+        <h2 class="mb-0">Lista de Fabricantes</h2>
+        <!-- Lado derecho: boton para volver al dashboard + boton de nuevo registro -->
+        <div class="d-flex gap-2">
+            <!-- Ruta absoluta (empieza con /): funciona sin importar en que carpeta este este archivo -->
+            <a href="/admin/index.php" class="btn btn-outline-secondary">&larr; Volver al panel</a>
+            <a href="../add/agregar-fabricantes.php" class="btn btn-success">+ Nuevo Fabricante</a>
+        </div>
     </div>
 
     <!-- Llega desde agregar-fabricantes.php despues de guardar (header Location ...?ok=1) -->

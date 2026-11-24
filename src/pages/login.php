@@ -1,3 +1,4 @@
+<?php session_start(); // abre la sesion ANTES de cualquier HTML (el header muestra al usuario conectado) ?>
 <!DOCTYPE html>
 <html lang="es">
 <?php include __DIR__ . '/../include/store/head.php'; ?> <!-- head and metadata -->

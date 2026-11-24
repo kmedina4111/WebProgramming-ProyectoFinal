@@ -22,8 +22,13 @@ $urlFotos  = '/assets/imgs/usuarios/';                      // ruta del NAVEGADO
 
 <div class="container bg-white p-4 rounded shadow-sm">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Lista de Usuarios</h2>
-        <a href="../add/agregar-usuario.php" class="btn btn-success">+ Nuevo Usuario</a>
+        <h2 class="mb-0">Lista de Usuarios</h2>
+        <!-- Lado derecho: boton para volver al dashboard + boton de nuevo registro -->
+        <div class="d-flex gap-2">
+            <!-- Ruta absoluta (empieza con /): funciona sin importar en que carpeta este este archivo -->
+            <a href="/admin/index.php" class="btn btn-outline-secondary">&larr; Volver al panel</a>
+            <a href="../add/agregar-usuario.php" class="btn btn-success">+ Nuevo Usuario</a>
+        </div>
     </div>
 
     <!-- Llega desde agregar-usuario.php despues de guardar (header Location ...?ok=1) -->

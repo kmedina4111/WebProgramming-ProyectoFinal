@@ -1,5 +1,26 @@
 <?php
+session_start();   // necesario para leer $_SESSION (quien inicio sesion) | debe ir antes de cualquier HTML
 require_once __DIR__ . '/../src/conexion/conexion.php';   // crea $conexion
+
+// ============ 0. SOLO ADMINISTRADORES ============
+// Si no inicio sesion, o inicio sesion como cliente, no puede ver el panel:
+// vuelve a la tienda y se abre el modal de login (?login=1)
+if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'admin') {
+    header('Location: /index.php?login=1');
+    exit;
+}
+
+// ============ ADMINISTRADOR CONECTADO (bloque de abajo del menu lateral) ============
+// Se vuelve a leer de la base de datos: asi, si edita su nombre o foto, aqui se ve el cambio al instante
+$stmt = $conexion->prepare("SELECT usuario, rol, foto FROM usuarios WHERE id = :id");
+$stmt->execute([':id' => $_SESSION['usuario_id']]);
+$admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Ruta de la foto: se usa solo si el archivo existe de verdad
+$fotoAdmin = null;
+if ($admin && !empty($admin['foto']) && file_exists(__DIR__ . '/../assets/imgs/usuarios/' . $admin['foto'])) {
+    $fotoAdmin = '/assets/imgs/usuarios/' . $admin['foto'];
+}
 
 // ============ 1. NUMEROS PARA LAS TARJETAS DE RESUMEN ============
 // COUNT(*) cuenta filas | fetchColumn() devuelve directamente el primer valor (el numero)
@@ -29,7 +50,7 @@ $porFabricante = $conexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 $tarjetas = [
     ['Laptops',     $totalLaptops,     'fi-rr-laptop',        'primary', '/src/controllers/list/listar-laptops.php'],
     ['En oferta',   $totalOfertas,     'fi-rr-badge-percent', 'danger',  '/src/controllers/list/listar-laptops.php'],
-    ['Fabricantes', $totalFabricantes, 'fi-rr-factory',       'success', '/src/controllers/list/listar-fabricantes.php'],
+    ['Fabricantes', $totalFabricantes, 'fi-rr-industry-alt',  'success', '/src/controllers/list/listar-fabricantes.php'],
     ['Usuarios',    $totalUsuarios,    'fi-rr-users',         'warning', '/src/controllers/list/listar-usuarios.php'],
 ];
 ?>
@@ -43,7 +64,9 @@ $tarjetas = [
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/4.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
 </head>
-<body class="bg-light">
+<!-- min-vh-100: el body mide como minimo el alto completo de la ventana -->
+<!-- d-flex flex-column: barra superior arriba y el resto (menu + contenido) debajo, ocupando lo que sobra -->
+<body class="bg-light d-flex flex-column min-vh-100">
 
 <!-- ============ BARRA SUPERIOR ============ -->
 <nav class="navbar navbar-dark bg-dark px-3">
@@ -53,32 +76,62 @@ $tarjetas = [
     </a>
 </nav>
 
-<div class="container-fluid">
-    <div class="row">
+<!-- flex-grow-1: ocupa todo el alto que deja la barra superior | d-flex flex-column: para que la fila tambien pueda estirarse -->
+<div class="container-fluid flex-grow-1 d-flex flex-column">
+    <!-- flex-grow-1: la fila llega hasta abajo, y sus columnas (menu y contenido) se estiran con ella -->
+    <div class="row flex-grow-1">
 
         <!-- ============ MENU LATERAL ============ -->
         <!-- col-md-3 col-lg-2: angosto en PC | en movil ocupa todo el ancho y queda arriba del contenido -->
-        <aside class="col-md-3 col-lg-2 bg-white border-end p-3">
+        <!-- d-flex flex-column: el menu arriba y el bloque del usuario empujado hasta abajo (con mt-auto) -->
+        <aside class="col-md-3 col-lg-2 bg-white border-end p-3 d-flex flex-column">
             <!-- nav-pills flex-column: botones del menu uno debajo del otro | active marca la pagina actual -->
             <nav class="nav nav-pills flex-column gap-1">
                 <a href="/admin/index.php" class="nav-link active d-flex align-items-center gap-2">
-                    <i class="fi fi-rr-dashboard d-flex"></i> Dashboard
+                    <i class="fi fi-rr-dashboard d-flex"></i> Overview
                 </a>
                 <a href="/src/controllers/list/listar-laptops.php" class="nav-link text-dark d-flex align-items-center gap-2">
                     <i class="fi fi-rr-laptop d-flex"></i> Laptops
                 </a>
                 <a href="/src/controllers/list/listar-fabricantes.php" class="nav-link text-dark d-flex align-items-center gap-2">
-                    <i class="fi fi-rr-factory d-flex"></i> Fabricantes
+                    <i class="fi fi-rr-industry-alt d-flex"></i> Fabricantes
                 </a>
                 <a href="/src/controllers/list/listar-usuarios.php" class="nav-link text-dark d-flex align-items-center gap-2">
                     <i class="fi fi-rr-users d-flex"></i> Usuarios
                 </a>
             </nav>
+
+            <!-- ============ USUARIO ADMINISTRADOR (abajo del menu) ============ -->
+            <!-- mt-auto: ocupa todo el espacio libre de arriba, asi el bloque queda pegado abajo -->
+            <?php if ($admin): ?>
+            <div class="mt-auto pt-3 border-top d-flex align-items-center gap-2">
+                <!-- Foto en circulo | flex-shrink-0: no se achica aunque el nombre sea largo -->
+                <?php if ($fotoAdmin): ?>
+                    <img src="<?= htmlspecialchars($fotoAdmin) ?>" alt="Foto de <?= htmlspecialchars($admin['usuario']) ?>" width="40" height="40" class="rounded-circle object-fit-cover border flex-shrink-0">
+                <?php else: ?>
+                    <!-- Sin foto: circulo con la inicial del nombre -->
+                    <div class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                        <?= htmlspecialchars(strtoupper(mb_substr($admin['usuario'], 0, 1))) ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Nombre en negrita y rol debajo | min-w-0 + text-truncate: si el nombre es largo se corta con "..." -->
+                <div class="lh-sm" style="min-width: 0;">
+                    <p class="fw-bold mb-0 text-truncate"><?= htmlspecialchars($admin['usuario']) ?></p>
+                    <small class="text-secondary"><?= $admin['rol'] === 'admin' ? 'Administrador' : 'Cliente' ?></small>
+                </div>
+
+                <!-- Icono de salir | ms-auto: lo empuja al extremo derecho -->
+                <a href="/admin/logout.php" class="ms-auto text-secondary d-flex p-1" title="Cerrar sesión" aria-label="Cerrar sesión">
+                    <i class="fi fi-rr-sign-out-alt d-flex fs-5"></i>
+                </a>
+            </div>
+            <?php endif; ?>
         </aside>
 
         <!-- ============ CONTENIDO ============ -->
         <main class="col-md-9 col-lg-10 p-4">
-            <h1 class="fs-3 fw-bold mb-4">Dashboard</h1>
+            <h1 class="fs-3 fw-bold mb-4">Overview</h1>
 
             <!-- 1. Tarjetas de resumen | 2 por fila en movil, 4 en PC -->
             <div class="row row-cols-2 row-cols-lg-4 g-3 mb-4">

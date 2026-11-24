@@ -15,5 +15,3 @@
     } catch (PDOException $e) {
         die("FALLO: " . $e->getMessage());
     }
-?>
-

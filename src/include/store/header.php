@@ -1,5 +1,20 @@
 <?php
     // Esta seccion contiene el fragmento de HTML del Header
+
+    // ===== SESION DEL USUARIO =====
+    // session_status: solo abre la sesion si la pagina no la abrio antes (evita el aviso "session already started")
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    // Datos que guardo AuthController.php al iniciar sesion
+    $sesionActiva  = isset($_SESSION['usuario_id']);
+    $nombreSesion  = $_SESSION['usuario'] ?? '';
+    $esAdminSesion = ($_SESSION['rol'] ?? '') === 'admin';
+    // Foto: solo si el archivo existe | si no, se muestra la inicial del nombre
+    $fotoSesion = null;
+    if (!empty($_SESSION['foto']) && file_exists(__DIR__ . '/../../../assets/imgs/usuarios/' . $_SESSION['foto'])) {
+        $fotoSesion = '/assets/imgs/usuarios/' . $_SESSION['foto'];
+    }
 ?>
 <header>
     <!-- ======================================================= HEADER PC ======================================================= -->
@@ -27,7 +42,33 @@
                 </form>
                 <!-- Usuario y carrito -->
                 <div class="d-flex align-items-center gap-3 gap-lg-4 flex-shrink-0">
-                    <!-- Iniciar sesion -->
+                    <?php if ($sesionActiva): ?>
+                    <!-- Usuario CON sesion: foto + nombre | al hacer clic se abre un menu (dropdown) -->
+                    <div class="dropdown">
+                        <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php if ($fotoSesion): ?>
+                                <img src="<?= htmlspecialchars($fotoSesion) ?>" alt="Foto de <?= htmlspecialchars($nombreSesion) ?>" width="44" height="44" class="rounded-circle object-fit-cover border">
+                            <?php else: ?>
+                                <div class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                    <?= htmlspecialchars(strtoupper(mb_substr($nombreSesion, 0, 1))) ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="d-none d-xl-block lh-sm">
+                                <small class="text-secondary fw-semibold">HOLA</small><br>
+                                <span class="fw-bold small"><?= htmlspecialchars($nombreSesion) ?></span>
+                            </div>
+                        </a>
+                        <!-- dropdown-menu-end: el menu se alinea a la derecha para no salirse de la pantalla -->
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                            <?php if ($esAdminSesion): ?>
+                                <li><a class="dropdown-item" href="/admin/index.php">Panel de administración</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            <?php endif; ?>
+                            <li><a class="dropdown-item text-danger" href="/admin/logout.php">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                    <?php else: ?>
+                    <!-- Usuario SIN sesion: abre el modal de login -->
                     <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/src/pages/login.php" data-bs-toggle="modal" data-bs-target="#modalLogin">
                         <!-- Se agrego d-flex para centrar el icono dentro del circulo -->
                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
@@ -38,6 +79,7 @@
                             <span class="fw-bold small">Iniciar Sesión</span>
                         </div>
                     </a>
+                    <?php endif; ?>
                     <!-- Carrito -->
                     <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="#">
                         <!-- Se agrego d-flex para centrar el icono dentro del circulo -->
@@ -98,12 +140,36 @@
                 </div>
                 <!-- Usuario y carrito | En movil solo se ven los iconos -->
                 <div class="d-flex align-items-center gap-3 gap-lg-4 flex-shrink-0">
-                    <!-- Iniciar sesion -->
+                    <?php if ($sesionActiva): ?>
+                    <!-- Usuario CON sesion (movil): solo la foto | al tocarla se abre el menu -->
+                    <div class="dropdown">
+                        <a class="d-flex text-decoration-none" href="#" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Mi cuenta">
+                            <?php if ($fotoSesion): ?>
+                                <img src="<?= htmlspecialchars($fotoSesion) ?>" alt="Foto de <?= htmlspecialchars($nombreSesion) ?>" width="44" height="44" class="rounded-circle object-fit-cover border">
+                            <?php else: ?>
+                                <div class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                    <?= htmlspecialchars(strtoupper(mb_substr($nombreSesion, 0, 1))) ?>
+                                </div>
+                            <?php endif; ?>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                            <!-- En movil no se ve el nombre al lado de la foto, asi que va dentro del menu -->
+                            <li><span class="dropdown-item-text fw-bold"><?= htmlspecialchars($nombreSesion) ?></span></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <?php if ($esAdminSesion): ?>
+                                <li><a class="dropdown-item" href="/admin/index.php">Panel de administración</a></li>
+                            <?php endif; ?>
+                            <li><a class="dropdown-item text-danger" href="/admin/logout.php">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                    <?php else: ?>
+                    <!-- Usuario SIN sesion: abre el modal de login -->
                     <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/src/pages/login.php" data-bs-toggle="modal" data-bs-target="#modalLogin" aria-label="Iniciar sesión">
                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
                             <i class="fi fi-rr-user fs-5 d-flex"></i>
                         </div>
                     </a>
+                    <?php endif; ?>
                     <!-- Carrito -->
                     <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="#">
                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">

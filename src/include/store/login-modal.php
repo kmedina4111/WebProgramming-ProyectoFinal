@@ -15,16 +15,21 @@
                     <h2 class="h3 fw-bold mb-1" id="modalLoginTitulo">Iniciar sesión</h2>
                     <p class="text-secondary small mb-0">Ingresa a tu cuenta para ver tus pedidos y comprar más rápido.</p>
                 </div>
-                <!-- Formulario | action: el controlador que procesara el login (se crea despues) -->
+                <!-- Mensaje de error: AuthController.php vuelve con ?login=error si el usuario o la contraseña no coinciden -->
+                <?php if (($_GET['login'] ?? '') === 'error'): ?>
+                    <div class="alert alert-danger small py-2">Usuario o contraseña incorrectos.</div>
+                <?php endif; ?>
+
+                <!-- Formulario | action: AuthController.php revisa los datos y redirige segun el rol (admin -> panel, cliente -> tienda) -->
                 <!-- novalidate: desactiva los mensajes del navegador para usar los de Bootstrap -->
                 <form id="formModalLogin" action="/src/controllers/AuthController.php" method="post" novalidate>
                     <input type="hidden" name="accion" value="login">
 
-                    <!-- Correo -->
+                    <!-- Usuario (la tabla usuarios inicia sesion con el campo "usuario", no con correo) -->
                     <div class="mb-3">
-                        <label for="modalEmail" class="form-label fw-semibold small">Correo electrónico</label>
-                        <input type="email" class="form-control rounded-3 py-2" id="modalEmail" name="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
-                        <div class="invalid-feedback">Ingresa un correo válido.</div>
+                        <label for="modalUsuario" class="form-label fw-semibold small">Usuario</label>
+                        <input type="text" class="form-control rounded-3 py-2" id="modalUsuario" name="usuario" placeholder="Tu nombre de usuario" autocomplete="username" maxlength="50" required>
+                        <div class="invalid-feedback">Ingresa tu usuario.</div>
                     </div>
 
                     <!-- Contraseña | input-group junta el campo y el boton de ver/ocultar -->
@@ -92,9 +97,18 @@
         modalVerPassword.querySelector('i').className = 'fi fi-rr-eye d-flex';
     });
 
-    // ===== Al abrir el modal: poner el cursor en el correo =====
+    // ===== Al abrir el modal: poner el cursor en el usuario =====
     document.getElementById('modalLogin').addEventListener('shown.bs.modal', function () {
-        document.getElementById('modalEmail').focus();
+        document.getElementById('modalUsuario').focus();
     });
+
+    // ===== Abrir el modal automaticamente =====
+    // ?login=error -> los datos estaban mal | ?login=1 -> se intento entrar al panel sin iniciar sesion
+    // DOMContentLoaded: espera a que cargue bootstrap.bundle.min.js (esta al final de la pagina)
+    if (new URLSearchParams(window.location.search).has('login')) {
+        document.addEventListener('DOMContentLoaded', function () {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalLogin')).show();
+        });
+    }
 </script>
 <!-- =================================================== FIN MODAL LOGIN =================================================== -->
