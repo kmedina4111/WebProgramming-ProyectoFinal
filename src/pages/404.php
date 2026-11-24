@@ -1,9 +1,9 @@
 <?php
+    session_start();   // abre la sesion ANTES de cualquier HTML (el header muestra al usuario conectado)
     // Pagina de error 404: se muestra cuando la direccion que se busca no existe.
     // http_response_code(404) le avisa al navegador y a Google que la pagina NO existe (si no, responderia 200 = "todo bien").
     // Debe ir ANTES de cualquier HTML.
     http_response_code(404);
-    session_start();   // abre la sesion ANTES de cualquier HTML (el header muestra al usuario conectado)
 ?>
 <!DOCTYPE html>
 <html lang="es">
