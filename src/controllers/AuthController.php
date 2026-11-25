@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'login
     $password = $_POST['password'] ?? '';
 
     // 1. Buscar al usuario por su nombre (aqui SI se pide el password: es el hash para compararlo)
-    $stmt = $conexion->prepare("SELECT id, usuario, password, rol, foto FROM usuarios WHERE usuario = :usuario");
+    $stmt = $conexion->prepare("SELECT id, usuario, nombre, password, rol, foto FROM usuarios WHERE usuario = :usuario");
     $stmt->execute([':usuario' => $usuario]);
     $usu = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -23,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'login
         // 3. Guardar en la sesion los datos que se usan en las paginas (NUNCA el password)
         $_SESSION['usuario_id'] = $usu['id'];
         $_SESSION['usuario']    = $usu['usuario'];
+        // nombre: es lo que se muestra en el header | si esta vacio se usa el usuario (correo) como respaldo
+        $_SESSION['nombre']     = $usu['nombre'] !== '' ? $usu['nombre'] : $usu['usuario'];
         $_SESSION['rol']        = $usu['rol'];
         $_SESSION['foto']       = $usu['foto'];
 

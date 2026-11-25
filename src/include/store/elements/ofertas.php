@@ -52,7 +52,7 @@
                             </div>
                         <?php endif; ?>
                     </div>
-                    <!-- Etiqueta de descuento en la esquina | position-absolute la pone encima de la imagen -->
+                    <!-- Etiqueta de descuento en la esquina la classe position-absolute la pone encima de la imagen -->
                     <span class="badge bg-danger position-absolute top-0 start-0 m-2">-<?= $descuento ?>%</span>
                     <!-- d-flex flex-column + mt-auto: el boton siempre queda abajo aunque el nombre sea largo -->
                     <div class="card-body d-flex flex-column">

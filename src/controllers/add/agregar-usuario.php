@@ -3,6 +3,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $usuario  = $_POST['usuario'];
+        $nombre   = trim($_POST['nombre']);   // nombre de la persona (se muestra en el header y en el panel)
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);   // se guarda el HASH, nunca el texto plano
         $rol      = $_POST['rol'];
         $nombreFoto = null;
@@ -15,10 +16,11 @@
             move_uploaded_file($_FILES['foto']['tmp_name'], __DIR__ . '/../../../assets/imgs/usuarios/' . $nombreFoto);
         }
 
-        $sql = "INSERT INTO usuarios (usuario, password, rol, foto) VALUES (:usuario, :password, :rol, :foto)";
+        $sql = "INSERT INTO usuarios (usuario, nombre, password, rol, foto) VALUES (:usuario, :nombre, :password, :rol, :foto)";
         $stmt = $conexion->prepare($sql);
         $stmt->execute([
             ':usuario'  => $usuario,
+            ':nombre'   => $nombre,
             ':password' => $password,
             ':rol'      => $rol,
             ':foto'     => $nombreFoto
@@ -48,6 +50,10 @@
         <div class="mb-2">
             <label class="form-label">Usuario:</label>
             <input type="text" name="usuario" class="form-control" maxlength="50" required>
+        </div>
+        <div class="mb-2">
+            <label class="form-label">Nombre:</label>
+            <input type="text" name="nombre" class="form-control" maxlength="100" required>
         </div>
         <div class="mb-2">
             <label class="form-label">Contraseña:</label>

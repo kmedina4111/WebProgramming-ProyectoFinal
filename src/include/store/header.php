@@ -8,7 +8,7 @@
     }
     // Datos que guardo AuthController.php al iniciar sesion
     $sesionActiva  = isset($_SESSION['usuario_id']);
-    $nombreSesion  = $_SESSION['usuario'] ?? '';
+    $nombreSesion  = $_SESSION['nombre'] ?? ($_SESSION['usuario'] ?? '');   // nombre de la persona (si no hay, el usuario/correo)
     $esAdminSesion = ($_SESSION['rol'] ?? '') === 'admin';
     // Foto: solo si el archivo existe | si no, se muestra la inicial del nombre
     $fotoSesion = null;

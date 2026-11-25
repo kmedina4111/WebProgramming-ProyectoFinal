@@ -8,7 +8,7 @@ $urlFotos  = '/assets/imgs/usuarios/';                      // ruta del NAVEGADO
 $id = $_GET['id'] ?? null;
 
 // Buscar el usuario a editar (sin la columna password: el formulario nunca debe mostrar el hash)
-$stmt = $conexion->prepare("SELECT id, usuario, rol, foto FROM usuarios WHERE id = :id");
+$stmt = $conexion->prepare("SELECT id, usuario, nombre, rol, foto FROM usuarios WHERE id = :id");
 $stmt->execute([':id' => $id]);
 $usu = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -20,6 +20,7 @@ if (!$usu) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario    = trim($_POST['usuario']);
+    $nombre     = trim($_POST['nombre']);
     $rol        = $_POST['rol'];
     $nombreFoto = $usu['foto']; // Mantener la foto anterior por defecto
 
@@ -42,18 +43,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // La contraseña es opcional: si el campo se deja vacio, se mantiene la actual
         if ($_POST['password'] !== '') {
-            $sql = "UPDATE usuarios SET usuario = :usuario, password = :password, rol = :rol, foto = :foto WHERE id = :id";
+            $sql = "UPDATE usuarios SET usuario = :usuario, nombre = :nombre, password = :password, rol = :rol, foto = :foto WHERE id = :id";
             $datos = [
                 ':usuario'  => $usuario,
+                ':nombre'   => $nombre,
                 ':password' => password_hash($_POST['password'], PASSWORD_DEFAULT),   // se guarda el HASH, nunca el texto plano
                 ':rol'      => $rol,
                 ':foto'     => $nombreFoto,
                 ':id'       => $id
             ];
         } else {
-            $sql = "UPDATE usuarios SET usuario = :usuario, rol = :rol, foto = :foto WHERE id = :id";
+            $sql = "UPDATE usuarios SET usuario = :usuario, nombre = :nombre, rol = :rol, foto = :foto WHERE id = :id";
             $datos = [
                 ':usuario' => $usuario,
+                ':nombre'  => $nombre,
                 ':rol'     => $rol,
                 ':foto'    => $nombreFoto,
                 ':id'      => $id
@@ -92,6 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="form-label">Usuario:</label>
             <!-- htmlspecialchars dentro de value: si el texto tiene comillas, no rompe el atributo -->
             <input type="text" name="usuario" class="form-control" maxlength="50" value="<?= htmlspecialchars($usu['usuario']) ?>" required>
+        </div>
+        <div class="mb-2">
+            <label class="form-label">Nombre:</label>
+            <input type="text" name="nombre" class="form-control" maxlength="100" value="<?= htmlspecialchars($usu['nombre']) ?>" required>
         </div>
         <div class="mb-2">
             <label class="form-label">Nueva contraseña:</label>

@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS usuarios;
 
 CREATE TABLE usuarios (
     id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    usuario    VARCHAR(50)  NOT NULL UNIQUE,                
+    usuario    VARCHAR(50)  NOT NULL UNIQUE,
+    nombre     VARCHAR(100) NOT NULL DEFAULT '',
     password   VARCHAR(255) NOT NULL,                       
     rol        ENUM('admin', 'cliente') NOT NULL DEFAULT 'cliente', 
     foto       VARCHAR(255) NULL,                           

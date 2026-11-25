@@ -18,6 +18,8 @@ $fabricantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <title>Módulo de Fabricantes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CDN de iconos Flaticon (uicons regular rounded): necesario para usar las clases fi fi-rr-... -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/4.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
 </head>
 <body class="bg-light p-4">
 
@@ -27,8 +29,8 @@ $fabricantes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Lado derecho: boton para volver al dashboard + boton de nuevo registro -->
         <div class="d-flex gap-2">
             <!-- Ruta absoluta (empieza con /): funciona sin importar en que carpeta este este archivo -->
-            <a href="/admin/index.php" class="btn btn-outline-secondary">&larr; Volver al panel</a>
-            <a href="../add/agregar-fabricantes.php" class="btn btn-success">+ Nuevo Fabricante</a>
+            <a href="/admin/index.php" class="btn btn-outline-secondary d-flex align-items-center gap-2"><i class="fi fi-rr-arrow-left d-flex"></i> Volver al panel</a>
+            <a href="../add/agregar-fabricantes.php" class="btn btn-success d-flex align-items-center gap-2"><i class="fi fi-rr-plus d-flex"></i> Nuevo Fabricante</a>
         </div>
     </div>
 

@@ -1,12 +1,11 @@
 <?php
-    session_start(); // abre la sesion ANTES de cualquier HTML (el header muestra al usuario conectado)
-
+    session_start(); 
     // ============ DATOS DE LA PAGINA OFERTAS ============
     // Igual que la seccion de ofertas del home (src/include/store/elements/ofertas.php), pero:
     //   - muestra TODAS las ofertas activas (sin LIMIT 4)
     //   - se puede ordenar con el select "Ordenar por" (?orden=...)
     // Se conecta con el CRUD del admin: agregar / editar / eliminar laptop se ve reflejado aqui
-    require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion
+    require_once __DIR__ . '/../conexion/conexion.php';
 
     // Opciones de orden permitidas: valor del <select> => ORDER BY
     // Solo se usa un valor de esta lista: el texto de la URL NUNCA va directo al SQL (evita inyeccion SQL)
@@ -22,7 +21,7 @@
         $orden = 'descuento';
     }
 
-    // Una laptop esta "en oferta" cuando tiene precio_anterior | solo las activas
+    // Una laptop esta en oferta cuando tiene precio_anterior | solo las activas
     $sqlOfertas = "SELECT l.numero_serie, l.modelo, l.procesador, l.precio, l.precio_anterior, l.foto, f.nombre_fabricante
                     FROM laptops l
                     JOIN fabricantes f ON f.id_fabricante = l.id_fabricante
@@ -147,7 +146,7 @@
     </main>
     <!-- =================================================== FIN CONTENIDO PRINCIPAL =================================================== -->
 
-    <?php include __DIR__ . '/../include/store/footer.php'; ?> <!-- footer -->
+    <?php include __DIR__ . '/../include/store/footer.php'; ?> 
     <!-- JS de Bootstrap: necesario para que funcione el offcanvas (menu lateral) del header movil y el acordeon (collapse) del footer movil -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
