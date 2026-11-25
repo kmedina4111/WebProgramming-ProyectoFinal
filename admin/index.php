@@ -1,8 +1,8 @@
 <?php
-session_start();   // necesario para leer $_SESSION (quien inicio sesion) | debe ir antes de cualquier HTML
-require_once __DIR__ . '/../src/conexion/conexion.php';   // crea $conexion
+session_start();   // necesario para leer $_SESSION (quien inicio sesion, ya sea admin o user) 
+require_once __DIR__ . '/../src/conexion/conexion.php';  
 
-// ============ 0. SOLO ADMINISTRADORES ============
+// ============ SOLO ADMINISTRADORES ============
 // Si no inicio sesion, o inicio sesion como cliente, no puede ver el panel:
 // vuelve a la tienda y se abre el modal de login (?login=1)
 if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'admin') {
@@ -11,7 +11,7 @@ if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'admin') {
 }
 
 // ============ ADMINISTRADOR CONECTADO (bloque de abajo del menu lateral) ============
-// Se vuelve a leer de la base de datos: asi, si edita su nombre o foto, aqui se ve el cambio al instante
+// Se vuelve a leer de la base de datos: asi, si edita su nombre o foto, aqui se ve el cambio
 $stmt = $conexion->prepare("SELECT usuario, rol, foto FROM usuarios WHERE id = :id");
 $stmt->execute([':id' => $_SESSION['usuario_id']]);
 $admin = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -22,22 +22,22 @@ if ($admin && !empty($admin['foto']) && file_exists(__DIR__ . '/../assets/imgs/u
     $fotoAdmin = '/assets/imgs/usuarios/' . $admin['foto'];
 }
 
-// ============ 1. NUMEROS PARA LAS TARJETAS DE RESUMEN ============
+// ============ NUMEROS PARA LAS TARJETAS DE RESUMEN ============
 // COUNT(*) cuenta filas | fetchColumn() devuelve directamente el primer valor (el numero)
 $totalLaptops     = $conexion->query("SELECT COUNT(*) FROM laptops")->fetchColumn();
 $totalOfertas     = $conexion->query("SELECT COUNT(*) FROM laptops WHERE precio_anterior IS NOT NULL")->fetchColumn();
 $totalFabricantes = $conexion->query("SELECT COUNT(*) FROM fabricantes")->fetchColumn();
 $totalUsuarios    = $conexion->query("SELECT COUNT(*) FROM usuarios")->fetchColumn();
 
-// ============ 2. ULTIMAS 5 LAPTOPS REGISTRADAS ============
+// ============ ULTIMAS 5 LAPTOPS REGISTRADAS ============
 $sql = "SELECT l.numero_serie, l.modelo, l.precio, l.precio_anterior, l.activo, f.nombre_fabricante
         FROM laptops l
         JOIN fabricantes f ON f.id_fabricante = l.id_fabricante
         ORDER BY l.creado_en DESC
-        LIMIT 5";
+        LIMIT 10";
 $ultimasLaptops = $conexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-// ============ 3. LAPTOPS POR FABRICANTE ============
+// ============ LAPTOPS POR FABRICANTE ============
 // LEFT JOIN: tambien aparecen los fabricantes con 0 laptops
 $sql = "SELECT f.nombre_fabricante, COUNT(l.numero_serie) AS total
         FROM fabricantes f
@@ -128,7 +128,6 @@ $tarjetas = [
             </div>
             <?php endif; ?>
         </aside>
-
         <!-- ============ CONTENIDO ============ -->
         <main class="col-md-9 col-lg-10 p-4">
             <h1 class="fs-3 fw-bold mb-4">Overview</h1>
@@ -154,8 +153,7 @@ $tarjetas = [
                 </div>
                 <?php endforeach; ?>
             </div>
-
-            <!-- 2. Acciones rapidas -->
+            <!-- Botones de acciones rapidas -->
             <div class="d-flex flex-wrap gap-2 mb-4">
                 <a href="/src/controllers/add/agregar-laptos.php" class="btn btn-primary">+ Nueva laptop</a>
                 <a href="/src/controllers/add/agregar-fabricantes.php" class="btn btn-success">+ Nuevo fabricante</a>
@@ -163,7 +161,7 @@ $tarjetas = [
             </div>
 
             <div class="row g-3">
-                <!-- 3. Ultimas laptops | col-lg-8: ocupa 2/3 en PC -->
+                <!-- Ultimas laptops | col-lg-8: ocupa 2/3 en PC -->
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-sm h-100">
                         <div class="card-header bg-white d-flex justify-content-between align-items-center">

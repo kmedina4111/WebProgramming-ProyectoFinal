@@ -10,7 +10,6 @@
     <!-- El header y el footer van DENTRO de <body>: todo lo que se ve en la pagina debe estar aqui -->
     <?php include 'src/include/store/header.php'; ?> <!-- header -->
     <main>
-        <?php include 'src/include/store/elements/banners.php'; ?> <!-- banners -->
         <?php include 'src/include/store/elements/beneficios.php'; ?> <!-- beneficios -->
         <?php include 'src/include/store/elements/categorias.php'; ?> <!-- categorias -->
         <?php include 'src/include/store/elements/ofertas.php'; ?> <!-- ofertas (desde la base de datos) -->
