@@ -1,8 +1,22 @@
 <?php
-    $servername = "localhost:8889";
-    $username = "root";
-    $password = "root";
-    $dbname = "nexuscorp";
+    // Detecta donde se esta ejecutando: en la PC (MAMP) o en el hosting (InfinityFree)
+    // HTTP_HOST trae el dominio, por ejemplo "localhost:8888"; se le quita el puerto
+    $host    = explode(":", $_SERVER["HTTP_HOST"] ?? "localhost")[0];
+    $esLocal = in_array($host, ["localhost", "127.0.0.1"], true);
+
+    if ($esLocal) {
+        // Datos de MAMP (PC)
+        $servername = "localhost:8889";
+        $username = "root";
+        $password = "root";
+        $dbname = "nexuscorp";
+    } else {
+        // Datos de InfinityFree (hosting)
+        $servername = "sql311.infinityfree.com";
+        $username = "if0_43116021";
+        $password = "RGpNPqtD6d";
+        $dbname = "if0_43116021_nexuscorp";
+    }
     // Quitar el echo del try ya que afecta a la pagina cuando se hace un include de este archivo.
     // ya se quito el echo
     try {

@@ -106,11 +106,11 @@ code.inline { font: 400 .92em var(--font-mono); background: var(--paper-2); padd
 /* Code panel (filename tab + highlighted code) */
 .code { flex: 1; min-width: 0; align-self: flex-start; border: 1.5px solid var(--ink); background: rgba(240, 235, 222, .94); display: flex; flex-direction: column; }
 .code-head { display: flex; justify-content: space-between; padding: 12px 22px; border-bottom: 1px solid var(--ink-faint); font: 400 16px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
-.code pre { padding: 20px 22px 22px; font: 400 20px/1.45 var(--font-mono); white-space: pre; overflow: hidden; tab-size: 4; }
-.code.sm pre { font-size: 18px; }
+.code pre { padding: 18px 22px 20px; font: 400 17px/1.42 var(--font-mono); white-space: pre; overflow: hidden; tab-size: 4; }
+.code.sm pre { font-size: 16px; }
 textarea.src { display: none; }
 /* Syntax colours: still two-colour (cobalt at different weights/opacities) */
-.t-com { opacity: .5; font-style: italic; }
+.t-com { opacity: .78; font-style: italic; }
 .t-str { color: var(--ink-soft); }
 .t-var { font-weight: 500; }
 .t-kw  { font-weight: 500; text-decoration: underline; text-decoration-color: var(--ink-faint); text-underline-offset: 4px; }
@@ -133,6 +133,31 @@ textarea.src { display: none; }
 .index .item span { font: 400 18px/2 var(--font-mono); }
 .index .item h3 { font: 400 38px/1.05 var(--font-display); margin-bottom: 10px; }
 .index .item p { font: 400 21px/1.45 var(--font-body); }
+
+/* "En palabras simples" callout */
+.plain { border: 1.5px solid var(--ink); border-left-width: 8px; background: var(--paper-2); padding: 16px 24px 18px; margin-bottom: 22px; }
+.plain .micro { display: block; margin-bottom: 9px; font-size: 14px; }
+.plain p { font: 400 22px/1.45 var(--font-body); }
+.plain b { font-weight: 600; }
+
+/* Flow diagram (steps joined by arrows) */
+.flow { display: flex; align-items: stretch; }
+.flow .step { flex: 1; min-width: 0; border: 1.5px solid var(--ink); background: rgba(240, 235, 222, .94); padding: 24px 26px; display: flex; flex-direction: column; }
+.flow .step .num { font: 400 17px/1 var(--font-mono); letter-spacing: .08em; margin-bottom: 16px; }
+.flow .step h3 { font: 400 38px/1.05 var(--font-display); margin-bottom: 12px; }
+.flow .step p { font: 400 21px/1.45 var(--font-body); }
+.flow .step .who { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--ink-faint); font: 400 16px/1.3 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
+.flow .arrow { width: 60px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font: 400 38px/1 var(--font-mono); }
+
+/* Glossary grid */
+.gloss { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 56px; margin-top: 10px; }
+.gloss div { padding: 34px 0 32px; border-bottom: 1px solid var(--ink-faint); }
+.gloss dt { font: 400 36px/1.1 var(--font-display); margin-bottom: 12px; }
+.gloss dd { font: 400 21px/1.5 var(--font-body); }
+
+/* Small data tables (sample rows) */
+.ledger.data th { font-size: 14px; padding-bottom: 12px; }
+.ledger.data td { font: 400 19px/1.3 var(--font-mono); padding: 11px 14px 11px 0; }
 
 /* Screenshot frame */
 .shot { border: 1.5px solid var(--ink); background: var(--paper); align-self: flex-start; }
@@ -172,6 +197,10 @@ textarea.src { display: none; }
 .cover h1 { position: absolute; left: 74px; top: 246px; width: 1260px; z-index: 2; font: 400 172px/.95 var(--font-display); letter-spacing: -.02em; }
 .cover h1 em { color: var(--ink-soft); }
 .cover .sub { position: absolute; left: var(--edge); top: 730px; width: 860px; z-index: 2; font: 400 30px/1.45 var(--font-body); }
+.cover .credits { position: absolute; left: var(--edge); top: 752px; width: 900px; margin: 0; z-index: 2; display: grid; grid-template-columns: 210px 1fr; border-top: 1.5px solid var(--ink); }
+.cover .credits dt, .cover .credits dd { margin: 0; padding: 15px 0; border-bottom: 1px solid var(--ink-faint); }
+.cover .credits dt { font: 400 19px/1.5 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+.cover .credits dd { font: 400 29px/1.2 var(--font-display); }
 .cover .plate { position: absolute; left: 1040px; top: 640px; padding: 10px 18px; background: #fff; border: 1.5px solid var(--ink); z-index: 2; }
 .cover .plate img { height: 50px; display: block; }
 .cover .stack { position: absolute; left: 1040px; top: 740px; width: 540px; z-index: 2; }
@@ -182,8 +211,8 @@ textarea.src { display: none; }
 /* ===========================================
    CLOSING (last slide)
    =========================================== */
-.closing .kick { position: absolute; right: var(--edge); top: 210px; z-index: 2; text-align: right; }
-.closing h2 { position: absolute; right: var(--edge); top: 250px; z-index: 2; text-align: right; font: 400 230px/.92 var(--font-display); letter-spacing: -.015em; }
+.closing .kick { position: absolute; left: var(--edge); right: var(--edge); top: 300px; z-index: 2; text-align: center; }
+.closing h2 { position: absolute; left: var(--edge); right: var(--edge); top: 350px; z-index: 2; text-align: center; font: 400 300px/.92 var(--font-display); letter-spacing: -.015em; }
 .closing h2 em { color: var(--ink-soft); }
 .closing .credits { position: absolute; left: 400px; right: var(--edge); bottom: 120px; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; border-top: 1.5px solid var(--ink); padding-top: 24px; }
 .closing .credits p { font: 400 22px/1.5 var(--font-body); margin-top: 12px; }
@@ -204,11 +233,15 @@ body.editing [contenteditable="true"] { outline: 1px dashed var(--ink-soft); out
 
 <!-- =========================================== 01 · PORTADA =========================================== -->
 <section class="slide cover">
-    <div class="ticker reveal"><span>Proyecto final</span><span>Programación Web</span><span>Edición 2026</span><span>Nº 01</span></div>
+    <div class="ticker reveal"><span>Misioneros Monfortianos</span><span>Desarrollo de Sistemas de Información</span><span>Curso · Programación Web</span><span>2026</span></div>
     <div class="hairline top"></div>
     <div class="kicker reveal d1">NEXUSCORP IMPORTACIONES —</div>
     <h1 class="reveal d2">Una tienda de laptops, <em>escrita en PHP</em> nativo.</h1>
-    <p class="sub reveal d3">Catálogo con filtros por marca, ofertas automáticas, sesiones por rol y un panel de administración con CRUD completo sobre MySQL.</p>
+    <dl class="credits reveal d3">
+        <dt>Integrantes</dt><dd>Medina Huarhuachi, Kevin</dd>
+        <dt></dt><dd>Vasquez Manrique, Derick</dd>
+        <dt>Docente</dt><dd>Valderrama Chumbes, Rosell Alejandro</dd>
+    </dl>
     <div class="plate reveal d3"><img src="assets/logo1.webp" alt="NexusCorp"></div>
     <div class="stack reveal d4">
         <div><span>01</span><span>PHP 8 · PDO</span></div>
@@ -239,6 +272,67 @@ body.editing [contenteditable="true"] { outline: 1px dashed var(--ink-soft); out
     <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
 </section>
 
+<!-- =========================================== NUEVA · COMO FUNCIONA UNA PAGINA WEB =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>¿Cómo funciona una página web?</h2><span class="lab">Recorrido en menos de un segundo</span></div>
+        <div class="flow reveal d2" style="margin-top:34px;">
+            <div class="step"><span class="num">01 · NAVEGADOR</span><h3>El cliente pide</h3><p>Escribe la dirección o hace clic en «Laptops». El navegador envía un pedido al servidor.</p><span class="who">Chrome · Edge · celular</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><span class="num">02 · SERVIDOR</span><h3>PHP procesa</h3><p>Ejecuta el archivo pedido, por ejemplo <b>categorias.php</b>, y decide qué datos necesita.</p><span class="who">MAMP · PHP 8.5</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><span class="num">03 · BASE DE DATOS</span><h3>MySQL responde</h3><p>Entrega las laptops guardadas: modelo, precio, foto y marca.</p><span class="who">Base nexuscorp</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><span class="num">04 · NAVEGADOR</span><h3>Se ve la página</h3><p>PHP arma el HTML con esos datos y el navegador lo dibuja con el diseño de Bootstrap.</p><span class="who">HTML + CSS</span></div>
+        </div>
+        <div class="body" style="margin-top:30px; gap:40px;">
+            <div class="plain reveal d3" style="width:520px; flex-shrink:0; margin:0; align-self:flex-start;"><span class="micro">En palabras simples</span><p>Es como un restaurante: el <b>cliente</b> (navegador) pide un plato, el <b>cocinero</b> (PHP) lo prepara, la <b>despensa</b> (MySQL) guarda los ingredientes y el <b>plato servido</b> es la página que se ve en pantalla.</p><p style="margin-top:14px;">El código de la derecha muestra los 4 pasos en un archivo real de la tienda.</p></div>
+            <div class="code reveal d4">
+                <div class="code-head"><span>categorias.php · los 4 pasos · resumido</span><span>php + html</span></div>
+                <textarea class="src"><?php
+// 01 · El navegador pidió: categorias.php?fabricante=1  →  PHP lee el "1" de la URL
+$idFabricante = (int) ($_GET['fabricante'] ?? 0);
+
+// 02 · PHP prepara la pregunta para MySQL: "dame las laptops de esta marca"
+$stmt = $conexion->prepare("SELECT modelo, precio FROM laptops WHERE id_fabricante = :id");
+$stmt->execute([':id' => $idFabricante]);
+$laptops = $stmt->fetchAll();          // 03 · MySQL responde con las filas encontradas
+?>
+<!-- 04 · PHP convierte cada fila en HTML y el navegador lo muestra -->
+<?php foreach ($laptops as $lap): ?>
+    <h3><?= htmlspecialchars($lap['modelo']) ?></h3>    <!-- ej. TUF Gaming F15 -->
+    <p>S/ <?= number_format($lap['precio'], 2) ?></p>    <!-- ej. S/ 4,599.00 -->
+<?php endforeach; ?></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== NUEVA · GLOSARIO =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Glosario básico</h2><span class="lab">Palabras que usaremos</span></div>
+        <dl class="gloss reveal d1">
+            <div><dt>HTML</dt><dd>El esqueleto de la página: títulos, textos, imágenes, botones y formularios.</dd></div>
+            <div><dt>CSS · Bootstrap</dt><dd>El diseño: colores, tamaños y ubicación. Bootstrap trae estilos ya hechos.</dd></div>
+            <div><dt>PHP</dt><dd>Lenguaje que corre en el servidor y arma la página antes de enviarla.</dd></div>
+            <div><dt>Base de datos</dt><dd>Lugar donde se guarda la información ordenada en tablas. Usamos MySQL.</dd></div>
+            <div><dt>Tabla</dt><dd>Como una hoja de Excel: columnas (campos) y filas (registros).</dd></div>
+            <div><dt>Consulta SQL</dt><dd>La orden que se le da a la base, por ejemplo «dame las laptops ASUS».</dd></div>
+            <div><dt>CRUD</dt><dd>Crear, leer, actualizar y eliminar: las 4 acciones sobre los datos.</dd></div>
+            <div><dt>Sesión</dt><dd>La forma en que la página «recuerda» quién inició sesión mientras navega.</dd></div>
+            <div><dt>Include</dt><dd>Insertar un archivo dentro de otro para no repetir código, como el menú.</dd></div>
+            <div><dt>Hash</dt><dd>La contraseña convertida en un código irreversible: nadie puede leerla.</dd></div>
+            <div><dt>Formulario POST</dt><dd>Envía lo escrito (usuario, contraseña) al servidor sin mostrarlo en la URL.</dd></div>
+            <div><dt>Responsive</dt><dd>La página se adapta al tamaño de la pantalla: PC, tablet o celular.</dd></div>
+        </dl>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
 <!-- =========================================== 03 · TECNOLOGIAS =========================================== -->
 <section class="slide">
     <div class="hairline top"></div>
@@ -246,14 +340,14 @@ body.editing [contenteditable="true"] { outline: 1px dashed var(--ink-soft); out
         <div class="topbar reveal"><h2>Tecnologías</h2><span class="lab">Sin frameworks de PHP</span></div>
         <div class="body reveal d1" style="display:block;">
             <table class="ledger roomy">
-                <thead><tr><th>Nº</th><th>Tecnología</th><th>Para qué se usa</th><th>Versión / origen</th></tr></thead>
+                <thead><tr><th>Nº</th><th>Tecnología</th><th>Qué papel cumple en la tienda</th><th>Versión / origen</th></tr></thead>
                 <tbody>
-                    <tr><td class="n">01</td><td class="name">PHP nativo</td><td>Lógica del servidor: páginas, formularios, sesiones e includes.</td><td class="tag">PHP 8.5 · MAMP</td></tr>
-                    <tr><td class="n">02</td><td class="name">PDO</td><td>Conexión a la base de datos con consultas preparadas.</td><td class="tag">Extensión de PHP</td></tr>
-                    <tr><td class="n">03</td><td class="name">MySQL</td><td>Tablas <code class="inline">usuarios</code>, <code class="inline">fabricantes</code> y <code class="inline">laptops</code>, con reglas CHECK y llave foránea.</td><td class="tag">MAMP · puerto 8889</td></tr>
-                    <tr><td class="n">04</td><td class="name">Bootstrap</td><td>Grilla, tarjetas, modal de login, dropdowns, offcanvas del menú móvil.</td><td class="tag">5.3.3 · CDN</td></tr>
-                    <tr><td class="n">05</td><td class="name">Flaticon UIcons</td><td>Íconos de la tienda y del panel (<code class="inline">fi fi-rr-…</code>).</td><td class="tag">4.0.0 · CDN</td></tr>
-                    <tr><td class="n">06</td><td class="name">Git + GitHub</td><td>Historial de cambios y sincronización entre la PC y la laptop.</td><td class="tag">GitHub Desktop</td></tr>
+                    <tr><td class="n">01</td><td class="name">PHP nativo</td><td>El <b>«cerebro»</b>: arma las páginas, procesa los formularios y recuerda al usuario conectado. «Nativo» = sin frameworks, todo escrito por nosotros.</td><td class="tag">PHP 8.5 · MAMP</td></tr>
+                    <tr><td class="n">02</td><td class="name">PDO</td><td>El <b>«puente»</b> entre PHP y la base de datos: lleva las consultas y trae los resultados de forma segura.</td><td class="tag">Extensión de PHP</td></tr>
+                    <tr><td class="n">03</td><td class="name">MySQL</td><td>El <b>«almacén»</b> de la información: tablas <code class="inline">usuarios</code>, <code class="inline">fabricantes</code> y <code class="inline">laptops</code>.</td><td class="tag">MAMP · puerto 8889</td></tr>
+                    <tr><td class="n">04</td><td class="name">Bootstrap</td><td>La <b>«ropa»</b> de la página: estilos listos para botones, tarjetas, menús desplegables y la ventana de login.</td><td class="tag">5.3.3 · CDN</td></tr>
+                    <tr><td class="n">05</td><td class="name">Flaticon UIcons</td><td>Los <b>íconos</b> (carrito, usuario, flechas, reloj…) cargados desde internet con un enlace (CDN).</td><td class="tag">4.0.0 · CDN</td></tr>
+                    <tr><td class="n">06</td><td class="name">Git + GitHub</td><td>Guarda <b>cada versión</b> del proyecto y permite que los dos integrantes trabajen en computadoras distintas.</td><td class="tag">GitHub Desktop</td></tr>
                 </tbody>
             </table>
         </div>
@@ -302,11 +396,51 @@ body.editing [contenteditable="true"] { outline: 1px dashed var(--ink-soft); out
     <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
 </section>
 
+<!-- =========================================== NUEVA · BASE DE DATOS EXPLICADA =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>La base de datos, explicada</h2><span class="lab">Datos reales de la tienda</span></div>
+        <div class="body" style="gap:56px;">
+            <div class="reveal d1" style="width:520px; flex-shrink:0;">
+                <div class="plain"><span class="micro">En palabras simples</span><p>Una base de datos es como un <b>libro de Excel</b>: cada tabla es una hoja, cada columna un dato y cada fila un registro.</p></div>
+                <p class="micro" style="margin:8px 0 12px;">Tabla fabricantes</p>
+                <table class="ledger data">
+                    <thead><tr><th>id_fabricante</th><th>nombre_fabricante</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>ASUS</td></tr><tr><td>2</td><td>ROG</td></tr><tr><td>3</td><td>DELL</td></tr>
+                        <tr><td>4</td><td>ALIENWARE</td></tr><tr><td>5</td><td>LENOVO</td></tr><tr><td>6</td><td>HP</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="reveal d2" style="flex:1; min-width:0;">
+                <p class="micro" style="margin-bottom:12px;">Tabla laptops (5 de 20 filas)</p>
+                <table class="ledger data">
+                    <thead><tr><th>numero_serie</th><th>modelo</th><th>precio</th><th>precio_anterior</th><th>id_fabricante</th></tr></thead>
+                    <tbody>
+                        <tr><td>ASU-TUF-0003</td><td>TUF Gaming F15</td><td>4599.00</td><td>5199.00</td><td>1</td></tr>
+                        <tr><td>ASU-VB15-0001</td><td>Vivobook 15</td><td>2199.00</td><td>2599.00</td><td>1</td></tr>
+                        <tr><td>ASU-VB16-0004</td><td>Vivobook 16X</td><td>3199.00</td><td>NULL</td><td>1</td></tr>
+                        <tr><td>ASU-ZB14-0002</td><td>Zenbook 14 OLED</td><td>4299.00</td><td>NULL</td><td>1</td></tr>
+                        <tr><td>DEL-INS-0008</td><td>Inspiron 15 3520</td><td>1699.00</td><td>NULL</td><td>3</td></tr>
+                    </tbody>
+                </table>
+                <ul class="points" style="margin-top:26px;">
+                    <li><span>PK</span><div><b>Llave primaria</b>: el dato que identifica cada fila sin repetirse, como un DNI. En laptops es el número de serie.</div></li>
+                    <li><span>FK</span><div><b>Llave foránea</b>: <code class="inline">id_fabricante</code> apunta a la otra tabla. El 1 significa ASUS y el 3 significa DELL.</div></li>
+                    <li><span>NULL</span><div>Sin <b>precio anterior</b> = sin oferta. Si tiene valor, la laptop aparece con descuento.</div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
 <!-- =========================================== 05 · BASE DE DATOS =========================================== -->
 <section class="slide">
     <div class="hairline top"></div>
     <div class="frame">
-        <div class="topbar reveal"><h2>Base de datos</h2><span class="lab">nexuscorp · 3 tablas</span></div>
+        <div class="topbar reveal"><h2>Estructura de las tablas</h2><span class="lab">nexuscorp · 3 tablas</span></div>
         <div class="body" style="gap:44px;">
             <div class="reveal d1" style="width:480px; flex-shrink:0;">
                 <p class="micro" style="margin-bottom:14px;">usuarios</p>
@@ -338,20 +472,27 @@ body.editing [contenteditable="true"] { outline: 1px dashed var(--ink-soft); out
             </div>
             <div class="code sm reveal d3">
                 <div class="code-head"><span>database.sql</span><span>sql</span></div>
-                <textarea class="src">-- Reglas de validacion
+                <textarea class="src">-- CHECK = regla que MySQL revisa antes de
+-- guardar. Si no se cumple, rechaza el dato.
 ALTER TABLE laptops
+ -- El precio nunca puede ser 0 ni negativo
  ADD CONSTRAINT chk_laptops_precio
    CHECK (precio > 0),
+ -- Precio anterior vacío (sin oferta) o mayor
+ -- que el actual (si no, no sería descuento)
  ADD CONSTRAINT chk_laptops_precio_anterior
    CHECK (precio_anterior IS NULL
           OR precio_anterior > precio);
 
--- Relacion laptops -> fabricantes
+-- FOREIGN KEY = llave foránea: une cada laptop
+-- con su fabricante (1 = ASUS, 3 = DELL...)
 ALTER TABLE laptops
  ADD CONSTRAINT fk_laptops_fabricante
  FOREIGN KEY (id_fabricante)
  REFERENCES fabricantes (id_fabricante)
+ -- Si cambia el id de la marca, se actualiza
  ON UPDATE CASCADE
+ -- No deja borrar una marca que tiene laptops
  ON DELETE RESTRICT;</textarea>
             </div>
         </div>
@@ -366,33 +507,42 @@ ALTER TABLE laptops
         <div class="topbar reveal"><h2>Conexión con PDO</h2><span class="lab">src/conexion/conexion.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">Un solo archivo crea la conexión y todas las páginas lo cargan con <code class="inline">require_once</code>.</p>
+                <div class="plain"><span class="micro">En palabras simples</span><p><b>conexion.php</b> es la «llave» que abre la puerta de la base de datos. Se escribe una sola vez y todas las páginas la usan.</p></div>
                 <ul class="points">
-                    <li><span>01</span><div><b>ERRMODE_EXCEPTION</b>: los errores de SQL lanzan excepciones que se capturan con <code class="inline">try/catch</code>.</div></li>
-                    <li><span>02</span><div><b>FETCH_ASSOC</b>: cada fila llega como arreglo con el nombre de la columna.</div></li>
-                    <li><span>03</span><div><b>EMULATE_PREPARES false</b>: consultas preparadas reales en MySQL.</div></li>
-                    <li><span>04</span><div>Sin <code class="inline">?&gt;</code> al final: evita enviar espacios antes de <code class="inline">session_start()</code>.</div></li>
+                    <li><span>01</span><div>Indica <b>dónde está la base</b>: servidor <code class="inline">localhost:8889</code> y nombre <code class="inline">nexuscorp</code>.</div></li>
+                    <li><span>02</span><div><code class="inline">try / catch</code>: si la conexión falla, muestra un mensaje en vez de romper la página.</div></li>
+                    <li><span>03</span><div><b>FETCH_ASSOC</b>: cada fila llega con el nombre de sus columnas, por ejemplo <code class="inline">$lap['precio']</code>.</div></li>
+                    <li><span>04</span><div><code class="inline">require_once</code> la carga en cualquier página; «once» evita cargarla dos veces.</div></li>
                 </ul>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>conexion.php</span><span>php</span></div>
                 <textarea class="src"><?php
-$servername = "localhost:8889";
-$dbname     = "nexuscorp";
+// Datos para encontrar la base de datos
+$servername = "localhost:8889";   // servidor local de MAMP (puerto 8889)
+$dbname     = "nexuscorp";        // nombre de la base de datos
+// $username y $password también se definen aquí (no se muestran por seguridad)
 
 try {
+    // DSN: la "dirección" de la base. utf8mb4 permite tildes y la letra ñ
     $dsn = "mysql:host={$servername};dbname={$dbname};charset=utf8mb4";
+
+    // new PDO(...) abre la conexión y la guarda en la variable $conexion
     $conexion = new PDO($dsn, $username, $password, [
+        // Si una consulta falla, lanza un error que se atrapa con catch
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        // Cada fila llega como ['modelo' => 'Vivobook 15', 'precio' => 2199]
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        // Usa consultas preparadas reales de MySQL (más seguro)
         PDO::ATTR_EMULATE_PREPARES   => false
     ]);
 } catch (PDOException $e) {
+    // Si no se pudo conectar, detiene la página y muestra el motivo
     die("FALLO: " . $e->getMessage());
 }
 
-// En cualquier pagina:
-require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion</textarea>
+// Uso en cualquier página: carga este archivo una sola vez
+require_once __DIR__ . '/../conexion/conexion.php';   // ahora existe $conexion</textarea>
             </div>
         </div>
     </div>
@@ -406,7 +556,7 @@ require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion</textare
         <div class="topbar reveal"><h2>Páginas armadas con includes</h2><span class="lab">index.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">El inicio no repite HTML: une piezas que también usan las otras páginas.</p>
+                <div class="plain"><span class="micro">En palabras simples</span><p>Como armar con <b>piezas de LEGO</b>: el menú, el pie de página y cada sección son piezas separadas. Cada página solo junta las que necesita.</p></div>
                 <ul class="points">
                     <li><span>01</span><div><b>head.php</b>: metadatos, Bootstrap, Flaticon y el CSS propio.</div></li>
                     <li><span>02</span><div><b>header.php</b>: menú, buscador, usuario conectado y el modal de login.</div></li>
@@ -417,22 +567,22 @@ require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion</textare
             <div class="code reveal d2">
                 <div class="code-head"><span>index.php</span><span>php + html</span></div>
                 <textarea class="src"><?php
-    session_start();
-    require_once __DIR__ . '/src/conexion/conexion.php';
+    session_start();                                      // activa la sesión: ¿hay alguien conectado?
+    require_once __DIR__ . '/src/conexion/conexion.php'; // conecta con la base de datos
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<?php include 'src/include/store/head.php'; ?>
+<!DOCTYPE html>                                          <!-- le dice al navegador: esto es HTML5 -->
+<html lang="es">                                         <!-- página en español -->
+<?php include 'src/include/store/head.php'; ?>           <!-- título, Bootstrap, íconos y CSS -->
 <body>
-    <?php include 'src/include/store/header.php'; ?>
-    <main>
-        <?php include 'src/include/store/elements/banners.php'; ?>
-        <?php include 'src/include/store/elements/beneficios.php'; ?>
-        <?php include 'src/include/store/elements/categorias.php'; ?>
-        <?php include 'src/include/store/elements/ofertas.php'; ?>
-        <?php include 'src/include/store/elements/marcas.php'; ?>
+    <?php include 'src/include/store/header.php'; ?>     <!-- menú superior + ventana de login -->
+    <main>                                               <!-- contenido principal -->
+        <?php include 'src/include/store/elements/banners.php'; ?>    <!-- carrusel de banners -->
+        <?php include 'src/include/store/elements/beneficios.php'; ?> <!-- envíos, garantía... -->
+        <?php include 'src/include/store/elements/categorias.php'; ?> <!-- cuadros de categorías -->
+        <?php include 'src/include/store/elements/ofertas.php'; ?>    <!-- ofertas desde la BD -->
+        <?php include 'src/include/store/elements/marcas.php'; ?>     <!-- logos de las marcas -->
     </main>
-    <?php include 'src/include/store/footer.php'; ?>
+    <?php include 'src/include/store/footer.php'; ?>     <!-- pie de página con enlaces -->
 </body>
 </html></textarea>
             </div>
@@ -465,6 +615,44 @@ require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion</textare
     <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
 </section>
 
+<!-- =========================================== NUEVA · FLUJO DEL LOGIN =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>¿Qué pasa al iniciar sesión?</h2><span class="lab">El recorrido completo</span></div>
+        <div class="flow reveal d1" style="margin-top:40px;">
+            <div class="step"><span class="num">01 · FORMULARIO</span><h3>Escribe sus datos</h3><p>El usuario abre la ventana «Iniciar sesión» y escribe su correo y contraseña.</p><span class="who">login-modal.php</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><span class="num">02 · ENVÍO</span><h3>Viajan al servidor</h3><p>El formulario manda los datos por <b>POST</b> al archivo AuthController.php.</p><span class="who">method="post"</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><span class="num">03 · VERIFICACIÓN</span><h3>Se comprueban</h3><p>Busca el usuario en la tabla <b>usuarios</b> y compara la contraseña con su hash.</p><span class="who">password_verify</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><span class="num">04 · RESULTADO</span><h3>Entra según su rol</h3><p><b>Admin</b> → panel. <b>Cliente</b> → tienda con su nombre y foto. <b>Error</b> → aviso en la ventana.</p><span class="who">$_SESSION</span></div>
+        </div>
+        <div class="body" style="margin-top:30px; gap:40px;">
+            <div class="plain reveal d2" style="width:520px; flex-shrink:0; margin:0; align-self:flex-start;"><span class="micro">En palabras simples</span><p>Es como la <b>recepción de un edificio</b>: muestras tu credencial, el guardia la revisa en su lista y te entrega un pase (la sesión) para moverte por dentro sin volver a identificarte.</p><p style="margin-top:14px;">A la derecha, los 4 pasos en el código (se explican en detalle en las siguientes diapositivas).</p></div>
+            <div class="code reveal d3">
+                <div class="code-head"><span>login-modal.php + AuthController.php · resumido</span><span>php + html</span></div>
+                <textarea class="src"><!-- 01 · FORMULARIO: lo que llena el usuario -->
+<form action="/src/controllers/AuthController.php" method="post">  <!-- 02 · se envía por POST -->
+    <input type="text" name="usuario">       <!-- su correo -->
+    <input type="password" name="password">  <!-- su contraseña (oculta) -->
+</form>
+<?php
+// 03 · VERIFICACIÓN: ¿existe el usuario y la contraseña coincide con el hash?
+if ($usu && password_verify($_POST['password'], $usu['password'])) {
+    $_SESSION['rol'] = $usu['rol'];                    // 04 · se entrega el "pase"
+    $destino = ($usu['rol'] === 'admin') ? '/admin/index.php' : '/index.php';
+    header('Location: ' . $destino);                  // admin → panel, cliente → tienda
+} else {
+    header('Location: /index.php?login=error');       // datos incorrectos → aviso
+}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
 <!-- =========================================== 09 · MODAL DE LOGIN =========================================== -->
 <section class="slide">
     <div class="hairline top"></div>
@@ -472,32 +660,36 @@ require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion</textare
         <div class="topbar reveal"><h2>Inicio de sesión: el modal</h2><span class="lab">login-modal.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">El login es un <b>modal de Bootstrap</b> incluido en el header, así está disponible en todas las páginas.</p>
+                <div class="plain"><span class="micro">En palabras simples</span><p>Un <b>modal</b> es una ventana que aparece encima de la página actual, sin cargar otra. Está dentro del header, por eso se abre desde cualquier página.</p></div>
                 <ul class="points">
-                    <li><span>01</span><div><code class="inline">data-bs-toggle="modal"</code> abre la ventana sin cambiar de página.</div></li>
+                    <li><span>01</span><div><code class="inline">data-bs-toggle="modal"</code>: atributo de Bootstrap que abre la ventana al hacer clic.</div></li>
                     <li><span>02</span><div>El formulario se envía por <b>POST</b> a <code class="inline">AuthController.php</code>.</div></li>
                     <li><span>03</span><div>Si la URL trae <code class="inline">?login</code>, el modal se abre solo (error de datos o acceso al panel sin sesión).</div></li>
                 </ul>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>header.php + login-modal.php</span><span>html</span></div>
-                <textarea class="src"><a href="/index.php?login=1"
+                <textarea class="src"><!-- Enlace del menú: al hacer clic abre la ventana sin cambiar de página -->
+<a href="/index.php?login=1"
    data-bs-toggle="modal" data-bs-target="#modalLogin">Iniciar sesión</a>
+<!-- data-bs-target="#modalLogin": indica QUÉ ventana abrir (la del id="modalLogin") -->
 
+<!-- La ventana (modal). "fade" = aparece con una animación suave -->
 <div class="modal fade" id="modalLogin" tabindex="-1">
+  <!-- action: archivo que recibe los datos · method="post": no se ven en la URL -->
   <form action="/src/controllers/AuthController.php" method="post">
-    <input type="hidden" name="accion" value="login">
-    <input type="text" name="usuario" maxlength="50" required>
-    <input type="password" name="password" minlength="6" required>
-    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+    <input type="hidden" name="accion" value="login">              <!-- oculto: la acción -->
+    <input type="text" name="usuario" maxlength="50" required>     <!-- required: obligatorio -->
+    <input type="password" name="password" minlength="6" required> <!-- se ve como •••••• -->
+    <button type="submit" class="btn btn-primary w-100">Ingresar</button> <!-- envía todo -->
   </form>
 </div>
 
 <script>
-  // ?login en la URL -> el modal se abre automaticamente
+  // Lee la URL actual. Si trae ?login (por ejemplo /index.php?login=error)...
   if (new URLSearchParams(window.location.search).has('login')) {
-    const modal = document.getElementById('modalLogin');
-    bootstrap.Modal.getOrCreateInstance(modal).show();
+    const modal = document.getElementById('modalLogin');   // ...busca la ventana
+    bootstrap.Modal.getOrCreateInstance(modal).show();      // ...y la abre sola
   }
 </script></textarea>
             </div>
@@ -513,38 +705,43 @@ require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion</textare
         <div class="topbar reveal"><h2>AuthController</h2><span class="lab">src/controllers/AuthController.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">Recibe usuario y contraseña, los verifica y redirige <b>según el rol</b>.</p>
+                <div class="plain"><span class="micro">En palabras simples</span><p>Es el <b>«guardia» del login</b>: recibe usuario y contraseña, revisa si son correctos y decide a dónde enviar a la persona.</p></div>
                 <ul class="points">
-                    <li><span>01</span><div>Busca al usuario con una <b>consulta preparada</b>.</div></li>
-                    <li><span>02</span><div><code class="inline">password_verify</code> compara lo escrito con el <b>hash</b> guardado.</div></li>
-                    <li><span>03</span><div><code class="inline">session_regenerate_id</code> crea un ID de sesión nuevo.</div></li>
+                    <li><span>01</span><div>Busca al usuario en la base con una <b>consulta preparada</b> (segura).</div></li>
+                    <li><span>02</span><div><code class="inline">password_verify</code> compara lo escrito con la versión cifrada (<b>hash</b>).</div></li>
+                    <li><span>03</span><div><code class="inline">session_regenerate_id</code> entrega un pase nuevo y evita robos de sesión.</div></li>
                     <li><span>04</span><div>Guarda en <code class="inline">$_SESSION</code> los datos que usan las demás páginas, <b>nunca la contraseña</b>.</div></li>
                     <li><span>05</span><div>Error → <code class="inline">?login=error</code> y el modal muestra el aviso.</div></li>
                 </ul>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>AuthController.php</span><span>php</span></div>
-                <textarea class="src">session_start();
+                <textarea class="src">session_start();   // activa la sesión para poder guardar datos en $_SESSION
 
+// Busca al usuario. :usuario es un "hueco" que se llena aparte (consulta preparada):
+// aunque alguien escriba código SQL en el formulario, se trata solo como texto.
 $stmt = $conexion->prepare("SELECT id, usuario, nombre, password, rol, foto
                             FROM usuarios WHERE usuario = :usuario");
-$stmt->execute([':usuario' => $usuario]);
-$usu = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt->execute([':usuario' => $usuario]);   // llena el hueco con lo que escribió
+$usu = $stmt->fetch(PDO::FETCH_ASSOC);      // devuelve la fila, o false si no existe
 
+// ¿Existe el usuario Y la contraseña coincide con el hash guardado?
 if ($usu && password_verify($password, $usu['password'])) {
-    session_regenerate_id(true);
-    $_SESSION['usuario_id'] = $usu['id'];
-    $_SESSION['nombre']     = $usu['nombre'];
-    $_SESSION['rol']        = $usu['rol'];
-    $_SESSION['foto']       = $usu['foto'];
+    session_regenerate_id(true);               // ID de sesión nuevo: evita robos
+    $_SESSION['usuario_id'] = $usu['id'];      // quién es (nunca se guarda la contraseña)
+    $_SESSION['nombre']     = $usu['nombre'];  // para el saludo del header
+    $_SESSION['rol']        = $usu['rol'];     // 'admin' o 'cliente'
+    $_SESSION['foto']       = $usu['foto'];    // foto de perfil
 
+    // Redirige según el rol
     if ($usu['rol'] === 'admin') {
-        header('Location: /admin/index.php');
+        header('Location: /admin/index.php');  // admin → panel
     } else {
-        header('Location: /index.php');
+        header('Location: /index.php');        // cliente → tienda
     }
-    exit;
+    exit;                                       // corta aquí: no ejecuta nada más
 }
+// Usuario o contraseña incorrectos → vuelve al inicio y el modal muestra el error
 header('Location: /index.php?login=error');</textarea>
             </div>
         </div>
@@ -559,6 +756,7 @@ header('Location: /index.php?login=error');</textarea>
         <div class="topbar reveal"><h2>Sesiones</h2><span class="lab">session_start · $_SESSION · session_destroy</span></div>
         <div class="body">
             <div class="side reveal d1">
+                <div class="plain"><span class="micro">En palabras simples</span><p>Una sesión es como la <b>pulsera de un evento</b>: te la ponen al entrar (login), cada página la revisa y te la quitan al salir (logout).</p></div>
                 <ul class="points">
                     <li><span>01</span><div><b>session_start()</b> activa las sesiones. Va en la <b>primera línea</b> de cada página, antes de cualquier HTML.</div></li>
                     <li><span>02</span><div><b>$_SESSION</b> es el arreglo donde se guardan y leen los datos: AuthController los guarda y el header y el panel los leen.</div></li>
@@ -568,24 +766,25 @@ header('Location: /index.php?login=error');</textarea>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>header.php · admin/index.php · logout.php</span><span>php</span></div>
-                <textarea class="src">// 1. Primera linea de cada pagina
+                <textarea class="src">// 1. PRIMERA LÍNEA de cada página: sin esto no se puede leer ni guardar la sesión
 session_start();
 
-// 2. Leer la sesion (header.php)
-$sesionActiva = isset($_SESSION['usuario_id']);
+// 2. LEER la sesión (header.php): ¿hay alguien conectado?
+$sesionActiva = isset($_SESSION['usuario_id']);       // true si inició sesión
+// ?? significa "si no existe, usa lo de la derecha" (evita errores)
 $nombreSesion = $_SESSION['nombre'] ?? ($_SESSION['usuario'] ?? '');
 
-// 3. Proteger el panel (admin/index.php)
+// 3. PROTEGER el panel (admin/index.php): sin sesión o sin rol admin → fuera
 if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'admin') {
-    header('Location: /index.php?login=1');
-    exit;
+    header('Location: /index.php?login=1');   // vuelve a la tienda y abre el login
+    exit;                                      // detiene la página: no muestra el panel
 }
 
-// 4. Cerrar sesion (admin/logout.php)
+// 4. CERRAR sesión (admin/logout.php)
 session_start();
-$_SESSION = [];
-session_destroy();
-header('Location: /index.php');
+$_SESSION = [];                    // vacía todos los datos guardados
+session_destroy();                 // elimina la sesión del servidor
+header('Location: /index.php');    // regresa al inicio
 exit;</textarea>
             </div>
         </div>
@@ -600,9 +799,9 @@ exit;</textarea>
         <div class="topbar reveal"><h2>Panel de administración</h2><span class="lab">admin/index.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">Un overview con los números clave de la tienda y accesos rápidos al CRUD.</p>
+                <div class="plain"><span class="micro">En palabras simples</span><p>Es la <b>«oficina» del administrador</b>: muestra cuántas laptops, ofertas, marcas y usuarios hay, y tiene botones para agregar más.</p></div>
                 <ul class="points">
-                    <li><span>01</span><div><b>4 tarjetas</b>: laptops, en oferta, fabricantes y usuarios, con <code class="inline">COUNT(*)</code>.</div></li>
+                    <li><span>01</span><div><b>4 tarjetas</b>: laptops, en oferta, fabricantes y usuarios. <code class="inline">COUNT(*)</code> cuenta las filas de una tabla.</div></li>
                     <li><span>02</span><div><b>Últimas 10 laptops</b> con <code class="inline">JOIN</code> al fabricante.</div></li>
                     <li><span>03</span><div><b>Laptops por fabricante</b> con <code class="inline">LEFT JOIN</code> y barras de progreso.</div></li>
                     <li><span>04</span><div>Menú lateral con el admin conectado: foto, nombre, rol y botón de salir.</div></li>
@@ -610,27 +809,51 @@ exit;</textarea>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>admin/index.php</span><span>php + html</span></div>
-                <textarea class="src">// fetchColumn(): devuelve directamente el numero del COUNT(*)
+                <textarea class="src">// COUNT(*) cuenta filas. fetchColumn() devuelve solo ese número (por ejemplo 20)
 $totalLaptops = $conexion->query("SELECT COUNT(*) FROM laptops")
                          ->fetchColumn();
+// Solo las que tienen precio anterior = laptops en oferta
 $totalOfertas = $conexion->query("SELECT COUNT(*) FROM laptops
                    WHERE precio_anterior IS NOT NULL")->fetchColumn();
 
+// Datos de cada tarjeta: [título, número, ícono de Flaticon, color de Bootstrap]
 $tarjetas = [
-    ['Laptops',   $totalLaptops, 'fi-rr-laptop',        'primary'],
-    ['En oferta', $totalOfertas, 'fi-rr-badge-percent', 'danger'],
+    ['Laptops',   $totalLaptops, 'fi-rr-laptop',        'primary'],   // azul
+    ['En oferta', $totalOfertas, 'fi-rr-badge-percent', 'danger'],    // rojo
 ];
 ?>
+<!-- foreach repite este bloque de HTML una vez por cada tarjeta -->
 <?php foreach ($tarjetas as [$titulo, $numero, $icono, $color]): ?>
-    <article class="col">
-        <div class="card border-0 shadow-sm h-100">
-            <i class="fi <?= $icono ?> text-<?= $color ?>"></i>
-            <h2 class="small"><?= $titulo ?></h2>
-            <p class="fs-3 fw-bold"><?= $numero ?></p>
+    <article class="col">                                   <!-- una columna de la grilla -->
+        <div class="card border-0 shadow-sm h-100">         <!-- tarjeta de Bootstrap -->
+            <i class="fi <?= $icono ?> text-<?= $color ?>"></i> <!-- ícono con su color -->
+            <h2 class="small"><?= $titulo ?></h2>               <!-- imprime el título -->
+            <p class="fs-3 fw-bold"><?= $numero ?></p>          <!-- número grande -->
         </div>
     </article>
-<?php endforeach; ?></textarea>
+<?php endforeach; ?>                                        <!-- fin de la repetición --></textarea>
             </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== NUEVA · QUE ES UN CRUD =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>¿Qué es un CRUD?</h2><span class="lab">Las 4 operaciones del panel</span></div>
+        <div class="plain reveal d1" style="margin:28px 0 34px;"><span class="micro">En palabras simples</span><p>Son las 4 cosas que haces con la <b>agenda de contactos</b> de tu celular: agregar, ver, editar y borrar. El panel las ofrece para <b>laptops</b>, <b>fabricantes</b> y <b>usuarios</b>.</p></div>
+        <div class="reveal d2">
+            <table class="ledger roomy">
+                <thead><tr><th>Letra</th><th>Acción</th><th>Orden SQL</th><th>Ejemplo en la tienda</th><th>Archivo</th></tr></thead>
+                <tbody>
+                    <tr><td class="name" style="width:110px;">C</td><td class="name" style="width:300px;">Crear</td><td class="tag" style="width:180px;">INSERT</td><td>Registrar la laptop nueva «Vivobook 15» con su foto.</td><td class="tag">add/agregar-laptos.php</td></tr>
+                    <tr><td class="name">R</td><td class="name">Leer</td><td class="tag">SELECT</td><td>Ver la lista de todas las laptops con su marca y precio.</td><td class="tag">list/listar-laptops.php</td></tr>
+                    <tr><td class="name">U</td><td class="name">Actualizar</td><td class="tag">UPDATE</td><td>Bajar el precio de S/ 2599 a S/ 2199 para ponerla en oferta.</td><td class="tag">update/editar-laptop.php</td></tr>
+                    <tr><td class="name">D</td><td class="name">Eliminar</td><td class="tag">DELETE</td><td>Borrar una laptop que ya no se vende, junto con su foto.</td><td class="tag">delete/eliminar-laptop.php</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
@@ -643,35 +866,42 @@ $tarjetas = [
         <div class="topbar reveal"><h2>CRUD · Crear</h2><span class="lab">add/agregar-laptos.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">Agregar una laptop guarda sus datos y su foto.</p>
+                <div class="plain"><span class="micro">En palabras simples</span><p>El admin llena el formulario «Nueva laptop»; PHP revisa la foto, la guarda en la carpeta de imágenes y registra los datos en la tabla.</p></div>
                 <ul class="points">
                     <li><span>01</span><div>La foto se valida por su <b>tipo real</b> (<code class="inline">mime_content_type</code>), no por el nombre: así nadie sube un <code class="inline">.php</code>.</div></li>
                     <li><span>02</span><div>Nombre único con <code class="inline">time()</code> + <code class="inline">uniqid()</code>.</div></li>
-                    <li><span>03</span><div><b>INSERT preparado</b> con marcadores <code class="inline">:nombre</code>.</div></li>
+                    <li><span>03</span><div><b>INSERT preparado</b>: los datos van separados de la orden SQL, así no pueden alterarla.</div></li>
                     <li><span>04</span><div>Si falla una regla UNIQUE o CHECK, el <code class="inline">catch</code> vuelve al formulario con error.</div></li>
                 </ul>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>agregar-laptos.php · resumido</span><span>php</span></div>
-                <textarea class="src">$permitidos = ['image/jpeg' => 'jpg', 'image/png' => 'png',
-               'image/webp' => 'webp'];
+                <textarea class="src">// Tipos de imagen permitidos: [tipo real del archivo => extensión con la que se guarda]
+$permitidos = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+
+// mime_content_type lee el CONTENIDO del archivo, no su nombre:
+// un "virus.php" renombrado como "foto.jpg" se detecta y se rechaza
 $tipo = mime_content_type($_FILES['foto']['tmp_name']);
 if (isset($permitidos[$tipo])) {
+    // Nombre único: hora actual + código aleatorio → 1732512000_6744a1b2.webp
     $nombreFoto = time() . '_' . uniqid() . '.' . $permitidos[$tipo];
+    // Mueve la foto de la carpeta temporal a assets/imgs/laptops/
     move_uploaded_file($_FILES['foto']['tmp_name'], $rutaFotos . $nombreFoto);
 }
 
 try {
+    // INSERT con "huecos" (:modelo, :precio...): los datos se envían por separado
     $sql = "INSERT INTO laptops (numero_serie, modelo, precio,
                                  precio_anterior, id_fabricante, foto)
             VALUES (:numero_serie, :modelo, :precio,
                     :precio_anterior, :id_fabricante, :foto)";
-    $stmt = $conexion->prepare($sql);
+    $stmt = $conexion->prepare($sql);                      // prepara la orden
     $stmt->execute([':numero_serie' => $numeroSerie, ':modelo' => $modelo,
-                    ':precio' => $precio /* ... resto de columnas */]);
-    header('Location: ../list/listar-laptops.php?ok=1');
+                    ':precio' => $precio /* ... resto de columnas */]);  // la ejecuta
+    header('Location: ../list/listar-laptops.php?ok=1');   // éxito → lista con aviso
 } catch (PDOException $e) {
-    header('Location: agregar-laptos.php?error=1');   // UNIQUE o CHECK
+    // Falla si el número de serie ya existe (UNIQUE) o el precio no es válido (CHECK)
+    header('Location: agregar-laptos.php?error=1');
 }</textarea>
             </div>
         </div>
@@ -686,7 +916,8 @@ try {
         <div class="topbar reveal"><h2>CRUD · Leer, editar y eliminar</h2><span class="lab">12 archivos · 3 entidades</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <table class="ledger roomy">
+                <div class="plain"><span class="micro">En palabras simples</span><p><b>Leer</b> muestra la lista; <b>editar</b> abre el mismo formulario con los datos ya escritos; <b>eliminar</b> borra la fila y también su foto.</p></div>
+                <table class="ledger">
                     <thead><tr><th>Operación</th><th>Carpeta</th></tr></thead>
                     <tbody>
                         <tr><td class="name" style="width:260px;">Crear</td><td class="tag">add/</td></tr>
@@ -695,26 +926,30 @@ try {
                         <tr><td class="name" style="width:260px;">Eliminar</td><td class="tag">delete/</td></tr>
                     </tbody>
                 </table>
-                <p class="txt" style="margin-top:26px;">Cada operación existe para <b>usuarios</b>, <b>fabricantes</b> y <b>laptops</b>. Al terminar se vuelve a la lista con un aviso (<code class="inline">?ok</code>, <code class="inline">?editado</code>, <code class="inline">?eliminado</code>).</p>
+                <p class="txt" style="margin-top:22px;">Cada operación existe para <b>usuarios</b>, <b>fabricantes</b> y <b>laptops</b>. Al terminar se vuelve a la lista con un aviso (<code class="inline">?ok</code>, <code class="inline">?editado</code>, <code class="inline">?eliminado</code>).</p>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>list · update · delete</span><span>php + html</span></div>
-                <textarea class="src">// LISTAR: JOIN para mostrar el nombre del fabricante
+                <textarea class="src">// LISTAR (SELECT): trae todas las laptops. JOIN une cada laptop con su
+// fabricante para mostrar "ASUS" en lugar del número 1
 $sql = "SELECT l.*, f.nombre_fabricante FROM laptops l
         JOIN fabricantes f ON f.id_fabricante = l.id_fabricante";
 
-// EDITAR: formulario precargado y escapado
+// EDITAR (UPDATE): el formulario aparece con el dato actual ya escrito.
+// htmlspecialchars evita que un texto con < > rompa la página o ejecute código
 <input name="modelo" value="<?= htmlspecialchars($lap['modelo']) ?>">
 
-// ELIMINAR: primero la foto del disco, despues el registro
+// ELIMINAR (DELETE): 1º borra la foto del disco para no dejar archivos sueltos
 if ($lap && !empty($lap['foto'])) {
-    unlink($rutaFotos . basename($lap['foto']));
+    unlink($rutaFotos . basename($lap['foto']));   // unlink = borrar un archivo
 }
+// 2º borra la fila de la tabla, buscándola por su número de serie
 $stmt = $conexion->prepare("DELETE FROM laptops WHERE numero_serie = :id");
 $stmt->execute([':id' => $id]);
-header('Location: ../list/listar-laptops.php?eliminado=1');
+header('Location: ../list/listar-laptops.php?eliminado=1');   // aviso "eliminado"
 
-// Fabricante con laptops: la llave foranea (RESTRICT) lo impide
+// Si se intenta borrar un fabricante que aún tiene laptops, la llave
+// foránea (RESTRICT) lo impide y se muestra un mensaje de error
 } catch (PDOException $e) {
     header('Location: ../list/listar-fabricantes.php?error=1');
 }</textarea>
@@ -731,36 +966,40 @@ header('Location: ../list/listar-laptops.php?eliminado=1');
         <div class="topbar reveal"><h2>Catálogo dinámico</h2><span class="lab">elements/pag-categoria.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">Los filtros viajan en la URL: <code class="inline">categorias.php?fabricante=3&amp;orden=precio_asc</code></p>
+                <div class="plain"><span class="micro">En palabras simples</span><p>Lo que el cliente elige viaja en la dirección de la página. <code class="inline">?fabricante=3&amp;orden=precio_asc</code> significa: DELL, del más barato al más caro.</p></div>
                 <ul class="points">
                     <li><span>01</span><div><code class="inline">(int)</code> convierte el fabricante a número; si no existe, se muestran todas.</div></li>
-                    <li><span>02</span><div>El orden solo puede ser una de <b>4 claves permitidas</b>: el texto de la URL nunca entra al SQL.</div></li>
+                    <li><span>02</span><div>El orden solo acepta <b>4 opciones permitidas</b> («lista blanca»): si alguien escribe otra cosa en la URL, se ignora.</div></li>
                     <li><span>03</span><div>El filtro <code class="inline">AND</code> se agrega solo si se eligió una marca.</div></li>
                     <li><span>04</span><div>Solo se muestran las laptops con <code class="inline">activo = 1</code>.</div></li>
                 </ul>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>pag-categoria.php · resumido</span><span>php</span></div>
-                <textarea class="src">$idFabricante = (int) ($_GET['fabricante'] ?? 0);
+                <textarea class="src">// Lee la marca elegida en la URL (?fabricante=3). (int) la convierte en número:
+// si alguien escribe texto o código, queda en 0 = "todas las marcas"
+$idFabricante = (int) ($_GET['fabricante'] ?? 0);
 
+// LISTA BLANCA: las únicas formas de ordenar que se aceptan
 $ordenes = [
-    'nuevas'      => 'l.creado_en DESC',
-    'precio_asc'  => 'l.precio ASC',
-    'precio_desc' => 'l.precio DESC',
-    'ofertas'     => '(l.precio_anterior IS NULL) ASC, l.precio ASC',
+    'nuevas'      => 'l.creado_en DESC',   // más recientes primero
+    'precio_asc'  => 'l.precio ASC',       // de menor a mayor precio
+    'precio_desc' => 'l.precio DESC',      // de mayor a menor precio
+    'ofertas'     => '(l.precio_anterior IS NULL) ASC, l.precio ASC',   // ofertas primero
 ];
-$orden = $_GET['orden'] ?? 'nuevas';
-if (!isset($ordenes[$orden])) { $orden = 'nuevas'; }
+$orden = $_GET['orden'] ?? 'nuevas';                      // lo que pidió el cliente
+if (!isset($ordenes[$orden])) { $orden = 'nuevas'; }      // ¿no está en la lista? se ignora
 
+// Consulta base: solo laptops activas (activo = 1) con el nombre de su marca
 $sql = "SELECT l.*, f.nombre_fabricante FROM laptops l
         JOIN fabricantes f ON f.id_fabricante = l.id_fabricante
         WHERE l.activo = 1";
 $params = [];
-if ($idFabricante > 0) {
-    $sql .= " AND l.id_fabricante = :fabricante";
+if ($idFabricante > 0) {                            // solo si eligió una marca...
+    $sql .= " AND l.id_fabricante = :fabricante";   // ...se agrega el filtro
     $params[':fabricante'] = $idFabricante;
 }
-$sql .= " ORDER BY " . $ordenes[$orden];</textarea>
+$sql .= " ORDER BY " . $ordenes[$orden];            // agrega el orden permitido</textarea>
             </div>
         </div>
     </div>
@@ -778,21 +1017,26 @@ $sql .= " ORDER BY " . $ordenes[$orden];</textarea>
                 <figcaption>Filtro ASUS · 4 laptops · 2 con descuento</figcaption>
             </figure>
             <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:26px;">
-                <p class="txt reveal d2">El descuento <b>no se guarda</b>: se calcula con el precio actual y el anterior. Si no hay precio anterior, la tarjeta solo muestra el precio.</p>
+                <div class="plain reveal d2" style="margin:0;"><span class="micro">En palabras simples</span><p>El descuento <b>no se guarda</b>, se calcula. Ejemplo: la TUF Gaming F15 bajó de S/ 5199 a S/ 4599 → 100 − (4599 × 100 ÷ 5199) = <b>12 % de descuento</b>.</p></div>
                 <div class="code sm reveal d3" style="align-self:stretch;">
                     <div class="code-head"><span>tarjeta de laptop</span><span>php + html</span></div>
-                    <textarea class="src">$enOferta  = !empty($lap['precio_anterior']);
+                    <textarea class="src">// ¿Está en oferta? Sí, si tiene precio anterior
+$enOferta  = !empty($lap['precio_anterior']);
+// % = 100 − (precio actual × 100 ÷ precio anterior)
+// round() redondea al entero: 11.54 → 12
 $descuento = $enOferta
   ? round(100 - ($lap['precio'] * 100
                  / $lap['precio_anterior']))
-  : 0;
+  : 0;                               // sin oferta → 0 %
 ?>
-<?php if ($enOferta): ?>
+<?php if ($enOferta): ?>             <!-- solo si hay oferta -->
   <span class="badge bg-danger">-<?= $descuento ?>%</span>
+  <!-- precio anterior tachado -->
   <small class="text-decoration-line-through">
     S/ <?= number_format($lap['precio_anterior'], 2) ?>
   </small>
 <?php endif; ?>
+<!-- number_format(4599, 2) → 4,599.00 -->
 <p class="fw-bold text-primary">
   S/ <?= number_format($lap['precio'], 2) ?>
 </p></textarea>
@@ -810,33 +1054,34 @@ $descuento = $enOferta
         <div class="topbar reveal"><h2>Menú de marcas</h2><span class="lab">include/store/header.php</span></div>
         <div class="body">
             <div class="side reveal d1">
-                <p class="lede">El desplegable “Categorías” se arma con los fabricantes de la base de datos.</p>
+                <div class="plain"><span class="micro">En palabras simples</span><p>El menú «Categorías» no está escrito a mano: PHP lee las marcas de la base y crea un enlace por cada una. Si mañana se agrega «MSI», <b>aparece sola</b>.</p></div>
                 <ul class="points">
-                    <li><span>01</span><div>Si se agrega una marca desde el panel, <b>aparece sola</b> en el menú.</div></li>
-                    <li><span>02</span><div>Cada marca es un ancla <code class="inline">&lt;a&gt;</code> hacia el catálogo filtrado.</div></li>
-                    <li><span>03</span><div><code class="inline">htmlspecialchars</code> al imprimir cada nombre.</div></li>
-                    <li><span>04</span><div>En celular, la misma lista usa un <b>collapse</b> dentro del menú lateral.</div></li>
+                    <li><span>01</span><div><code class="inline">foreach</code> repite el mismo enlace <code class="inline">&lt;a&gt;</code> para cada marca.</div></li>
+                    <li><span>02</span><div>Cada enlace lleva al catálogo filtrado por esa marca.</div></li>
+                    <li><span>03</span><div>En celular, la misma lista se despliega dentro del menú lateral.</div></li>
                 </ul>
             </div>
             <div class="code reveal d2">
                 <div class="code-head"><span>header.php</span><span>php + html</span></div>
                 <textarea class="src"><?php
-  require_once __DIR__ . '/../../conexion/conexion.php';
+  require_once __DIR__ . '/../../conexion/conexion.php';   // conecta con la base
+  // Trae todas las marcas ordenadas alfabéticamente (A → Z)
   $marcasMenu = $conexion->query("SELECT id_fabricante, nombre_fabricante
                   FROM fabricantes ORDER BY nombre_fabricante")->fetchAll();
 ?>
-<li class="nav-item dropdown">
+<li class="nav-item dropdown">                     <!-- opción del menú con desplegable -->
   <a class="nav-link" href="/src/pages/categorias.php"
-     role="button" data-bs-toggle="dropdown">
-    Categorías <i class="fi fi-rr-angle-small-down"></i>
+     role="button" data-bs-toggle="dropdown">       <!-- Bootstrap abre y cierra la lista -->
+    Categorías <i class="fi fi-rr-angle-small-down"></i>   <!-- ícono de flecha -->
   </a>
-  <ul class="dropdown-menu">
+  <ul class="dropdown-menu">                       <!-- la lista que se despliega -->
     <li><a class="dropdown-item" href="/src/pages/categorias.php">Todas</a></li>
+    <!-- foreach: crea un <li> por cada marca de la base (ASUS, DELL, HP...) -->
     <?php foreach ($marcasMenu as $marca): ?>
       <li><a class="dropdown-item"
-          href="categorias.php?fabricante=<?= $marca['id_fabricante'] ?>">
-          <?= htmlspecialchars($marca['nombre_fabricante']) ?></a></li>
-    <?php endforeach; ?>
+          href="categorias.php?fabricante=<?= $marca['id_fabricante'] ?>"> <!-- ?fabricante=1 -->
+          <?= htmlspecialchars($marca['nombre_fabricante']) ?></a></li>   <!-- nombre seguro -->
+    <?php endforeach; ?>                           <!-- fin de la repetición -->
   </ul>
 </li></textarea>
             </div>
@@ -849,19 +1094,36 @@ $descuento = $enOferta
 <section class="slide">
     <div class="hairline top"></div>
     <div class="frame">
-        <div class="topbar reveal"><h2>Seguridad aplicada</h2><span class="lab">Riesgo → medida</span></div>
+        <div class="topbar reveal"><h2>Seguridad aplicada</h2><span class="lab">Riesgo → qué es → solución</span></div>
         <div class="body reveal d1" style="display:block;">
-            <table class="ledger roomy">
-                <thead><tr><th>Nº</th><th>Riesgo</th><th>Medida</th><th>Dónde</th></tr></thead>
+            <table class="ledger">
+                <thead><tr><th>Nº</th><th>Riesgo</th><th style="width:640px;">¿Qué es?</th><th>Cómo lo evitamos</th></tr></thead>
                 <tbody>
-                    <tr><td class="n">01</td><td class="name">Inyección SQL</td><td>Consultas preparadas y lista blanca para el <code class="inline">ORDER BY</code>.</td><td class="tag">CRUD · catálogo · login</td></tr>
-                    <tr><td class="n">02</td><td class="name">XSS</td><td><code class="inline">htmlspecialchars</code> al imprimir datos de la base o del usuario.</td><td class="tag">listas · header · catálogo</td></tr>
-                    <tr><td class="n">03</td><td class="name">Contraseñas</td><td>Se guarda el hash (<code class="inline">password_hash</code>) y se compara con <code class="inline">password_verify</code>.</td><td class="tag">usuarios · AuthController</td></tr>
-                    <tr><td class="n">04</td><td class="name">Robo de sesión</td><td><code class="inline">session_regenerate_id(true)</code> al iniciar sesión.</td><td class="tag">AuthController</td></tr>
-                    <tr><td class="n">05</td><td class="name">Archivos falsos</td><td>Tipo real con <code class="inline">mime_content_type</code> y extensiones permitidas.</td><td class="tag">fotos de laptops</td></tr>
-                    <tr><td class="n">06</td><td class="name">Acceso al panel</td><td>Sin sesión de admin, vuelve a la tienda y abre el login.</td><td class="tag">admin/index.php</td></tr>
+                    <tr><td class="n">01</td><td class="name" style="width:290px;">Inyección SQL</td><td>Escribir órdenes SQL en un formulario o en la URL para leer o borrar datos ajenos.</td><td><b>Consultas preparadas</b>: los datos van aparte de la orden. Lista blanca para el orden del catálogo.</td></tr>
+                    <tr><td class="n">02</td><td class="name">XSS</td><td>Guardar código JavaScript (por ejemplo en un nombre) para que se ejecute en la pantalla de otros.</td><td><code class="inline">htmlspecialchars</code> convierte &lt; y &gt; en texto inofensivo antes de mostrarlo.</td></tr>
+                    <tr><td class="n">03</td><td class="name">Contraseñas</td><td>Si alguien copia la base de datos, podría leer las contraseñas tal cual.</td><td>Solo se guarda el <b>hash</b>; al entrar se compara con <code class="inline">password_verify</code>.</td></tr>
+                    <tr><td class="n">04</td><td class="name">Robo de sesión</td><td>Reutilizar el identificador de sesión de otra persona para entrar como ella.</td><td><code class="inline">session_regenerate_id(true)</code> crea uno nuevo en cada login.</td></tr>
+                    <tr><td class="n">05</td><td class="name">Archivos falsos</td><td>Subir un archivo .php disfrazado de foto para ejecutarlo en el servidor.</td><td>Se revisa el <b>tipo real</b> del archivo; solo se aceptan jpg, png y webp.</td></tr>
+                    <tr><td class="n">06</td><td class="name">Acceso al panel</td><td>Escribir /admin en la dirección sin haber iniciado sesión.</td><td>Sin sesión de admin, vuelve a la tienda y se abre el login.</td></tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== NUEVA · CONCLUSIONES =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Conclusiones</h2><span class="lab">Lo aprendido · próximos pasos</span></div>
+        <div class="index reveal d1" style="margin-top:12px;">
+            <div class="item"><span>01</span><div><h3>Orden en el proyecto</h3><p>Páginas, piezas (includes), controladores y conexión en carpetas distintas: más fácil de mantener y de entender.</p></div></div>
+            <div class="item"><span>02</span><div><h3>Datos que se actualizan solos</h3><p>El catálogo, las ofertas y el menú de marcas salen de la base de datos: no hay que editar el HTML.</p></div></div>
+            <div class="item"><span>03</span><div><h3>Seguridad desde el inicio</h3><p>Consultas preparadas, contraseñas cifradas, validación de fotos y panel protegido por rol.</p></div></div>
+            <div class="item"><span>04</span><div><h3>Trabajo en equipo</h3><p>Git y GitHub para compartir los cambios entre los integrantes y entre computadoras.</p></div></div>
+            <div class="item"><span>05</span><div><h3>Próximo paso: compras</h3><p>Carrito de compras, pedidos y pagos en línea para completar la tienda.</p></div></div>
+            <div class="item"><span>06</span><div><h3>Próximo paso: mensajes</h3><p>Guardar los mensajes del formulario de contacto y responderlos desde el panel.</p></div></div>
         </div>
     </div>
     <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
@@ -873,11 +1135,11 @@ $descuento = $enOferta
     <div class="glitch left" data-glitch="34"></div>
     <div class="qr" data-qr style="left: 350px; top: 120px;"></div>
     <p class="kick micro reveal">NexusCorp Importaciones — fin</p>
-    <h2 class="reveal d1">Gracias.<br><em>¿Preguntas?</em></h2>
+    <h2 class="reveal d1">Gracias.</h2>
     <div class="credits reveal d2">
-        <div><p class="micro">Proyecto</p><p>Tienda online de laptops con panel de administración.</p></div>
-        <div><p class="micro">Tecnologías</p><p>PHP nativo · PDO · MySQL<br>Bootstrap 5.3 · Flaticon</p></div>
-        <div><p class="micro">Curso</p><p>Programación Web<br>Proyecto final · 2026</p></div>
+        <div><p class="micro">Integrantes</p><p>Medina Huarhuachi, Kevin<br>Vasquez Manrique, Derick</p></div>
+        <div><p class="micro">Docente</p><p>Valderrama Chumbes,<br>Rosell Alejandro</p></div>
+        <div><p class="micro">Curso</p><p>Programación Web · 2026<br>Misioneros Monfortianos</p></div>
     </div>
     <div class="hairline bot"></div><span class="pagenum"></span>
 </section>
