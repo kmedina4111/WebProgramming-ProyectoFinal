@@ -1,4 +1,4 @@
-<!-- ============ 7. MARCAS ============ -->
+<!-- ============ MARCAS ============ -->
 <!-- Por ahora solo texto. Luego reemplazar cada nombre por el <img> del logo de la marca -->
 <section class="container mt-5">
     <h3 class="fw-bold mb-3">Nuestras marcas</h3>

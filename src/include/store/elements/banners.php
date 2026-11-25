@@ -1,4 +1,4 @@
-<!-- ============ 1. CARRUSEL DE BANNERS ============ -->
+<!-- ============ CARRUSEL DE BANNERS ============ -->
 <!-- carousel slide + data-bs-ride="carousel": los banners cambian solos (necesita el JS de Bootstrap) -->
 <section class="container mt-4">
     <div id="carruselBanners" class="carousel slide rounded-4 overflow-hidden" data-bs-ride="carousel">

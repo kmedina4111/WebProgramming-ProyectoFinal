@@ -19,19 +19,16 @@
                 <?php if (($_GET['login'] ?? '') === 'error'): ?>
                     <div class="alert alert-danger small py-2">Usuario o contraseña incorrectos.</div>
                 <?php endif; ?>
-
                 <!-- Formulario | action: AuthController.php revisa los datos y redirige segun el rol (admin -> panel, cliente -> tienda) -->
                 <!-- novalidate: desactiva los mensajes del navegador para usar los de Bootstrap -->
                 <form id="formModalLogin" action="/src/controllers/AuthController.php" method="post" novalidate>
                     <input type="hidden" name="accion" value="login">
-
                     <!-- Usuario (la tabla usuarios inicia sesion con el campo "usuario", no con correo) -->
                     <div class="mb-3">
                         <label for="modalUsuario" class="form-label fw-semibold small">Usuario</label>
                         <input type="text" class="form-control rounded-3 py-2" id="modalUsuario" name="usuario" placeholder="Tu nombre de usuario" autocomplete="username" maxlength="50" required>
                         <div class="invalid-feedback">Ingresa tu usuario.</div>
                     </div>
-
                     <!-- Contraseña | input-group junta el campo y el boton de ver/ocultar -->
                     <div class="mb-3">
                         <label for="modalPassword" class="form-label fw-semibold small">Contraseña</label>
@@ -43,7 +40,6 @@
                             <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
                         </div>
                     </div>
-
                     <!-- Recordarme y olvide mi contraseña -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="form-check">
@@ -52,11 +48,9 @@
                         </div>
                         <a href="#" class="small text-decoration-none">¿Olvidaste tu contraseña?</a>
                     </div>
-
                     <!-- Boton enviar -->
                     <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-semibold">Ingresar</button>
                 </form>
-
                 <!-- Enlace a registro -->
                 <p class="text-center small text-secondary mt-4 mb-0">
                     ¿No tienes cuenta? <a href="#" class="fw-semibold text-decoration-none">Regístrate</a>
@@ -66,7 +60,6 @@
         </div>
     </div>
 </div>
-<!--JAVASCRIPT-->
 <script>
     // ===== Validacion de Bootstrap =====
     // Si hay campos invalidos, se cancela el envio y se muestran los mensajes en rojo (.invalid-feedback)
@@ -77,7 +70,6 @@
         }
         formModalLogin.classList.add('was-validated');
     });
-
     // ===== Mostrar / ocultar contraseña =====
     const modalPassword = document.getElementById('modalPassword');
     const modalVerPassword = document.getElementById('modalVerPassword');
@@ -87,7 +79,6 @@
         modalVerPassword.querySelector('i').className = oculto ? 'fi fi-rr-eye-crossed d-flex' : 'fi fi-rr-eye d-flex';
         modalVerPassword.setAttribute('aria-label', oculto ? 'Ocultar contraseña' : 'Mostrar contraseña');
     });
-
     // ===== Al cerrar el modal: limpiar el formulario =====
     // Asi, si se vuelve a abrir, no aparecen los errores en rojo ni la contraseña escrita
     document.getElementById('modalLogin').addEventListener('hidden.bs.modal', function () {
@@ -96,12 +87,10 @@
         modalPassword.type = 'password';
         modalVerPassword.querySelector('i').className = 'fi fi-rr-eye d-flex';
     });
-
     // ===== Al abrir el modal: poner el cursor en el usuario =====
     document.getElementById('modalLogin').addEventListener('shown.bs.modal', function () {
         document.getElementById('modalUsuario').focus();
     });
-
     // ===== Abrir el modal automaticamente =====
     // ?login=error -> los datos estaban mal | ?login=1 -> se intento entrar al panel sin iniciar sesion
     // DOMContentLoaded: espera a que cargue bootstrap.bundle.min.js (esta al final de la pagina)
@@ -111,4 +100,3 @@
         });
     }
 </script>
-<!-- =================================================== FIN MODAL LOGIN =================================================== -->

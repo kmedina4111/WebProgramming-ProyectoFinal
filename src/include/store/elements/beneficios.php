@@ -1,4 +1,4 @@
-<!-- ============ 2. BARRA DE BENEFICIOS ============ -->
+<!-- ============ BARRA DE BENEFICIOS ============ -->
 <!-- col-6 col-lg-3 | 2 columnas en movil y 4 en PC -->
 <!-- g-4 parecido a gap pero forma parte de la suma del ancho total -->
 <section class="container mt-4">

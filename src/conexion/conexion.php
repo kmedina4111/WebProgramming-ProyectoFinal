@@ -4,6 +4,7 @@
     $password = "root";
     $dbname = "nexuscorp";
     // Quitar el echo del try ya que afecta a la pagina cuando se hace un include de este archivo.
+    // ya se quito el echo
     try {
         $dsn = "mysql:host={$servername};dbname={$dbname};charset=utf8mb4";
         $conexion = new PDO($dsn, $username, $password, [

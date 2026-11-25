@@ -13,16 +13,16 @@
                 <p class="small">Productos importados de calidad, al mejor precio y con envío a todo el país.</p>
                 <!-- Redes sociales | Iconos mediante el CDN de Flaticon -->
                 <div class="d-flex gap-2 mt-3">
-                    <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+                    <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                         <i class="fi fi-brands-facebook d-flex"></i>
                     </a>
-                    <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+                    <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                         <i class="fi fi-brands-instagram d-flex"></i>
                     </a>
-                    <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+                    <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                         <i class="fi fi-brands-tik-tok d-flex"></i>
                     </a>
-                    <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+                    <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                         <i class="fi fi-brands-whatsapp d-flex"></i>
                     </a>
                 </div>
@@ -31,30 +31,30 @@
                 <!-- Columna 2 -->
                 <h5 class="fw-bold mb-3">Tienda</h5>
                 <ul class="list-unstyled"><!-- list-unstyled quita los puntos de la lista -->
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Categorías</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Novedades</a></li>
+                    <li class="mb-2"><a href="/src/pages/ofertas.php" class="text-white text-decoration-none">Ofertas</a></li>
+                    <li class="mb-2"><a href="/src/pages/categorias.php" class="text-white text-decoration-none">Categorías</a></li>
+                    <li class="mb-2"><a href="/src/pages/ofertas.php" class="text-white text-decoration-none">Ofertas</a></li>
+                    <li class="mb-2"><a href="/src/pages/proximamente.php" class="text-white text-decoration-none">Novedades</a></li>
                 </ul>
             </div>
             <div>
                 <!-- Columna 3 -->
                 <h5 class="fw-bold mb-3">Páginas</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Inicio</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Servicios</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Nosotros</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">FaQ</a></li>
+                    <li class="mb-2"><a href="/index.php" class="text-white text-decoration-none">Inicio</a></li>
+                    <li class="mb-2"><a href="/src/pages/servicios.php" class="text-white text-decoration-none">Servicios</a></li>
+                    <li class="mb-2"><a href="/src/pages/nosotros.php" class="text-white text-decoration-none">Nosotros</a></li>
+                    <li class="mb-2"><a href="/src/pages/proximamente.php" class="text-white text-decoration-none">FaQ</a></li>
                 </ul>
             </div>
             <div>
                 <!-- Columna 4 -->
                 <h5 class="fw-bold mb-3">Información</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contacto</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Términos y condiciones</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Política de privacidad</a></li>
-                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Envíos y devoluciones</a></li>
+                    <li class="mb-2"><a href="/src/pages/contacto.php" class="text-white text-decoration-none">Contacto</a></li>
+                    <li class="mb-2"><a href="/src/pages/terminos.php" class="text-white text-decoration-none">Términos y condiciones</a></li>
+                    <li class="mb-2"><a href="/src/pages/privacidad.php" class="text-white text-decoration-none">Política de privacidad</a></li>
+                    <li class="mb-2"><a href="/src/pages/envios-devoluciones.php" class="text-white text-decoration-none">Envíos y devoluciones</a></li>
                 </ul>
             </div>
         </div>
@@ -76,16 +76,16 @@
         <h3 class="fw-bold mb-3">NexusCorp Importaciones</h3>
         <p class="small">Productos importados de calidad, al mejor precio y con envío a todo el país.</p>
         <div class="d-flex gap-2 mt-3 justify-content-center"> <!-- Centra los elementos RRSS -->
-            <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+            <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                 <i class="fi fi-brands-facebook d-flex"></i>
             </a>
-            <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+            <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                 <i class="fi fi-brands-instagram d-flex"></i>
             </a>
-            <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+            <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                 <i class="fi fi-brands-tik-tok d-flex"></i>
             </a>
-            <a href="#" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
+            <a href="/src/pages/proximamente.php" class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="width: 40px; height: 40px;">
                 <i class="fi fi-brands-whatsapp d-flex"></i>
             </a>
         </div>
@@ -103,10 +103,10 @@
         <!-- collapse: la lista empieza cerrada -->
         <div class="collapse" id="footerTienda" data-bs-parent="#acordeonFooter">
             <ul class="list-unstyled py-2">
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Categorías</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Ofertas</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Novedades</a></li>
+                <li class="mb-2"><a href="/src/pages/ofertas.php" class="text-white text-decoration-none">Ofertas</a></li>
+                <li class="mb-2"><a href="/src/pages/categorias.php" class="text-white text-decoration-none">Categorías</a></li>
+                <li class="mb-2"><a href="/src/pages/ofertas.php" class="text-white text-decoration-none">Ofertas</a></li>
+                <li class="mb-2"><a href="/src/pages/proximamente.php" class="text-white text-decoration-none">Novedades</a></li>
             </ul>
         </div>
         <!-- =================================== Seccion 3: Paginas =================================== -->
@@ -115,10 +115,10 @@
         </button>
         <div class="collapse" id="footerPaginas" data-bs-parent="#acordeonFooter">
             <ul class="list-unstyled py-2">
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Inicio</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Servicios</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Nosotros</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">FaQ</a></li>
+                <li class="mb-2"><a href="/index.php" class="text-white text-decoration-none">Inicio</a></li>
+                <li class="mb-2"><a href="/src/pages/servicios.php" class="text-white text-decoration-none">Servicios</a></li>
+                <li class="mb-2"><a href="/src/pages/nosotros.php" class="text-white text-decoration-none">Nosotros</a></li>
+                <li class="mb-2"><a href="/src/pages/proximamente.php" class="text-white text-decoration-none">FaQ</a></li>
             </ul>
         </div>
         <!-- ================================== Seccion 4: Informacion ================================== -->
@@ -127,10 +127,10 @@
         </button>
         <div class="collapse" id="footerInfo" data-bs-parent="#acordeonFooter">
             <ul class="list-unstyled py-2">
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contacto</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Términos y condiciones</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Política de privacidad</a></li>
-                <li class="mb-2"><a href="#" class="text-white text-decoration-none">Envíos y devoluciones</a></li>
+                <li class="mb-2"><a href="/src/pages/contacto.php" class="text-white text-decoration-none">Contacto</a></li>
+                <li class="mb-2"><a href="/src/pages/terminos.php" class="text-white text-decoration-none">Términos y condiciones</a></li>
+                <li class="mb-2"><a href="/src/pages/privacidad.php" class="text-white text-decoration-none">Política de privacidad</a></li>
+                <li class="mb-2"><a href="/src/pages/envios-devoluciones.php" class="text-white text-decoration-none">Envíos y devoluciones</a></li>
             </ul>
         </div>
     </div>

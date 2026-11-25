@@ -4,23 +4,17 @@
     //   - agregar-laptos.php: si se llena "Precio anterior", la laptop aparece aqui
     //   - editar-laptop.php: los cambios (precio, foto, modelo...) se ven aqui | si se borra el precio anterior o se pone Inactivo, sale de aqui
     //   - eliminar-laptop.php: la laptop desaparece de aqui
-    // __DIR__: este archivo se incluye desde index.php (otra carpeta), asi la ruta siempre es correcta
-    require_once __DIR__ . '/../../../conexion/conexion.php';   // crea $conexion
-
+    require_once __DIR__ . '/../../../conexion/conexion.php';  
     // Una laptop esta "en oferta" cuando tiene precio_anterior | solo las activas | las 4 con mayor descuento
-    $sqlOfertas = "SELECT l.numero_serie, l.modelo, l.precio, l.precio_anterior, l.foto, f.nombre_fabricante
-                    FROM laptops l
-                    JOIN fabricantes f ON f.id_fabricante = l.id_fabricante
-                    WHERE l.activo = 1 AND l.precio_anterior IS NOT NULL
-                    ORDER BY (l.precio_anterior - l.precio) / l.precio_anterior DESC
-                    LIMIT 4";
+    $sqlOfertas = "SELECT l.numero_serie, l.modelo, l.precio, l.precio_anterior, l.foto, f.nombre_fabricante FROM laptops l 
+    JOIN fabricantes f ON f.id_fabricante = l.id_fabricante WHERE l.activo = 1 AND l.precio_anterior IS NOT NULL
+    ORDER BY (l.precio_anterior - l.precio) / l.precio_anterior DESC LIMIT 4";
     $ofertas = $conexion->query($sqlOfertas)->fetchAll(PDO::FETCH_ASSOC);
-
     // Carpeta de las fotos (la misma donde guarda agregar-laptos.php)
     $rutaFotosLaptops = __DIR__ . '/../../../../assets/imgs/laptops/';   // ruta del SERVIDOR (para file_exists)
     $urlFotosLaptops  = '/assets/imgs/laptops/';                         // ruta del NAVEGADOR (para el <img>)
 ?>
-    <!-- ============ 4. OFERTAS ============ -->
+    <!-- ============ OFERTAS ============ -->
     <!-- Si no hay ninguna laptop en oferta, la seccion completa no se muestra -->
     <?php if (count($ofertas) > 0): ?>
     <section class="container mt-5">

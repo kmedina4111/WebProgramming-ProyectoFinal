@@ -1,13 +1,11 @@
 <?php
     session_start();   // abre la sesion ANTES de cualquier HTML (el header muestra al usuario conectado)
-    // La conexion esta en src/conexion/ (no en src/include/store/)
-    require_once __DIR__ . '/src/conexion/conexion.php';   // crea $conexion
+    require_once __DIR__ . '/src/conexion/conexion.php';   
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<?php include 'src/include/store/head.php'; ?> <!-- head and metadata -->
+<?php include 'src/include/store/head.php'; ?> <!-- head  -->
 <body>
-    <!-- El header y el footer van DENTRO de <body>: todo lo que se ve en la pagina debe estar aqui -->
     <?php include 'src/include/store/header.php'; ?> <!-- header -->
     <main>
         <?php include 'src/include/store/elements/beneficios.php'; ?> <!-- beneficios -->

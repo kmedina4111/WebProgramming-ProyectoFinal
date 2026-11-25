@@ -1,4 +1,4 @@
-<!-- ============ 8. NEWSLETTER ============ -->
+<!-- ============ NEWSLETTER ============ -->
 <section class="container mt-5">
     <div class="bg-light rounded-4 p-4 p-md-5 text-center">
         <h3 class="fw-bold">Recibe nuestras ofertas</h3>

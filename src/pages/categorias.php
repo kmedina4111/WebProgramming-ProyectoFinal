@@ -6,8 +6,8 @@
 <html lang="es">
 <?php include __DIR__ . '/../include/store/head.php'; ?> 
 <body>
-    <?php include __DIR__ . '/../include/store/header.php'; ?> 
     <main>
+        <?php include __DIR__ . '/../include/store/header.php'; ?> 
         <?php include __DIR__ . '/../include/store/elements/pag-categoria.php'; ?> 
     </main>
     <?php include __DIR__ . '/../include/store/footer.php'; ?> 

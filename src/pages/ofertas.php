@@ -1,10 +1,8 @@
 <?php
     session_start(); 
     // ============ DATOS DE LA PAGINA OFERTAS ============
-    // Igual que la seccion de ofertas del home (src/include/store/elements/ofertas.php), pero:
     //   - muestra TODAS las ofertas activas (sin LIMIT 4)
     //   - se puede ordenar con el select "Ordenar por" (?orden=...)
-    // Se conecta con el CRUD del admin: agregar / editar / eliminar laptop se ve reflejado aqui
     require_once __DIR__ . '/../conexion/conexion.php';
 
     // Opciones de orden permitidas: valor del <select> => ORDER BY
@@ -35,15 +33,12 @@
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<?php include __DIR__ . '/../include/store/head.php'; ?> <!-- head and metadata -->
+<?php include __DIR__ . '/../include/store/head.php'; ?> <
 <body>
-    <?php include __DIR__ . '/../include/store/header.php'; ?> <!-- header -->
-
+    <?php include __DIR__ . '/../include/store/header.php'; ?> 
     <!-- ===================================================== CONTENIDO PRINCIPAL ===================================================== -->
-    <!-- PAGINA DE OFERTAS | Misma estructura que la pagina de categorias, pero sin los botones de fabricantes -->
-    <!-- Las ofertas salen de la base de datos (ver el bloque PHP del inicio del archivo) -->
     <main>
-        <!-- ============ 1. ENCABEZADO: breadcrumb + titulo ============ -->
+        <!-- ============ ENCABEZADO: breadcrumb ============ -->
         <section class="container mt-4">
             <!-- Breadcrumb: muestra en que parte de la tienda esta el usuario -->
             <nav aria-label="breadcrumb">
@@ -56,13 +51,12 @@
             <h1 class="fw-bold fs-2 mb-1">Ofertas</h1>
             <p class="text-secondary mb-0">Laptops con descuento por tiempo limitado.</p>
         </section>
-        <!-- ============ 2. BARRA DE HERRAMIENTAS: resultados + ordenar ============ -->
+        <!-- ============ BARRA DE HERRAMIENTAS: resultados + ordenar ============ -->
         <section class="container mt-4">
             <!-- justify-content-between: resultados a la izquierda y "Ordenar" a la derecha -->
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 border-bottom pb-3">
                 <!-- count($ofertas): cuantas laptops en oferta hay | "oferta" en singular si solo hay 1 -->
                 <span class="text-secondary"><strong class="text-dark"><?= count($ofertas) ?></strong> <?= count($ofertas) === 1 ? 'oferta disponible' : 'ofertas disponibles' ?></span>
-
                 <!-- method="get": el orden viaja en la URL (ej: ofertas.php?orden=precio_asc) -->
                 <!-- onchange: al elegir una opcion, el formulario se envia solo (no hace falta boton) -->
                 <form class="d-flex align-items-center gap-2" method="get">
@@ -79,7 +73,7 @@
         </section>
 
         <?php if (count($ofertas) > 0): ?>
-        <!-- ============ 3. GRILLA DE OFERTAS ============ -->
+        <!-- ============ GRILLA DE OFERTAS ============ -->
         <!-- row-cols-2 row-cols-md-3 row-cols-lg-4: 2 por fila en movil, 3 en tablet y 4 en PC (cada hijo solo lleva "col") -->
         <section class="container mt-4">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
@@ -131,7 +125,7 @@
         </section>
 
         <?php else: ?>
-        <!-- ============ 4. ESTADO VACIO ============ -->
+        <!-- ============ ESTADO VACIO ============ -->
         <!-- Se muestra SOLO cuando no hay ofertas activas (en lugar de la grilla) -->
         <section class="container mt-4">
             <div class="bg-light rounded-4 p-5 text-center">
@@ -142,10 +136,8 @@
             </div>
         </section>
         <?php endif; ?>
-
     </main>
     <!-- =================================================== FIN CONTENIDO PRINCIPAL =================================================== -->
-
     <?php include __DIR__ . '/../include/store/footer.php'; ?> 
     <!-- JS de Bootstrap: necesario para que funcione el offcanvas (menu lateral) del header movil y el acordeon (collapse) del footer movil -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -86,7 +86,6 @@
         <!-- row: la grilla de Bootstrap necesita este div para poner el menu y el contenido lado a lado -->
         <!-- flex-grow-1: la fila llega hasta abajo, y sus columnas (menu y contenido) se estiran con ella -->
         <div class="row flex-grow-1">
-
             <!-- ============ MENU LATERAL ============ -->
             <!-- col-md-3 col-lg-2: angosto en PC | en movil ocupa todo el ancho y queda arriba del contenido -->
             <!-- d-flex flex-column: el menu arriba y el bloque del usuario empujado hasta abajo (con mt-auto) -->
@@ -106,7 +105,6 @@
                         <i class="fi fi-rr-users d-flex"></i> Usuarios
                     </a>
                 </nav>
-
                 <!-- ============ USUARIO ADMINISTRADOR (abajo del menu) ============ -->
                 <!-- mt-auto: ocupa todo el espacio libre de arriba, asi el bloque queda pegado abajo -->
                 <?php if ($admin): ?>
@@ -120,13 +118,11 @@
                             <?= htmlspecialchars(strtoupper(mb_substr($nombreAdmin, 0, 1))) ?>
                         </div>
                     <?php endif; ?>
-
                     <!-- Nombre en negrita y rol debajo | min-w-0 + text-truncate: si el nombre es largo se corta con "..." -->
                     <div class="lh-sm" style="min-width: 0;">
                         <p class="fw-bold mb-0 text-truncate"><?= htmlspecialchars($nombreAdmin) ?></p>
                         <small class="text-secondary"><?= $admin['rol'] === 'admin' ? 'Administrador' : 'Cliente' ?></small>
                     </div>
-
                     <!-- Icono de salir | ms-auto: lo empuja al extremo derecho -->
                     <a href="/admin/logout.php" class="ms-auto text-secondary text-decoration-none d-flex p-1" title="Cerrar sesión" aria-label="Cerrar sesión">
                         <i class="fi fi-rr-sign-out-alt d-flex fs-5"></i>
@@ -134,11 +130,10 @@
                 </div>
                 <?php endif; ?>
             </aside>
-            <!-- ============ CONTENIDO (Overview) ============ -->
+            <!-- ============ OVERVIEW ============ -->
             <!-- section: un bloque tematico de la pagina, con su propio titulo (h1) -->
             <section class="col-md-9 col-lg-10 p-4">
                 <h1 class="fs-3 fw-bold mb-4">Overview</h1>
-
                 <!-- 1. Tarjetas de resumen | 2 por fila en movil, 4 en PC -->
                 <!-- aria-label: le da nombre a la seccion ya que no tiene un titulo visible -->
                 <section class="row row-cols-2 row-cols-lg-4 g-3 mb-4" aria-label="Resumen">
@@ -162,16 +157,14 @@
                     </article>
                     <?php endforeach; ?>
                 </section>
-
-                <!-- 2. Botones de acciones rapidas | nav: es un grupo de enlaces -->
+                <!-- Botones de acciones rapidas | nav: es un grupo de enlaces -->
                 <nav class="d-flex flex-wrap gap-2 mb-4" aria-label="Acciones rápidas">
                     <!-- fi fi-rr-plus: icono "+" del CDN de Flaticon (uicons-regular-rounded, cargado en el head) | d-flex en el icono lo alinea al centro del texto -->
                     <a href="/src/controllers/add/agregar-laptos.php" class="btn btn-primary d-flex align-items-center gap-2"><i class="fi fi-rr-plus d-flex"></i> Nueva laptop</a>
                     <a href="/src/controllers/add/agregar-fabricantes.php" class="btn btn-success d-flex align-items-center gap-2"><i class="fi fi-rr-plus d-flex"></i> Nuevo fabricante</a>
                     <a href="/src/controllers/add/agregar-usuario.php" class="btn btn-warning d-flex align-items-center gap-2"><i class="fi fi-rr-plus d-flex"></i> Nuevo usuario</a>
                 </nav>
-
-                <!-- 3. Detalle: ultimas laptops y laptops por fabricante -->
+                <!-- Detalle: ultimas laptops y laptops por fabricante -->
                 <section class="row g-3" aria-label="Detalle">
                     <!-- Ultimas laptops | col-lg-8: ocupa 2/3 en PC -->
                     <article class="col-lg-8">
@@ -221,7 +214,6 @@
                             </div>
                         </div>
                     </article>
-
                     <!-- Laptops por fabricante | col-lg-4: ocupa 1/3 en PC -->
                     <article class="col-lg-4">
                         <div class="card border-0 shadow-sm h-100">
@@ -241,7 +233,6 @@
                                     </div>
                                 </li>
                                 <?php endforeach; ?>
-
                                 <?php if (count($porFabricante) === 0): ?>
                                 <li class="list-group-item text-center text-secondary py-4">Aún no hay fabricantes.</li>
                                 <?php endif; ?>
@@ -250,7 +241,6 @@
                     </article>
                 </section>
             </section>
-
         </div>
     </main>
 </body>

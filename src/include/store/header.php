@@ -1,20 +1,22 @@
 <?php
     // Esta seccion contiene el fragmento de HTML del Header
-
-    // ===== SESION DEL USUARIO =====
-    // session_status: solo abre la sesion si la pagina no la abrio antes (evita el aviso "session already started")
+    // session_status: solo abre la sesion si la pagina no la abrio antes 
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     // Datos que guardo AuthController.php al iniciar sesion
     $sesionActiva  = isset($_SESSION['usuario_id']);
-    $nombreSesion  = $_SESSION['nombre'] ?? ($_SESSION['usuario'] ?? '');   // nombre de la persona (si no hay, el usuario/correo)
+    $nombreSesion  = $_SESSION['nombre'] ?? ($_SESSION['usuario'] ?? '');   // nombre de la persona 
     $esAdminSesion = ($_SESSION['rol'] ?? '') === 'admin';
     // Foto: solo si el archivo existe | si no, se muestra la inicial del nombre
     $fotoSesion = null;
     if (!empty($_SESSION['foto']) && file_exists(__DIR__ . '/../../../assets/imgs/usuarios/' . $_SESSION['foto'])) {
         $fotoSesion = '/assets/imgs/usuarios/' . $_SESSION['foto'];
     }
+
+    // Marcas para el desplegable de Categorias (salen de la tabla fabricantes: si se agrega una, aparece sola)
+    require_once __DIR__ . '/../../conexion/conexion.php';  
+    $marcasMenu = $conexion->query("SELECT id_fabricante, nombre_fabricante FROM fabricantes ORDER BY nombre_fabricante")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <header>
     <!-- ======================================================= HEADER PC ======================================================= -->
@@ -69,7 +71,7 @@
                     </div>
                     <?php else: ?>
                     <!-- Usuario SIN sesion: abre el modal de login -->
-                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/src/pages/login.php" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/index.php?login=1" data-bs-toggle="modal" data-bs-target="#modalLogin">
                         <!-- Se agrego d-flex para centrar el icono dentro del circulo -->
                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
                             <i class="fi fi-rr-user fs-5 d-flex"></i>   <!-- Se agrego fs-5 para el tamaño y d-flex para centrarlo bien -->
@@ -99,17 +101,36 @@
             <ul class="nav justify-content-between fs-6"> <!-- fs-6 en el ul agranda la letra de todos los enlaces -->
                 <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/index.php">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/src/pages/ofertas.php">Ofertas</a></li>
-                <!-- d-flex y gap-1 para poner el icono de flecha al lado del texto -->
-                <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/categorias.php">Categorías <i class="fi fi-rr-angle-small-down d-flex"></i></a>
+                <!-- Categorias: desplegable (dropdown de Bootstrap) con las marcas | cada marca es un ancla <a> que filtra el catalogo -->
+                <li class="nav-item dropdown">
+                    <!-- data-bs-toggle="dropdown": al hacer clic abre/cierra la lista | d-flex y gap-1: la flecha al lado del texto -->
+                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/categorias.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorías <i class="fi fi-rr-angle-small-down d-flex"></i>
+                    </a>
+                    <ul class="dropdown-menu shadow-sm">
+                        <li><a class="dropdown-item fw-semibold" href="/src/pages/categorias.php">Todas las laptops</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <?php foreach ($marcasMenu as $marca): ?>
+                            <!-- ?fabricante=ID: categorias.php muestra solo las laptops de esa marca -->
+                            <li><a class="dropdown-item" href="/src/pages/categorias.php?fabricante=<?= $marca['id_fabricante'] ?>"><?= htmlspecialchars($marca['nombre_fabricante']) ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </li>
-                <!-- d-flex y gap-1 para poner el icono de flecha al lado del texto -->
-                <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/terminos.php">Términos <i class="fi fi-rr-angle-small-down d-flex"></i></a>
+                <!-- Terminos: desplegable (dropdown de Bootstrap) con las paginas legales | cada opcion es un ancla <a> -->
+                <li class="nav-item dropdown">
+                    <!-- data-bs-toggle="dropdown": al hacer clic abre/cierra la lista | d-flex y gap-1: la flecha al lado del texto -->
+                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/terminos.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Términos <i class="fi fi-rr-angle-small-down d-flex"></i>
+                    </a>
+                    <ul class="dropdown-menu shadow-sm">
+                        <li><a class="dropdown-item" href="/src/pages/terminos.php">Términos y condiciones</a></li>
+                        <li><a class="dropdown-item" href="/src/pages/privacidad.php">Política de privacidad</a></li>
+                        <li><a class="dropdown-item" href="/src/pages/envios-devoluciones.php">Envíos y devoluciones</a></li>
+                    </ul>
                 </li>
-                <!-- d-flex y gap-1 para poner el icono de flecha al lado del texto -->
+                <!-- Servicios: enlace simple, sin icono de flecha -->
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/servicios.php">Servicios <i class="fi fi-rr-angle-small-down d-flex"></i></a>
+                    <a class="nav-link text-white fw-semibold d-flex align-items-center gap-1" href="/src/pages/servicios.php">Servicios</a>
                 </li>
                 <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/src/pages/contacto.php">Contacto</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-semibold" href="/src/pages/nosotros.php">Nosotros</a></li>
@@ -164,7 +185,7 @@
                     </div>
                     <?php else: ?>
                     <!-- Usuario SIN sesion: abre el modal de login -->
-                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/src/pages/login.php" data-bs-toggle="modal" data-bs-target="#modalLogin" aria-label="Iniciar sesión">
+                    <a class="d-flex align-items-center gap-2 text-dark text-decoration-none" href="/index.php?login=1" data-bs-toggle="modal" data-bs-target="#modalLogin" aria-label="Iniciar sesión">
                         <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
                             <i class="fi fi-rr-user fs-5 d-flex"></i>
                         </div>
@@ -184,7 +205,6 @@
             </form>
         </div>
     </nav>
-
     <!-- |-------------------------- NAV SECUNDARIO | Menu Lateral Desglosable --------------------------| -->
     <!-- Menu lateral para movil (offcanvas de Bootstrap) -->
     <!-- --bs-offcanvas-width: el menu ocupa solo el 75% del ancho de la pantalla -->
@@ -198,13 +218,31 @@
         <div class="offcanvas-body p-0 d-flex flex-column">
             <!-- list-group: lista de Bootstrap con una linea entre cada opcion -->
             <div class="list-group list-group-flush">
+                <!-- Categorias: desplegable (collapse de Bootstrap) | href y aria-controls apuntan al id de la lista de marcas -->
                 <!-- d-flex y justify-content-between ponen el texto a la izquierda y la flecha a la derecha -->
-                <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#">Categorías <i class="fi fi-rr-angle-small-down d-flex"></i></a>
-                <a class="list-group-item list-group-item-action fw-semibold py-3" href="#">Ofertas</a>
-                <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#">Términos <i class="fi fi-rr-angle-small-down d-flex"></i></a>
-                <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#">Servicios <i class="fi fi-rr-angle-small-down d-flex"></i></a>
-                <a class="list-group-item list-group-item-action fw-semibold py-3" href="#">Contacto</a>
-                <a class="list-group-item list-group-item-action fw-semibold py-3" href="#">Nosotros</a>
+                <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#marcasMovil" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="marcasMovil">
+                    Categorías <i class="fi fi-rr-angle-small-down d-flex"></i>
+                </a>
+                <!-- collapse: oculto hasta que se toca "Categorias" | ps-5: las marcas quedan mas adentro (como sub-opciones) -->
+                <div class="collapse" id="marcasMovil">
+                    <a class="list-group-item list-group-item-action ps-5 py-2 fw-semibold" href="/src/pages/categorias.php">Todas las laptops</a>
+                    <?php foreach ($marcasMenu as $marca): ?>
+                        <a class="list-group-item list-group-item-action ps-5 py-2" href="/src/pages/categorias.php?fabricante=<?= $marca['id_fabricante'] ?>"><?= htmlspecialchars($marca['nombre_fabricante']) ?></a>
+                    <?php endforeach; ?>
+                </div>
+                <a class="list-group-item list-group-item-action fw-semibold py-3" href="/src/pages/ofertas.php">Ofertas</a>
+                <!-- Terminos: desplegable (collapse de Bootstrap) igual que Categorias -->
+                <a class="list-group-item list-group-item-action fw-semibold py-3 d-flex justify-content-between align-items-center" href="#terminosMovil" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="terminosMovil">
+                    Términos <i class="fi fi-rr-angle-small-down d-flex"></i>
+                </a>
+                <div class="collapse" id="terminosMovil">
+                    <a class="list-group-item list-group-item-action ps-5 py-2" href="/src/pages/terminos.php">Términos y condiciones</a>
+                    <a class="list-group-item list-group-item-action ps-5 py-2" href="/src/pages/privacidad.php">Política de privacidad</a>
+                    <a class="list-group-item list-group-item-action ps-5 py-2" href="/src/pages/envios-devoluciones.php">Envíos y devoluciones</a>
+                </div>
+                <a class="list-group-item list-group-item-action fw-semibold py-3" href="/src/pages/servicios.php">Servicios</a>
+                <a class="list-group-item list-group-item-action fw-semibold py-3" href="/src/pages/contacto.php">Contacto</a>
+                <a class="list-group-item list-group-item-action fw-semibold py-3" href="/src/pages/nosotros.php">Nosotros</a>
             </div>
             <!-- mt-auto empuja este bloque hasta el fondo del menu -->
             <div class="mt-auto p-3 border-top">
@@ -223,5 +261,4 @@
     </div>
     <!-- ========================================================================================================================= -->  
 </header>
-
 <?php include __DIR__ . '/login-modal.php'; ?> <!-- modal de inicio de sesion (disponible en todas las paginas) -->
