@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <!-- LOGO -->
-                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="#">
+                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="/index.php">
                         <img src="/assets/imgs/logos/logo1.webp" alt="Logo" class="img-fluid" style="max-height: 50px;">
                     </a>
                 </div>
@@ -155,8 +155,8 @@
                 </div>
                 <div>
                     <!-- LOGO movil | En celular el logo ocupa el espacio libre (flex-grow-1) -->
-                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="#">
-                        <img src="assets/imgs/logos/logo1.webp" alt="Logo" class="img-fluid" style="max-height: 42px;">
+                    <a class="flex-shrink-1 flex-grow-1 flex-md-grow-0 text-start" style="min-width: 0;" href="/index.php">
+                        <img src="/assets/imgs/logos/logo1.webp" alt="Logo" class="img-fluid" style="max-height: 42px;">
                     </a>
                 </div>
                 <!-- Usuario y carrito | En movil solo se ven los iconos -->

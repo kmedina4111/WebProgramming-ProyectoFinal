@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusCorp Importaciones · Proyecto final</title>
+
+<!-- Fonts: Newsreader (titulos), Hanken Grotesk (texto), DM Mono (codigo y detalles) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..500;1,6..72,400..500&family=Hanken+Grotesk:wght@400..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES (THEME)
+   Cambia estos valores para cambiar todo el aspecto
+   =========================================== */
+:root {
+    --paper: #F0EBDE;          /* fondo crema */
+    --paper-2: #E6E0CE;        /* crema un poco mas oscuro (paneles de codigo) */
+    --ink: #1F2BE0;            /* azul cobalto: el UNICO color de tinta */
+    --ink-soft: #5560E5;       /* cobalto suave */
+    --grid: rgba(31, 43, 224, 0.10);
+    --ink-faint: rgba(31, 43, 224, 0.18);
+
+    --font-display: 'Newsreader', Georgia, serif;
+    --font-body: 'Hanken Grotesk', sans-serif;
+    --font-mono: 'DM Mono', ui-monospace, monospace;
+
+    --edge: 80px;              /* margen lateral de cada diapositiva */
+    --stage-bg: #d9d3c2;
+    --slide-bg: var(--paper);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES (viewport-base.css)
+   =========================================== */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+    html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+    .deck-viewport { position: static; overflow: visible; background: #fff; }
+    .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+    .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .deck-controls { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ===========================================
+   SLIDE CHROME: graph paper + hairlines + page number
+   Every slide inherits these automatically
+   =========================================== */
+.slide { transition: opacity 280ms ease, visibility 280ms; color: var(--ink); font-family: var(--font-body); }
+.slide::before {                                   /* papel cuadriculado permanente */
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px),
+                      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+.hairline { position: absolute; left: var(--edge); right: var(--edge); height: 1.5px; background: var(--ink); z-index: 2; }
+.hairline.top { top: 28px; }
+.hairline.bot { bottom: 22px; }
+.pagenum, .nav-hint { position: absolute; bottom: 56px; font: 400 18px/1 var(--font-mono); letter-spacing: .06em; color: var(--ink); z-index: 2; }
+.pagenum { right: var(--edge); }
+.nav-hint { left: var(--edge); opacity: .45; letter-spacing: .08em; }
+
+/* Content frame: everything sits inside it, clear of the chrome */
+.frame { position: absolute; inset: 104px var(--edge) 112px; z-index: 2; display: flex; flex-direction: column; }
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+.topbar { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1.5px solid var(--ink); padding-bottom: 18px; }
+.topbar h2 { font: 400 84px/1 var(--font-display); letter-spacing: -.005em; }
+.lab { font: 400 18px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; padding-bottom: 8px; }
+.body { flex: 1; min-height: 0; margin-top: 34px; display: flex; gap: 56px; }
+.micro { font: 600 16px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; }
+.lede { font: 400 27px/1.5 var(--font-body); }
+.txt { font: 400 23px/1.5 var(--font-body); }
+.txt b, .lede b { font-weight: 600; }
+.mono { font-family: var(--font-mono); }
+code.inline { font: 400 .92em var(--font-mono); background: var(--paper-2); padding: 1px 7px; }
+
+/* ===========================================
+   COMPONENTS
+   =========================================== */
+/* Side column with numbered points */
+.side { width: 600px; flex-shrink: 0; display: flex; flex-direction: column; }
+.side .lede { margin-bottom: 28px; }
+.points { list-style: none; }
+.points li { display: grid; grid-template-columns: 58px 1fr; padding: 16px 0; border-bottom: 1px solid var(--ink-faint); font: 400 22px/1.45 var(--font-body); }
+.points li:first-child { border-top: 1px solid var(--ink-faint); }
+.points li span { font: 400 17px/1.7 var(--font-mono); }
+
+/* Code panel (filename tab + highlighted code) */
+.code { flex: 1; min-width: 0; align-self: flex-start; border: 1.5px solid var(--ink); background: rgba(240, 235, 222, .94); display: flex; flex-direction: column; }
+.code-head { display: flex; justify-content: space-between; padding: 12px 22px; border-bottom: 1px solid var(--ink-faint); font: 400 16px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.code pre { padding: 20px 22px 22px; font: 400 20px/1.45 var(--font-mono); white-space: pre; overflow: hidden; tab-size: 4; }
+.code.sm pre { font-size: 18px; }
+textarea.src { display: none; }
+/* Syntax colours: still two-colour (cobalt at different weights/opacities) */
+.t-com { opacity: .5; font-style: italic; }
+.t-str { color: var(--ink-soft); }
+.t-var { font-weight: 500; }
+.t-kw  { font-weight: 500; text-decoration: underline; text-decoration-color: var(--ink-faint); text-underline-offset: 4px; }
+.t-tag { color: var(--ink-soft); font-weight: 500; }
+.t-fn  { font-weight: 500; }
+.t-php { background: var(--ink-faint); font-weight: 500; padding: 0 3px; }
+
+/* Ledger table */
+.ledger { width: 100%; border-collapse: collapse; }
+.ledger th { text-align: left; font: 600 16px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; padding: 0 16px 16px 0; border-bottom: 1.5px solid var(--ink); }
+.ledger td { padding: 18px 16px 18px 0; border-bottom: 1px solid var(--ink-faint); vertical-align: top; font: 400 22px/1.4 var(--font-body); }
+.ledger td.n { font: 400 18px/1.6 var(--font-mono); width: 70px; }
+.ledger td.name { font: 400 32px/1.1 var(--font-display); width: 330px; }
+.ledger td.tag { font: 400 18px/1.6 var(--font-mono); letter-spacing: .04em; }
+.ledger.roomy td { padding-top: 30px; padding-bottom: 30px; }
+
+/* Index list 2x3 */
+.index { display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px; flex: 1; }
+.index .item { display: grid; grid-template-columns: 70px 1fr; padding: 26px 0; border-bottom: 1px solid var(--ink-faint); }
+.index .item span { font: 400 18px/2 var(--font-mono); }
+.index .item h3 { font: 400 38px/1.05 var(--font-display); margin-bottom: 10px; }
+.index .item p { font: 400 21px/1.45 var(--font-body); }
+
+/* Screenshot frame */
+.shot { border: 1.5px solid var(--ink); background: var(--paper); align-self: flex-start; }
+.shot img { display: block; width: 100%; height: auto; max-width: none; max-height: none; }
+.shot figcaption { padding: 10px 16px; border-top: 1px solid var(--ink-faint); font: 400 16px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+
+/* Pixel-glitch column + QR patch (decorative) */
+.glitch { position: absolute; top: 30px; bottom: 24px; width: 230px; z-index: 1; pointer-events: none; }
+.glitch.right { right: var(--edge); }
+.glitch.left { left: var(--edge); }
+.glitch i { position: absolute; height: 12px; background: var(--ink); transform: scaleX(0); }
+.glitch.right i { right: 0; transform-origin: right; }
+.glitch.left i { left: 0; transform-origin: left; }
+.slide.visible .glitch i { animation: bar .7s var(--ease) forwards; }
+.qr { position: absolute; display: grid; grid-template-columns: repeat(8, 14px); gap: 3px; padding: 5px; background: var(--paper); box-shadow: 0 0 0 1.5px var(--paper); z-index: 2; }
+.qr b { width: 14px; height: 14px; background: var(--ink); }
+.qr b.off { background: transparent; }
+
+/* ===========================================
+   ANIMATIONS (only on the visible slide)
+   =========================================== */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.slide.visible .reveal { opacity: 1; transform: none; }
+.slide.visible .d1 { transition-delay: .08s; }
+.slide.visible .d2 { transition-delay: .18s; }
+.slide.visible .d3 { transition-delay: .28s; }
+.slide.visible .d4 { transition-delay: .38s; }
+.slide.visible .d5 { transition-delay: .48s; }
+@keyframes bar { to { transform: scaleX(1); } }
+
+/* ===========================================
+   COVER (slide 1)
+   =========================================== */
+.cover .ticker { position: absolute; left: var(--edge); right: var(--edge); top: 70px; display: flex; justify-content: space-between; font: 400 20px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; z-index: 2; }
+.cover .hairline.top { top: 112px; }
+.cover .kicker { position: absolute; left: var(--edge); top: 196px; z-index: 2; font: 500 24px/1 var(--font-mono); letter-spacing: .2em; }
+.cover h1 { position: absolute; left: 74px; top: 246px; width: 1260px; z-index: 2; font: 400 172px/.95 var(--font-display); letter-spacing: -.02em; }
+.cover h1 em { color: var(--ink-soft); }
+.cover .sub { position: absolute; left: var(--edge); top: 730px; width: 860px; z-index: 2; font: 400 30px/1.45 var(--font-body); }
+.cover .plate { position: absolute; left: 1040px; top: 640px; padding: 10px 18px; background: #fff; border: 1.5px solid var(--ink); z-index: 2; }
+.cover .plate img { height: 50px; display: block; }
+.cover .stack { position: absolute; left: 1040px; top: 740px; width: 540px; z-index: 2; }
+.cover .stack div { display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--ink-faint); font: 400 24px/1 var(--font-body); }
+.cover .stack div span:first-child { font: 400 19px/1.2 var(--font-mono); }
+.cover .foot { position: absolute; left: var(--edge); right: var(--edge); bottom: 56px; display: flex; justify-content: space-between; font: 400 18px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; z-index: 2; }
+
+/* ===========================================
+   CLOSING (last slide)
+   =========================================== */
+.closing .kick { position: absolute; right: var(--edge); top: 210px; z-index: 2; text-align: right; }
+.closing h2 { position: absolute; right: var(--edge); top: 250px; z-index: 2; text-align: right; font: 400 230px/.92 var(--font-display); letter-spacing: -.015em; }
+.closing h2 em { color: var(--ink-soft); }
+.closing .credits { position: absolute; left: 400px; right: var(--edge); bottom: 120px; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; border-top: 1.5px solid var(--ink); padding-top: 24px; }
+.closing .credits p { font: 400 22px/1.5 var(--font-body); margin-top: 12px; }
+
+/* ===========================================
+   INLINE EDITING (hover top-left corner or press E)
+   =========================================== */
+.edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
+.edit-toggle { position: fixed; top: 16px; left: 16px; z-index: 10001; width: 44px; height: 44px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); font: 500 14px var(--font-mono); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: var(--ink); color: var(--paper); }
+body.editing [contenteditable="true"] { outline: 1px dashed var(--ink-soft); outline-offset: 4px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- =========================================== 01 · PORTADA =========================================== -->
+<section class="slide cover">
+    <div class="ticker reveal"><span>Proyecto final</span><span>Programación Web</span><span>Edición 2026</span><span>Nº 01</span></div>
+    <div class="hairline top"></div>
+    <div class="kicker reveal d1">NEXUSCORP IMPORTACIONES —</div>
+    <h1 class="reveal d2">Una tienda de laptops, <em>escrita en PHP</em> nativo.</h1>
+    <p class="sub reveal d3">Catálogo con filtros por marca, ofertas automáticas, sesiones por rol y un panel de administración con CRUD completo sobre MySQL.</p>
+    <div class="plate reveal d3"><img src="assets/logo1.webp" alt="NexusCorp"></div>
+    <div class="stack reveal d4">
+        <div><span>01</span><span>PHP 8 · PDO</span></div>
+        <div><span>02</span><span>MySQL · 3 tablas</span></div>
+        <div><span>03</span><span>Bootstrap 5.3 · Flaticon</span></div>
+    </div>
+    <div class="qr" data-qr style="right: 330px; top: 200px;"></div>
+    <div class="glitch right" data-glitch="28" style="top:132px; bottom:100px;"></div>
+    <div class="hairline bot"></div>
+    <div class="foot reveal d5"><span>Mayoristas en cómputo</span><span>Tienda · Login · Panel</span></div>
+</section>
+
+<!-- =========================================== 02 · EL PROYECTO =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>El proyecto</h2><span class="lab">Qué hace la tienda</span></div>
+        <p class="lede reveal d1" style="margin-top:28px; max-width:1500px;">NexusCorp es una tienda online de laptops: el cliente navega el catálogo y las ofertas, y el administrador gestiona productos, marcas y usuarios desde un panel propio.</p>
+        <div class="index reveal d2" style="margin-top:12px;">
+            <div class="item"><span>01</span><div><h3>Catálogo por marca</h3><p>Todas las laptops activas, filtrables por fabricante y ordenables por precio u ofertas.</p></div></div>
+            <div class="item"><span>02</span><div><h3>Ofertas automáticas</h3><p>Si una laptop tiene <b>precio anterior</b>, sale en ofertas con su % de descuento calculado.</p></div></div>
+            <div class="item"><span>03</span><div><h3>Login por roles</h3><p>Un solo formulario: el <b>admin</b> va al panel y el <b>cliente</b> a la tienda con su nombre y foto.</p></div></div>
+            <div class="item"><span>04</span><div><h3>Panel de administración</h3><p>Resumen con totales, últimas laptops registradas y laptops por fabricante.</p></div></div>
+            <div class="item"><span>05</span><div><h3>CRUD completo</h3><p>Agregar, listar, editar y eliminar laptops, fabricantes y usuarios, con subida de fotos.</p></div></div>
+            <div class="item"><span>06</span><div><h3>Páginas informativas</h3><p>Servicios, nosotros, contacto con formulario, términos, privacidad y envíos.</p></div></div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 03 · TECNOLOGIAS =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Tecnologías</h2><span class="lab">Sin frameworks de PHP</span></div>
+        <div class="body reveal d1" style="display:block;">
+            <table class="ledger roomy">
+                <thead><tr><th>Nº</th><th>Tecnología</th><th>Para qué se usa</th><th>Versión / origen</th></tr></thead>
+                <tbody>
+                    <tr><td class="n">01</td><td class="name">PHP nativo</td><td>Lógica del servidor: páginas, formularios, sesiones e includes.</td><td class="tag">PHP 8.5 · MAMP</td></tr>
+                    <tr><td class="n">02</td><td class="name">PDO</td><td>Conexión a la base de datos con consultas preparadas.</td><td class="tag">Extensión de PHP</td></tr>
+                    <tr><td class="n">03</td><td class="name">MySQL</td><td>Tablas <code class="inline">usuarios</code>, <code class="inline">fabricantes</code> y <code class="inline">laptops</code>, con reglas CHECK y llave foránea.</td><td class="tag">MAMP · puerto 8889</td></tr>
+                    <tr><td class="n">04</td><td class="name">Bootstrap</td><td>Grilla, tarjetas, modal de login, dropdowns, offcanvas del menú móvil.</td><td class="tag">5.3.3 · CDN</td></tr>
+                    <tr><td class="n">05</td><td class="name">Flaticon UIcons</td><td>Íconos de la tienda y del panel (<code class="inline">fi fi-rr-…</code>).</td><td class="tag">4.0.0 · CDN</td></tr>
+                    <tr><td class="n">06</td><td class="name">Git + GitHub</td><td>Historial de cambios y sincronización entre la PC y la laptop.</td><td class="tag">GitHub Desktop</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 04 · ESTRUCTURA =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Estructura del proyecto</h2><span class="lab">Carpetas</span></div>
+        <div class="body">
+            <div class="code reveal d1" style="flex:0 0 1060px;">
+                <div class="code-head"><span>proyectofinal/</span><span>árbol</span></div>
+                <textarea class="src">proyectofinal/
+├── index.php                  ← inicio de la tienda
+├── database.sql · seed-laptops.sql
+├── admin/
+│   ├── index.php              ← panel (overview)
+│   └── logout.php             ← session_destroy()
+├── assets/   css/ · imgs/ (logos, laptops, usuarios)
+└── src/
+    ├── conexion/conexion.php  ← PDO
+    ├── controllers/
+    │   ├── AuthController.php ← login
+    │   └── add/ · list/ · update/ · delete/
+    ├── include/store/
+    │   ├── head · header · footer · login-modal
+    │   └── elements/  banners · ofertas · marcas · cta
+    └── pages/
+        categorias · ofertas · contacto · nosotros
+        servicios · terminos · privacidad · 404</textarea>
+            </div>
+            <div class="side reveal d2" style="width:auto; flex:1;">
+                <ul class="points">
+                    <li><span>01</span><div><b>pages/</b> — lo que ve el cliente. Cada página arma su contenido con includes.</div></li>
+                    <li><span>02</span><div><b>include/</b> — piezas reutilizables: head, header, footer y secciones del inicio.</div></li>
+                    <li><span>03</span><div><b>controllers/</b> — procesan formularios: login y las 4 operaciones del CRUD.</div></li>
+                    <li><span>04</span><div><b>admin/</b> — panel protegido por rol y cierre de sesión.</div></li>
+                    <li><span>05</span><div><b>conexion/</b> — un solo archivo crea <code class="inline">$conexion</code> para todo el proyecto.</div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 05 · BASE DE DATOS =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Base de datos</h2><span class="lab">nexuscorp · 3 tablas</span></div>
+        <div class="body" style="gap:44px;">
+            <div class="reveal d1" style="width:480px; flex-shrink:0;">
+                <p class="micro" style="margin-bottom:14px;">usuarios</p>
+                <ul class="points" style="margin-bottom:34px;">
+                    <li style="padding:9px 0;"><span>PK</span><div class="mono" style="font-size:19px;">id · INT AUTO_INCREMENT</div></li>
+                    <li style="padding:9px 0;"><span>UQ</span><div class="mono" style="font-size:19px;">usuario · VARCHAR(50)</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">nombre · password (hash)</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">rol · ENUM('admin','cliente')</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">foto · creado_en</div></li>
+                </ul>
+                <p class="micro" style="margin-bottom:14px;">fabricantes</p>
+                <ul class="points">
+                    <li style="padding:9px 0;"><span>PK</span><div class="mono" style="font-size:19px;">id_fabricante</div></li>
+                    <li style="padding:9px 0;"><span>UQ</span><div class="mono" style="font-size:19px;">nombre_fabricante</div></li>
+                </ul>
+            </div>
+            <div class="reveal d2" style="width:500px; flex-shrink:0;">
+                <p class="micro" style="margin-bottom:14px;">laptops</p>
+                <ul class="points">
+                    <li style="padding:9px 0;"><span>PK</span><div class="mono" style="font-size:19px;">numero_serie · VARCHAR(50)</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">modelo · descripcion</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">procesador · tarjeta_grafica</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">ram_gb · almacenamiento_gb</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">tipo_almacenamiento (SSD/HDD)</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">precio · precio_anterior</div></li>
+                    <li style="padding:9px 0;"><span>FK</span><div class="mono" style="font-size:19px;">id_fabricante</div></li>
+                    <li style="padding:9px 0;"><span></span><div class="mono" style="font-size:19px;">foto · activo · creado_en</div></li>
+                </ul>
+            </div>
+            <div class="code sm reveal d3">
+                <div class="code-head"><span>database.sql</span><span>sql</span></div>
+                <textarea class="src">-- Reglas de validacion
+ALTER TABLE laptops
+ ADD CONSTRAINT chk_laptops_precio
+   CHECK (precio > 0),
+ ADD CONSTRAINT chk_laptops_precio_anterior
+   CHECK (precio_anterior IS NULL
+          OR precio_anterior > precio);
+
+-- Relacion laptops -> fabricantes
+ALTER TABLE laptops
+ ADD CONSTRAINT fk_laptops_fabricante
+ FOREIGN KEY (id_fabricante)
+ REFERENCES fabricantes (id_fabricante)
+ ON UPDATE CASCADE
+ ON DELETE RESTRICT;</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 06 · CONEXION PDO =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Conexión con PDO</h2><span class="lab">src/conexion/conexion.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">Un solo archivo crea la conexión y todas las páginas lo cargan con <code class="inline">require_once</code>.</p>
+                <ul class="points">
+                    <li><span>01</span><div><b>ERRMODE_EXCEPTION</b>: los errores de SQL lanzan excepciones que se capturan con <code class="inline">try/catch</code>.</div></li>
+                    <li><span>02</span><div><b>FETCH_ASSOC</b>: cada fila llega como arreglo con el nombre de la columna.</div></li>
+                    <li><span>03</span><div><b>EMULATE_PREPARES false</b>: consultas preparadas reales en MySQL.</div></li>
+                    <li><span>04</span><div>Sin <code class="inline">?&gt;</code> al final: evita enviar espacios antes de <code class="inline">session_start()</code>.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>conexion.php</span><span>php</span></div>
+                <textarea class="src"><?php
+$servername = "localhost:8889";
+$dbname     = "nexuscorp";
+
+try {
+    $dsn = "mysql:host={$servername};dbname={$dbname};charset=utf8mb4";
+    $conexion = new PDO($dsn, $username, $password, [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false
+    ]);
+} catch (PDOException $e) {
+    die("FALLO: " . $e->getMessage());
+}
+
+// En cualquier pagina:
+require_once __DIR__ . '/../conexion/conexion.php';   // crea $conexion</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 07 · INCLUDES =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Páginas armadas con includes</h2><span class="lab">index.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">El inicio no repite HTML: une piezas que también usan las otras páginas.</p>
+                <ul class="points">
+                    <li><span>01</span><div><b>head.php</b>: metadatos, Bootstrap, Flaticon y el CSS propio.</div></li>
+                    <li><span>02</span><div><b>header.php</b>: menú, buscador, usuario conectado y el modal de login.</div></li>
+                    <li><span>03</span><div><b>elements/</b>: secciones del inicio reutilizadas también en Nosotros.</div></li>
+                    <li><span>04</span><div>Un cambio en un include se ve <b>en todas las páginas</b> a la vez.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>index.php</span><span>php + html</span></div>
+                <textarea class="src"><?php
+    session_start();
+    require_once __DIR__ . '/src/conexion/conexion.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<?php include 'src/include/store/head.php'; ?>
+<body>
+    <?php include 'src/include/store/header.php'; ?>
+    <main>
+        <?php include 'src/include/store/elements/banners.php'; ?>
+        <?php include 'src/include/store/elements/beneficios.php'; ?>
+        <?php include 'src/include/store/elements/categorias.php'; ?>
+        <?php include 'src/include/store/elements/ofertas.php'; ?>
+        <?php include 'src/include/store/elements/marcas.php'; ?>
+    </main>
+    <?php include 'src/include/store/footer.php'; ?>
+</body>
+</html></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 08 · LA TIENDA (captura) =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>La tienda</h2><span class="lab">/index.php</span></div>
+        <div class="body">
+            <figure class="shot reveal d1" style="width:1120px; flex-shrink:0;">
+                <img src="assets/inicio.png" alt="Página de inicio de NexusCorp">
+                <figcaption>Inicio · header, beneficios, categorías y ofertas desde la base de datos</figcaption>
+            </figure>
+            <div class="side reveal d2" style="width:auto; flex:1;">
+                <ul class="points">
+                    <li><span>01</span><div><b>Header</b> con desplegables de Categorías y Términos; las marcas salen de la tabla <code class="inline">fabricantes</code>.</div></li>
+                    <li><span>02</span><div><b>Beneficios</b>: envíos, garantía, pago seguro y soporte.</div></li>
+                    <li><span>03</span><div><b>Categorías</b>: Laptops abre el catálogo; el resto lleva a “Próximamente”.</div></li>
+                    <li><span>04</span><div><b>Ofertas</b>: las 4 laptops con mayor descuento.</div></li>
+                    <li><span>05</span><div>Diseño adaptable: menú lateral (offcanvas) en celular.</div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 09 · MODAL DE LOGIN =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Inicio de sesión: el modal</h2><span class="lab">login-modal.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">El login es un <b>modal de Bootstrap</b> incluido en el header, así está disponible en todas las páginas.</p>
+                <ul class="points">
+                    <li><span>01</span><div><code class="inline">data-bs-toggle="modal"</code> abre la ventana sin cambiar de página.</div></li>
+                    <li><span>02</span><div>El formulario se envía por <b>POST</b> a <code class="inline">AuthController.php</code>.</div></li>
+                    <li><span>03</span><div>Si la URL trae <code class="inline">?login</code>, el modal se abre solo (error de datos o acceso al panel sin sesión).</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>header.php + login-modal.php</span><span>html</span></div>
+                <textarea class="src"><a href="/index.php?login=1"
+   data-bs-toggle="modal" data-bs-target="#modalLogin">Iniciar sesión</a>
+
+<div class="modal fade" id="modalLogin" tabindex="-1">
+  <form action="/src/controllers/AuthController.php" method="post">
+    <input type="hidden" name="accion" value="login">
+    <input type="text" name="usuario" maxlength="50" required>
+    <input type="password" name="password" minlength="6" required>
+    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+  </form>
+</div>
+
+<script>
+  // ?login en la URL -> el modal se abre automaticamente
+  if (new URLSearchParams(window.location.search).has('login')) {
+    const modal = document.getElementById('modalLogin');
+    bootstrap.Modal.getOrCreateInstance(modal).show();
+  }
+</script></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 10 · AUTHCONTROLLER =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>AuthController</h2><span class="lab">src/controllers/AuthController.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">Recibe usuario y contraseña, los verifica y redirige <b>según el rol</b>.</p>
+                <ul class="points">
+                    <li><span>01</span><div>Busca al usuario con una <b>consulta preparada</b>.</div></li>
+                    <li><span>02</span><div><code class="inline">password_verify</code> compara lo escrito con el <b>hash</b> guardado.</div></li>
+                    <li><span>03</span><div><code class="inline">session_regenerate_id</code> crea un ID de sesión nuevo.</div></li>
+                    <li><span>04</span><div>Guarda en <code class="inline">$_SESSION</code> los datos que usan las demás páginas, <b>nunca la contraseña</b>.</div></li>
+                    <li><span>05</span><div>Error → <code class="inline">?login=error</code> y el modal muestra el aviso.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>AuthController.php</span><span>php</span></div>
+                <textarea class="src">session_start();
+
+$stmt = $conexion->prepare("SELECT id, usuario, nombre, password, rol, foto
+                            FROM usuarios WHERE usuario = :usuario");
+$stmt->execute([':usuario' => $usuario]);
+$usu = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($usu && password_verify($password, $usu['password'])) {
+    session_regenerate_id(true);
+    $_SESSION['usuario_id'] = $usu['id'];
+    $_SESSION['nombre']     = $usu['nombre'];
+    $_SESSION['rol']        = $usu['rol'];
+    $_SESSION['foto']       = $usu['foto'];
+
+    if ($usu['rol'] === 'admin') {
+        header('Location: /admin/index.php');
+    } else {
+        header('Location: /index.php');
+    }
+    exit;
+}
+header('Location: /index.php?login=error');</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 11 · SESIONES =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Sesiones</h2><span class="lab">session_start · $_SESSION · session_destroy</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <ul class="points">
+                    <li><span>01</span><div><b>session_start()</b> activa las sesiones. Va en la <b>primera línea</b> de cada página, antes de cualquier HTML.</div></li>
+                    <li><span>02</span><div><b>$_SESSION</b> es el arreglo donde se guardan y leen los datos: AuthController los guarda y el header y el panel los leen.</div></li>
+                    <li><span>03</span><div>El panel solo deja pasar si existe la sesión y el rol es <b>admin</b>.</div></li>
+                    <li><span>04</span><div><b>session_destroy()</b> borra la sesión al cerrar sesión, en <code class="inline">admin/logout.php</code>.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>header.php · admin/index.php · logout.php</span><span>php</span></div>
+                <textarea class="src">// 1. Primera linea de cada pagina
+session_start();
+
+// 2. Leer la sesion (header.php)
+$sesionActiva = isset($_SESSION['usuario_id']);
+$nombreSesion = $_SESSION['nombre'] ?? ($_SESSION['usuario'] ?? '');
+
+// 3. Proteger el panel (admin/index.php)
+if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] ?? '') !== 'admin') {
+    header('Location: /index.php?login=1');
+    exit;
+}
+
+// 4. Cerrar sesion (admin/logout.php)
+session_start();
+$_SESSION = [];
+session_destroy();
+header('Location: /index.php');
+exit;</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 12 · PANEL ADMIN =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Panel de administración</h2><span class="lab">admin/index.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">Un overview con los números clave de la tienda y accesos rápidos al CRUD.</p>
+                <ul class="points">
+                    <li><span>01</span><div><b>4 tarjetas</b>: laptops, en oferta, fabricantes y usuarios, con <code class="inline">COUNT(*)</code>.</div></li>
+                    <li><span>02</span><div><b>Últimas 10 laptops</b> con <code class="inline">JOIN</code> al fabricante.</div></li>
+                    <li><span>03</span><div><b>Laptops por fabricante</b> con <code class="inline">LEFT JOIN</code> y barras de progreso.</div></li>
+                    <li><span>04</span><div>Menú lateral con el admin conectado: foto, nombre, rol y botón de salir.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>admin/index.php</span><span>php + html</span></div>
+                <textarea class="src">// fetchColumn(): devuelve directamente el numero del COUNT(*)
+$totalLaptops = $conexion->query("SELECT COUNT(*) FROM laptops")
+                         ->fetchColumn();
+$totalOfertas = $conexion->query("SELECT COUNT(*) FROM laptops
+                   WHERE precio_anterior IS NOT NULL")->fetchColumn();
+
+$tarjetas = [
+    ['Laptops',   $totalLaptops, 'fi-rr-laptop',        'primary'],
+    ['En oferta', $totalOfertas, 'fi-rr-badge-percent', 'danger'],
+];
+?>
+<?php foreach ($tarjetas as [$titulo, $numero, $icono, $color]): ?>
+    <article class="col">
+        <div class="card border-0 shadow-sm h-100">
+            <i class="fi <?= $icono ?> text-<?= $color ?>"></i>
+            <h2 class="small"><?= $titulo ?></h2>
+            <p class="fs-3 fw-bold"><?= $numero ?></p>
+        </div>
+    </article>
+<?php endforeach; ?></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 13 · CRUD: CREAR =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>CRUD · Crear</h2><span class="lab">add/agregar-laptos.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">Agregar una laptop guarda sus datos y su foto.</p>
+                <ul class="points">
+                    <li><span>01</span><div>La foto se valida por su <b>tipo real</b> (<code class="inline">mime_content_type</code>), no por el nombre: así nadie sube un <code class="inline">.php</code>.</div></li>
+                    <li><span>02</span><div>Nombre único con <code class="inline">time()</code> + <code class="inline">uniqid()</code>.</div></li>
+                    <li><span>03</span><div><b>INSERT preparado</b> con marcadores <code class="inline">:nombre</code>.</div></li>
+                    <li><span>04</span><div>Si falla una regla UNIQUE o CHECK, el <code class="inline">catch</code> vuelve al formulario con error.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>agregar-laptos.php · resumido</span><span>php</span></div>
+                <textarea class="src">$permitidos = ['image/jpeg' => 'jpg', 'image/png' => 'png',
+               'image/webp' => 'webp'];
+$tipo = mime_content_type($_FILES['foto']['tmp_name']);
+if (isset($permitidos[$tipo])) {
+    $nombreFoto = time() . '_' . uniqid() . '.' . $permitidos[$tipo];
+    move_uploaded_file($_FILES['foto']['tmp_name'], $rutaFotos . $nombreFoto);
+}
+
+try {
+    $sql = "INSERT INTO laptops (numero_serie, modelo, precio,
+                                 precio_anterior, id_fabricante, foto)
+            VALUES (:numero_serie, :modelo, :precio,
+                    :precio_anterior, :id_fabricante, :foto)";
+    $stmt = $conexion->prepare($sql);
+    $stmt->execute([':numero_serie' => $numeroSerie, ':modelo' => $modelo,
+                    ':precio' => $precio /* ... resto de columnas */]);
+    header('Location: ../list/listar-laptops.php?ok=1');
+} catch (PDOException $e) {
+    header('Location: agregar-laptos.php?error=1');   // UNIQUE o CHECK
+}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 14 · CRUD: LEER, EDITAR, ELIMINAR =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>CRUD · Leer, editar y eliminar</h2><span class="lab">12 archivos · 3 entidades</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <table class="ledger roomy">
+                    <thead><tr><th>Operación</th><th>Carpeta</th></tr></thead>
+                    <tbody>
+                        <tr><td class="name" style="width:260px;">Crear</td><td class="tag">add/</td></tr>
+                        <tr><td class="name" style="width:260px;">Listar</td><td class="tag">list/</td></tr>
+                        <tr><td class="name" style="width:260px;">Editar</td><td class="tag">update/</td></tr>
+                        <tr><td class="name" style="width:260px;">Eliminar</td><td class="tag">delete/</td></tr>
+                    </tbody>
+                </table>
+                <p class="txt" style="margin-top:26px;">Cada operación existe para <b>usuarios</b>, <b>fabricantes</b> y <b>laptops</b>. Al terminar se vuelve a la lista con un aviso (<code class="inline">?ok</code>, <code class="inline">?editado</code>, <code class="inline">?eliminado</code>).</p>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>list · update · delete</span><span>php + html</span></div>
+                <textarea class="src">// LISTAR: JOIN para mostrar el nombre del fabricante
+$sql = "SELECT l.*, f.nombre_fabricante FROM laptops l
+        JOIN fabricantes f ON f.id_fabricante = l.id_fabricante";
+
+// EDITAR: formulario precargado y escapado
+<input name="modelo" value="<?= htmlspecialchars($lap['modelo']) ?>">
+
+// ELIMINAR: primero la foto del disco, despues el registro
+if ($lap && !empty($lap['foto'])) {
+    unlink($rutaFotos . basename($lap['foto']));
+}
+$stmt = $conexion->prepare("DELETE FROM laptops WHERE numero_serie = :id");
+$stmt->execute([':id' => $id]);
+header('Location: ../list/listar-laptops.php?eliminado=1');
+
+// Fabricante con laptops: la llave foranea (RESTRICT) lo impide
+} catch (PDOException $e) {
+    header('Location: ../list/listar-fabricantes.php?error=1');
+}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 15 · CATALOGO DINAMICO =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Catálogo dinámico</h2><span class="lab">elements/pag-categoria.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">Los filtros viajan en la URL: <code class="inline">categorias.php?fabricante=3&amp;orden=precio_asc</code></p>
+                <ul class="points">
+                    <li><span>01</span><div><code class="inline">(int)</code> convierte el fabricante a número; si no existe, se muestran todas.</div></li>
+                    <li><span>02</span><div>El orden solo puede ser una de <b>4 claves permitidas</b>: el texto de la URL nunca entra al SQL.</div></li>
+                    <li><span>03</span><div>El filtro <code class="inline">AND</code> se agrega solo si se eligió una marca.</div></li>
+                    <li><span>04</span><div>Solo se muestran las laptops con <code class="inline">activo = 1</code>.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>pag-categoria.php · resumido</span><span>php</span></div>
+                <textarea class="src">$idFabricante = (int) ($_GET['fabricante'] ?? 0);
+
+$ordenes = [
+    'nuevas'      => 'l.creado_en DESC',
+    'precio_asc'  => 'l.precio ASC',
+    'precio_desc' => 'l.precio DESC',
+    'ofertas'     => '(l.precio_anterior IS NULL) ASC, l.precio ASC',
+];
+$orden = $_GET['orden'] ?? 'nuevas';
+if (!isset($ordenes[$orden])) { $orden = 'nuevas'; }
+
+$sql = "SELECT l.*, f.nombre_fabricante FROM laptops l
+        JOIN fabricantes f ON f.id_fabricante = l.id_fabricante
+        WHERE l.activo = 1";
+$params = [];
+if ($idFabricante > 0) {
+    $sql .= " AND l.id_fabricante = :fabricante";
+    $params[':fabricante'] = $idFabricante;
+}
+$sql .= " ORDER BY " . $ordenes[$orden];</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 16 · CATALOGO + OFERTAS (captura) =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Catálogo y ofertas</h2><span class="lab">categorias.php?fabricante=1</span></div>
+        <div class="body">
+            <figure class="shot reveal d1" style="width:900px; flex-shrink:0;">
+                <img src="assets/catalogo.png" alt="Catálogo filtrado por ASUS">
+                <figcaption>Filtro ASUS · 4 laptops · 2 con descuento</figcaption>
+            </figure>
+            <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:26px;">
+                <p class="txt reveal d2">El descuento <b>no se guarda</b>: se calcula con el precio actual y el anterior. Si no hay precio anterior, la tarjeta solo muestra el precio.</p>
+                <div class="code sm reveal d3" style="align-self:stretch;">
+                    <div class="code-head"><span>tarjeta de laptop</span><span>php + html</span></div>
+                    <textarea class="src">$enOferta  = !empty($lap['precio_anterior']);
+$descuento = $enOferta
+  ? round(100 - ($lap['precio'] * 100
+                 / $lap['precio_anterior']))
+  : 0;
+?>
+<?php if ($enOferta): ?>
+  <span class="badge bg-danger">-<?= $descuento ?>%</span>
+  <small class="text-decoration-line-through">
+    S/ <?= number_format($lap['precio_anterior'], 2) ?>
+  </small>
+<?php endif; ?>
+<p class="fw-bold text-primary">
+  S/ <?= number_format($lap['precio'], 2) ?>
+</p></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 17 · MENU DE MARCAS =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Menú de marcas</h2><span class="lab">include/store/header.php</span></div>
+        <div class="body">
+            <div class="side reveal d1">
+                <p class="lede">El desplegable “Categorías” se arma con los fabricantes de la base de datos.</p>
+                <ul class="points">
+                    <li><span>01</span><div>Si se agrega una marca desde el panel, <b>aparece sola</b> en el menú.</div></li>
+                    <li><span>02</span><div>Cada marca es un ancla <code class="inline">&lt;a&gt;</code> hacia el catálogo filtrado.</div></li>
+                    <li><span>03</span><div><code class="inline">htmlspecialchars</code> al imprimir cada nombre.</div></li>
+                    <li><span>04</span><div>En celular, la misma lista usa un <b>collapse</b> dentro del menú lateral.</div></li>
+                </ul>
+            </div>
+            <div class="code reveal d2">
+                <div class="code-head"><span>header.php</span><span>php + html</span></div>
+                <textarea class="src"><?php
+  require_once __DIR__ . '/../../conexion/conexion.php';
+  $marcasMenu = $conexion->query("SELECT id_fabricante, nombre_fabricante
+                  FROM fabricantes ORDER BY nombre_fabricante")->fetchAll();
+?>
+<li class="nav-item dropdown">
+  <a class="nav-link" href="/src/pages/categorias.php"
+     role="button" data-bs-toggle="dropdown">
+    Categorías <i class="fi fi-rr-angle-small-down"></i>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/src/pages/categorias.php">Todas</a></li>
+    <?php foreach ($marcasMenu as $marca): ?>
+      <li><a class="dropdown-item"
+          href="categorias.php?fabricante=<?= $marca['id_fabricante'] ?>">
+          <?= htmlspecialchars($marca['nombre_fabricante']) ?></a></li>
+    <?php endforeach; ?>
+  </ul>
+</li></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 18 · SEGURIDAD =========================================== -->
+<section class="slide">
+    <div class="hairline top"></div>
+    <div class="frame">
+        <div class="topbar reveal"><h2>Seguridad aplicada</h2><span class="lab">Riesgo → medida</span></div>
+        <div class="body reveal d1" style="display:block;">
+            <table class="ledger roomy">
+                <thead><tr><th>Nº</th><th>Riesgo</th><th>Medida</th><th>Dónde</th></tr></thead>
+                <tbody>
+                    <tr><td class="n">01</td><td class="name">Inyección SQL</td><td>Consultas preparadas y lista blanca para el <code class="inline">ORDER BY</code>.</td><td class="tag">CRUD · catálogo · login</td></tr>
+                    <tr><td class="n">02</td><td class="name">XSS</td><td><code class="inline">htmlspecialchars</code> al imprimir datos de la base o del usuario.</td><td class="tag">listas · header · catálogo</td></tr>
+                    <tr><td class="n">03</td><td class="name">Contraseñas</td><td>Se guarda el hash (<code class="inline">password_hash</code>) y se compara con <code class="inline">password_verify</code>.</td><td class="tag">usuarios · AuthController</td></tr>
+                    <tr><td class="n">04</td><td class="name">Robo de sesión</td><td><code class="inline">session_regenerate_id(true)</code> al iniciar sesión.</td><td class="tag">AuthController</td></tr>
+                    <tr><td class="n">05</td><td class="name">Archivos falsos</td><td>Tipo real con <code class="inline">mime_content_type</code> y extensiones permitidas.</td><td class="tag">fotos de laptops</td></tr>
+                    <tr><td class="n">06</td><td class="name">Acceso al panel</td><td>Sin sesión de admin, vuelve a la tienda y abre el login.</td><td class="tag">admin/index.php</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="hairline bot"></div><span class="nav-hint">← → para navegar</span><span class="pagenum"></span>
+</section>
+
+<!-- =========================================== 19 · CIERRE =========================================== -->
+<section class="slide closing">
+    <div class="hairline top"></div>
+    <div class="glitch left" data-glitch="34"></div>
+    <div class="qr" data-qr style="left: 350px; top: 120px;"></div>
+    <p class="kick micro reveal">NexusCorp Importaciones — fin</p>
+    <h2 class="reveal d1">Gracias.<br><em>¿Preguntas?</em></h2>
+    <div class="credits reveal d2">
+        <div><p class="micro">Proyecto</p><p>Tienda online de laptops con panel de administración.</p></div>
+        <div><p class="micro">Tecnologías</p><p>PHP nativo · PDO · MySQL<br>Bootstrap 5.3 · Flaticon</p></div>
+        <div><p class="micro">Curso</p><p>Programación Web<br>Proyecto final · 2026</p></div>
+    </div>
+    <div class="hairline bot"></div><span class="pagenum"></span>
+</section>
+
+</main>
+</div>
+
+<!-- Inline editing controls (hover top-left corner or press E) -->
+<div class="edit-hotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Modo edición (E)">E</button>
+
+<script>
+/* ===========================================
+   SYNTAX HIGHLIGHTER
+   Reads each <textarea class="src"> and renders a <pre> with token spans.
+   Still two-colour: tokens differ only by weight, opacity or soft cobalt.
+   =========================================== */
+const TOKEN = new RegExp([
+    '(?<com>\\/\\/[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/|<!--[\\s\\S]*?-->|^\\s*--[^\\n]*)',
+    '(?<str>\'(?:\\\\.|[^\'\\\\\\n])*\'|"(?:\\\\.|[^"\\\\\\n])*")',
+    '(?<php><\\?php|<\\?=|\\?>)',
+    '(?<var>\\$\\w+)',
+    '(?<tag><\\/?[a-zA-Z][\\w-]*)',
+    '(?<kw>\\b(?:if|else|foreach|endforeach|endif|as|try|catch|new|require_once|include|exit|isset|empty|die|const|SELECT|FROM|WHERE|JOIN|ON|AND|OR|INSERT|INTO|VALUES|DELETE|UPDATE|SET|ORDER|BY|ALTER|TABLE|ADD|CONSTRAINT|CHECK|FOREIGN|KEY|REFERENCES|CASCADE|RESTRICT|NULL|IS|NOT|ASC|DESC|COUNT)\\b)',
+    '(?<fn>\\b[a-zA-Z_]\\w*(?=\\())'
+].join('|'), 'gm');
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+document.querySelectorAll('textarea.src').forEach(src => {
+    const code = src.value;
+    let html = '', last = 0;
+    for (const m of code.matchAll(TOKEN)) {
+        html += esc(code.slice(last, m.index));
+        const kind = Object.keys(m.groups).find(k => m.groups[k] !== undefined);
+        html += `<span class="t-${kind}">${esc(m[0])}</span>`;
+        last = m.index + m[0].length;
+    }
+    html += esc(code.slice(last));
+    const pre = document.createElement('pre');
+    pre.innerHTML = html;
+    src.replaceWith(pre);
+});
+
+/* ===========================================
+   DECORATIONS: pixel-glitch columns + QR patches
+   =========================================== */
+document.querySelectorAll('[data-glitch]').forEach(g => {
+    const n = +g.dataset.glitch;
+    for (let i = 0; i < n; i++) {
+        const b = document.createElement('i');
+        b.style.top = (i * 30) + 'px';
+        b.style.width = (40 + Math.round(Math.abs(Math.sin(i * .55)) * 19) * 10) + 'px';
+        b.style.animationDelay = (.3 + i * .025) + 's';
+        g.appendChild(b);
+    }
+});
+const QR = '1111111010000010101110101011101010111010100000101111111000101010';
+document.querySelectorAll('[data-qr]').forEach(q => {
+    [...QR].forEach(c => { const b = document.createElement('b'); if (c === '0') b.className = 'off'; q.appendChild(b); });
+});
+
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   Keyboard, wheel, touch navigation + fixed-stage scaling
+   =========================================== */
+class SlidePresentation {
+    constructor() {
+        this.slides = [...document.querySelectorAll('.slide')];
+        this.stage = document.getElementById('deckStage');
+        this.current = 0;
+        this.slides.forEach((s, i) => {
+            const p = s.querySelector('.pagenum');
+            if (p) p.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(this.slides.length).padStart(2, '0');
+        });
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupWheelNav();
+        this.setupTouchNav();
+        const fromHash = parseInt(location.hash.slice(1), 10);
+        this.show(Number.isFinite(fromHash) ? fromHash - 1 : 0);
+    }
+    setupStageScale() {
+        const scale = () => {
+            const f = Math.min(innerWidth / 1920, innerHeight / 1080);
+            this.stage.style.transform = `translate(${(innerWidth - 1920 * f) / 2}px, ${(innerHeight - 1080 * f) / 2}px) scale(${f})`;
+        };
+        scale();
+        addEventListener('resize', scale);
+    }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', e => {
+            if (document.body.classList.contains('editing')) return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.show(this.current + 1); }
+            if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.show(this.current - 1); }
+            if (e.key === 'Home') this.show(0);
+            if (e.key === 'End') this.show(this.slides.length - 1);
+        });
+    }
+    setupWheelNav() {
+        let lock = false;
+        addEventListener('wheel', e => {
+            if (lock || document.body.classList.contains('editing') || Math.abs(e.deltaY) < 30) return;
+            lock = true; setTimeout(() => lock = false, 700);
+            this.show(this.current + (e.deltaY > 0 ? 1 : -1));
+        }, { passive: true });
+    }
+    setupTouchNav() {
+        let x0 = null;
+        addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+        addEventListener('touchend', e => {
+            if (x0 === null) return;
+            const dx = e.changedTouches[0].clientX - x0;
+            if (Math.abs(dx) > 50) this.show(this.current + (dx < 0 ? 1 : -1));
+            x0 = null;
+        });
+    }
+    show(i) {
+        this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+        this.slides.forEach((s, k) => {
+            s.classList.toggle('active', k === this.current);
+            s.classList.toggle('visible', k === this.current);
+        });
+        history.replaceState(null, '', '#' + (this.current + 1));
+    }
+}
+const deck = new SlidePresentation();
+
+/* ===========================================
+   INLINE EDITOR
+   E or top-left corner toggles edit mode; Ctrl+S downloads the edited HTML
+   =========================================== */
+const editor = {
+    isActive: false,
+    selector: '.slide h1, .slide h2, .slide h3, .slide p, .slide li, .slide td, .slide pre, .slide figcaption, .slide .lab',
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        document.getElementById('editToggle').classList.toggle('active', this.isActive);
+        document.querySelectorAll(this.selector).forEach(el => el.setAttribute('contenteditable', this.isActive));
+    },
+    save() {
+        const blob = new Blob(['<!DOCTYPE html>\n' + document.documentElement.outerHTML], { type: 'text/html' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'presentacion-nexuscorp.html';
+        a.click();
+    }
+};
+const editToggle = document.getElementById('editToggle');
+const hotzone = document.querySelector('.edit-hotzone');
+let hideTimeout = null;
+editToggle.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+editToggle.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+document.addEventListener('keydown', e => {
+    if ((e.key === 'e' || e.key === 'E') && !e.target.isContentEditable) editor.toggleEditMode();
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); editor.save(); }
+});
+</script>
+</body>
+</html>
