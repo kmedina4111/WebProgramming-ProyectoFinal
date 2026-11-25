@@ -42,7 +42,6 @@
         header('Location: /index.php?login=error');
         exit;
     }
-
     // Si alguien entra a este archivo directamente (sin enviar el formulario), vuelve a la tienda
     header('Location: /index.php');
     exit;
